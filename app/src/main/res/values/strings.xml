@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Student Toolkit</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_menu">menu</string>
+    <string name="bldg_activity_menu">Buildings</string>
+    <string name="maps_activity_menu">Maps</string>
+    <string name="todo_activity_menu">To-do</string>
+    <string name="welcome_activity_menu">UCD Student Toolkit</string>
+    <string name="title_activity_to_do">ToDoActivity</string>
+    <string name="large_text">Default text</string>
+    <string name="title_activity_edit_to_do">EditToDoActivity</string>
+
+</resources>
