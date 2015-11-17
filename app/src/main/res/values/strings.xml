@@ -6,10 +6,38 @@
     <string name="title_activity_menu">menu</string>
     <string name="bldg_activity_menu">Buildings</string>
     <string name="maps_activity_menu">Maps</string>
-    <string name="todo_activity_menu">To-do</string>
+    <string name="todo_activity_menu">To-Do</string>
     <string name="welcome_activity_menu">UCD Student Toolkit</string>
     <string name="title_activity_to_do">ToDoActivity</string>
     <string name="large_text">Default text</string>
     <string name="title_activity_edit_to_do">EditToDoActivity</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="back">Return</string>
+    <string name="title">Title...</string>
+    <string name="description">Description...</string>
+    <string name="date">Date...</string>
+    <string name="postpone">Postpone</string>
+    <string name="update">Update</string>
+    <string name="title_activity_postpone_to_do_">PostponeToDo_Activity</string>
+
+    <string-array name="day_array">
+        <item>Today</item>
+        <item>Tomorrow</item>
+        <item>In a week</item>
+        <item>Select a date...</item>
+    </string-array>
+
+    <string-array name="time_array">
+        <item>Morning (9:00)</item>
+        <item>Afternoon (12:00)</item>
+        <item>Evening (17:00)</item>
+        <item>Night (20:00)</item>
+        <item>Select a time...</item>
+    </string-array>
+
+
 
 </resources>

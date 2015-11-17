@@ -12,27 +12,26 @@
         android:textStyle="bold"
         android:textColor="#aca7a7"
         android:layout_toLeftOf="@+id/delete_button"
-        android:layout_alignBottom="@+id/delete_button"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@+id/delete_button" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/show_button"
+        android:src="@android:drawable/ic_menu_view"
+
+        android:layout_toLeftOf="@+id/delete_button"
+        android:layout_toStartOf="@+id/delete_button" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/delete_button"
-        android:layout_marginTop="68dp"
-        android:src="@android:drawable/ic_menu_edit"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/edit_button"
-        android:layout_toStartOf="@+id/edit_button" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/edit_button"
         android:src="@android:drawable/ic_menu_delete"
-        android:layout_alignTop="@+id/delete_button"
+        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 

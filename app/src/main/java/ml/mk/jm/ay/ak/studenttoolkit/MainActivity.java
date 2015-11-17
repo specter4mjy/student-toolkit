@@ -1,6 +1,7 @@
 package ml.mk.jm.ay.ak.studenttoolkit;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,14 +9,35 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import java.util.ArrayList;
+
+import ml.mk.jm.ay.ak.studenttoolkit.database.DatabaseConnection;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static ArrayList<Todo> todos = new ArrayList<Todo>();
+    public static DatabaseConnection db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        db = new DatabaseConnection(this.getApplicationContext());
+
         Button addItemButton = (Button) findViewById(R.id.todo_button);//exit button
+        db.getWritableDatabase().execSQL("INSERT INTO todo (title, description, due) VALUES ('EXAMPLETITLE','EXAMPLEDESCRIPTION', CURRENT_TIMESTAMP)");
+
+        Cursor c = db.getReadableDatabase().rawQuery("select * from todo",null);
+        while(c.moveToNext()){
+            String id = c.getString(0);
+            String title = c.getString(DatabaseConnection.TITLE);
+            String description = c.getString(DatabaseConnection.DESCRIPTION);
+            String due = c.getString(DatabaseConnection.DUE);
+            Log.w("DATABASE HERE!", title + description + due);
+        }
+
+        c.close();
 
         addItemButton.setOnClickListener(new Click());
     }
@@ -29,12 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }

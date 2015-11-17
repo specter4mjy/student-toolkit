@@ -26,6 +26,15 @@
             android:label="@string/title_activity_edit_to_do"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity android:name=".ShowToDoActivity" >
+        </activity>
+        <activity android:name=".NewToDoActivity" >
+        </activity>
+        <activity
+            android:name=".PostponeToDo_Activity"
+            android:label="@string/title_activity_postpone_to_do_"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>
