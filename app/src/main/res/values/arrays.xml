@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="recurrence_array">
+    <item name="daily">Daily</item>
+    <item name="weekly">Weekly</item>
+    <item name="monthly">Monthly</item>
+    </string-array>
+    <string-array name="WeekOfDay">
+        <item name = "sun">Sun</item>
+        <item name = "mon">Mon</item>
+        <item name = "tue">Tue</item>
+        <item name = "wed">Wed</item>
+        <item name = "thu">Thu</item>
+        <item name = "fri">Fri</item>
+        <item name = "sat">Sat</item>
+    </string-array>
+    <string-array name="NotificationChoices">
+        <item name = "first">10 minutes before</item>
+        <item name ="second">20 minutes before</item>
+        <item name ="third">30 minutes before</item>
+        <item name ="fourth">1 hour before</item>
+    </string-array>
+</resources>

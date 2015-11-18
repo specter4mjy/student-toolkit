@@ -23,6 +23,13 @@
     <string name="update">Update</string>
     <string name="title_activity_postpone_to_do_">PostponeToDo_Activity</string>
 
+    <string name="title_activity_todo">TodoActivity</string>
+    <string name="cancel_btn">Cancel button</string>
+    <string name="title_activity_edit_event">EditEventActivity</string>
+    <string name="str_am"> AM</string>
+    <string name="str_pm"> PM</string>
+    <string name="choose_notification">Choose a Notification</string>
+
     <string-array name="day_array">
         <item>Today</item>
         <item>Tomorrow</item>

@@ -7,7 +7,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="ml.mk.jm.ay.ak.studenttoolkit.EditToDoActivity">
+    tools:context="ml.mk.jm.ay.ak.studenttoolkit.todo.EditToDoActivity">
 
     <TableLayout
         android:layout_width="match_parent"
