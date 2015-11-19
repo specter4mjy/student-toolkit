@@ -3,7 +3,7 @@
     android:id="@+id/edit_name"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/recyclerViewbacground"
+    android:background="@color/cardViewBackground"
     android:orientation="vertical">
 
     <LinearLayout
@@ -27,77 +27,162 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Title"
-                android:textSize="21dp" />
+                android:singleLine="true"
+                android:textColor="#bbb"
+                android:textSize="25dp" />
         </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-
         android:padding="30dp">
 
-        <LinearLayout
+
+        <ImageView
+            android:id="@+id/location_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:alpha="0.7"
+            android:src="@drawable/location" />
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
+            android:layout_alignTop="@id/location_icon"
+            android:layout_toRightOf="@id/location_icon"
+            android:theme="@style/TextInputLayout">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:alpha="0.7"
-                android:src="@drawable/location" />
-
-            <android.support.design.widget.TextInputLayout
+            <EditText
+                android:id="@+id/location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/TextInputLayout">
+                android:hint="Location"
+                android:singleLine="true"
+                android:textSize="18sp" />
+        </android.support.design.widget.TextInputLayout>
 
-                <EditText
-                    android:id="@+id/location"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Location" />
-            </android.support.design.widget.TextInputLayout>
-        </LinearLayout>
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/clockicon"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_below="@id/location_icon"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:alpha="0.7"
+            android:padding="8dp"
+            android:src="@drawable/clock" />
+
+
+        <TextView
+            android:id="@+id/start_time_lbl"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/clockicon"
+            android:layout_toRightOf="@id/clockicon"
+            android:text="Start Time:" />
+
+        <TextView
+            android:id="@+id/start_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:alpha="0.7"
-                android:src="@drawable/clock" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            android:layout_alignBaseline="@id/start_time_lbl"
+            android:layout_margin="2dp"
+            android:layout_toRightOf="@id/start_time_lbl"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
 
-                <TextView
-                    android:id="@+id/start_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/end_time_lbl"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/clockicon"
+            android:layout_toRightOf="@id/clockicon"
+            android:text="End Time:" />
+
+        <TextView
+            android:id="@+id/end_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/end_time_lbl"
+            android:layout_margin="2dp"
+            android:layout_toRightOf="@id/end_time_lbl"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/alldayicon"
+            android:src="@drawable/alldayicon"
+            android:layout_alignLeft="@id/clockicon"
+            android:layout_margin="10dp"
+            android:layout_below="@id/end_time_lbl"
+            android:alpha="0.7"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+        <Switch
+            android:id="@+id/allDaySwitch"
+            android:textColor="@color/colorPrimary"
+            android:layout_alignLeft="@id/end_time_lbl"
+            android:layout_alignBottom="@id/alldayicon"
+            android:text="All Day"
+            android:paddingRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/alarmicon"
+            android:src="@drawable/alarmicon"
+            android:layout_alignLeft="@id/clockicon"
+            android:layout_margin="10dp"
+            android:alpha="0.7"
+            android:layout_below="@id/alldayicon"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+        <Switch
+            android:id="@+id/alarmSwitch"
+            android:layout_alignLeft="@id/allDaySwitch"
+            android:layout_alignBottom="@id/alarmicon"
+            android:textColor="@color/colorPrimary"
+            android:paddingRight="20dp"
+            android:text="Alarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/descriptionicon"
+            android:src="@drawable/descriptionicon"
+            android:layout_alignLeft="@id/clockicon"
+            android:layout_margin="10dp"
+            android:layout_below="@id/alarmicon"
+            android:alpha="0.7"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+        <TextView
+            android:id="@+id/description_lbl"
+            android:layout_toRightOf="@id/descriptionicon"
+            android:layout_alignTop="@id/descriptionicon"
+            android:layout_marginTop="10dp"
+            android:text="Description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/description_edit"
+            android:layout_below="@id/descriptionicon"
+            android:layout_width="match_parent"
+            android:hint="Description"
+            android:layout_height="wrap_content" />
 
 
-                <TextView
-                    android:id="@+id/end_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

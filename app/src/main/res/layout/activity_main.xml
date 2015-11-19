@@ -12,8 +12,6 @@
         android:fitsSystemWindows="true"
         tools:context=".MainActivity">
 
-        <include layout="@layout/activity_screen_slide" />
-
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBar"
             android:layout_width="match_parent"
@@ -78,6 +76,8 @@
 
         </android.support.design.widget.AppBarLayout>
 
+        <include layout="@layout/activity_screen_slide" />
+
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            android:src="@android:drawable/ic_dialog_email" />
+            android:src="@drawable/viewmodeicon" />
 
     </android.support.design.widget.CoordinatorLayout>
 

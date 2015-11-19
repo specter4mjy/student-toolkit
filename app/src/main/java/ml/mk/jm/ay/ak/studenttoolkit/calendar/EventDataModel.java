@@ -5,10 +5,13 @@ package ml.mk.jm.ay.ak.studenttoolkit.calendar;
  */
 public class EventDataModel {
     String title;
-    String startTime;
-    String endTime;
+    long startTimeMillis;
+    long endTimeMillis;
     String location;
     int eventColor;
     boolean addIcon;
+    int allDay;
+    int hasAlarm;
+    String description;
 
 }

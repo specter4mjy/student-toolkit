@@ -1,6 +1,8 @@
 package ml.mk.jm.ay.ak.studenttoolkit.calendar;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -19,12 +21,12 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import ml.mk.jm.ay.ak.studenttoolkit.R;
-import ml.mk.jm.ay.ak.studenttoolkit.todo.ToDoActivity;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import ml.mk.jm.ay.ak.studenttoolkit.R;
+import ml.mk.jm.ay.ak.studenttoolkit.todo.ToDoActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +37,12 @@ public class MainActivity extends AppCompatActivity {
     private TextView tb_day_tv;
     private TextView tb_year_tv;
     private TextView tb_month_tv;
+
+    public boolean isEditMode() {
+        return editMode;
+    }
+
+    private boolean editMode = false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,14 +55,27 @@ public class MainActivity extends AppCompatActivity {
         setToolbarTitle(0);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        final ConditionalViewPager viewPager = (ConditionalViewPager) findViewById(R.id.pager);
+
+        fab.setOnLongClickListener(new View.OnLongClickListener() {
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
-            public void onClick(View view) {
+            public boolean onLongClick(View v) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
+                editMode = !editMode;
+                FloatingActionButton fab = (FloatingActionButton) v;
+                if (editMode) {
+                    fab.setImageDrawable(getDrawable(R.drawable.editmodeicon));
+                } else {
+                    fab.setImageDrawable(getDrawable(R.drawable.viewmodeicon));
+                }
+                viewPager.setEditmode(editMode);
+//                Vibrator vb = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+//                vb.vibrate(5000);
+                return false;
             }
         });
-
         final GestureDetector gestureDetector = new GestureDetector(this, new MyGestureDetector());
         fab.setOnTouchListener(
                 new View.OnTouchListener() {
@@ -65,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
 
@@ -92,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
     private void setToolbarTitle(int position) {
@@ -198,4 +219,6 @@ public class MainActivity extends AppCompatActivity {
             return ScreenSlideFragment.newInstance(position);
         }
     }
+
+
 }

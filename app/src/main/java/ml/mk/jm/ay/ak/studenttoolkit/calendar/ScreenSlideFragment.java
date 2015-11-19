@@ -16,13 +16,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import ml.mk.jm.ay.ak.studenttoolkit.R;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import ml.mk.jm.ay.ak.studenttoolkit.R;
 
 /**
  * Created by specter on 10/24/15.
@@ -45,7 +45,9 @@ public class ScreenSlideFragment extends android.support.v4.app.Fragment {
             CalendarContract.Instances.ALL_DAY,
             CalendarContract.Instances.END,
             CalendarContract.Instances.EVENT_COLOR,
-            CalendarContract.Instances.EVENT_LOCATION
+            CalendarContract.Instances.EVENT_LOCATION,
+            CalendarContract.Instances.HAS_ALARM
+
 
     };
 
@@ -60,6 +62,7 @@ public class ScreenSlideFragment extends android.support.v4.app.Fragment {
     private static final int PROJECTION_END_INDEX = 8;
     private static final int PROJECTION_COLOR_INDEX = 9;
     private static final int PROJECTION_LOCATION_INDEX = 10;
+    private static final int PROJECTION_HAS_ALARM_INDEX = 11;
     Calendar nowTime;
 
     public static ScreenSlideFragment newInstance(int page) {
@@ -87,7 +90,6 @@ public class ScreenSlideFragment extends android.support.v4.app.Fragment {
         linearLayoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        recyclerView.setHasFixedSize(true);
 
 
         DateFormat formatter = new SimpleDateFormat("HH/mm/ss/MM/dd/yyyy");
@@ -124,7 +126,7 @@ public class ScreenSlideFragment extends android.support.v4.app.Fragment {
 
         List<EventDataModel> items = new ArrayList<>();
 
-        long lastEventEndTime=startOfDayMillis; // 0:00 of the day
+        long lastEventEndTime = startOfDayMillis; // 0:00 of the day
         EventDataModel model = new EventDataModel();
         long eventBeginTime = 0;
         long eventEndTime = 0;
@@ -132,6 +134,9 @@ public class ScreenSlideFragment extends android.support.v4.app.Fragment {
             String title;
             String location;
             int eventColor;
+            int allday;
+            int hasAlarm;
+            String description;
 
 
             eventBeginTime = cursor.getLong(PROJECTION_BEGIN_INDEX);
@@ -139,25 +144,27 @@ public class ScreenSlideFragment extends android.support.v4.app.Fragment {
             title = cursor.getString(PROJECTION_TITLE_INDEX);
             location = cursor.getString(PROJECTION_LOCATION_INDEX);
             eventColor = cursor.getInt(PROJECTION_COLOR_INDEX);
+            allday = cursor.getInt(PROJECTION_ALL_DAY_INDEX);
+            hasAlarm = cursor.getInt(PROJECTION_HAS_ALARM_INDEX);
+            description = cursor.getString(PROJECTION_DESC_INDEX);
+
 
             model = new EventDataModel();
 
 
             model.title = title;
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis((eventBeginTime));
-            String hour = String.format("%02d", calendar.get(Calendar.HOUR_OF_DAY));
-            String minute = String.format("%02d", calendar.get(Calendar.MINUTE));
-            model.startTime = hour + " : " + minute;
-            calendar.setTimeInMillis(eventEndTime);
-            hour = String.format("%02d", calendar.get(Calendar.HOUR_OF_DAY));
-            minute = String.format("%02d", calendar.get(Calendar.MINUTE));
-            model.endTime = hour + " : " + minute;
             model.location = location;
-            model.eventColor = eventColor == 0 ? Color.parseColor("#555555"):eventColor;
+            model.startTimeMillis = eventBeginTime;
+            model.endTimeMillis = eventEndTime;
+            model.eventColor = eventColor == 0 ? Color.parseColor("#555555") : eventColor;
+            model.allDay = allday;
+            model.description = description;
+            model.hasAlarm = hasAlarm;
 
             if (eventBeginTime > lastEventEndTime) {
                 EventDataModel addModel = new EventDataModel();
+                addModel.startTimeMillis = lastEventEndTime;
+                addModel.endTimeMillis = eventBeginTime;
                 addModel.addIcon = true;
                 items.add(addModel);
             }
@@ -167,6 +174,8 @@ public class ScreenSlideFragment extends android.support.v4.app.Fragment {
         }
         if (eventEndTime < endOfDayMillis) {
             EventDataModel addModel = new EventDataModel();
+            addModel.startTimeMillis = lastEventEndTime;
+            addModel.endTimeMillis = endOfDayMillis;
             addModel.addIcon = true;
             items.add(addModel);
         }

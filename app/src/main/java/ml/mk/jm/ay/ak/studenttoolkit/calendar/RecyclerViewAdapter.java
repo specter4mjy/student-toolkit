@@ -15,10 +15,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import ml.mk.jm.ay.ak.studenttoolkit.AddEventDialog;
 import ml.mk.jm.ay.ak.studenttoolkit.R;
 
 import java.util.List;
+
+import static ml.mk.jm.ay.ak.studenttoolkit.calendar.helper.TimeFormatHelper.millisToHourAndMinuteStr;
 
 /**
  * Created by specter on 10/24/15.
@@ -84,8 +85,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 EventViewHolder eventViewHolder = (EventViewHolder) holder;
                 eventViewHolder.label.setText(model.title);
                 eventViewHolder.label.setTextColor(model.eventColor);
-                eventViewHolder.startTime.setText(model.startTime);
-                eventViewHolder.endTime.setText(model.endTime);
+                eventViewHolder.startTime.setText(millisToHourAndMinuteStr(model.startTimeMillis));
+                eventViewHolder.endTime.setText(millisToHourAndMinuteStr(model.endTimeMillis));
                 if (model.location.equals("")) {
                     eventViewHolder.location.setVisibility(View.GONE);
                 } else {
@@ -137,8 +138,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             Intent intent = new Intent(activity, EventDetailActivity.class);
             intent.putExtra("title", event.title);
             intent.putExtra("location", event.location);
-            intent.putExtra("startTime", event.startTime);
-            intent.putExtra("endTime", event.endTime);
+            intent.putExtra("startTime", event.startTimeMillis);// this is milliseconds formate ,use TimeFormatHelper to convert to string
+            intent.putExtra("endTime", event.endTimeMillis);
+            intent.putExtra("description", event.description);
+            intent.putExtra("allDay", event.allDay);
+            intent.putExtra("hasAlarm", event.hasAlarm);
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, (View) label, "event_title");
             activity.startActivity(intent, options.toBundle());
 
@@ -158,7 +162,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         @Override
         public void onClick(View v) {
-            AddEventDialog addEventDialog = AddEventDialog.newInstance();
+            int position = getLayoutPosition();
+            EventDataModel eventDataModel = events.get(position);
+            AddEventDialog addEventDialog = AddEventDialog.newInstance(eventDataModel);
 
             addEventDialog.show(((AppCompatActivity) activity).getSupportFragmentManager(), "add event");
 
@@ -195,7 +201,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         @Override
         public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-            if (viewHolder.getItemViewType() == ADD)
+            if (viewHolder.getItemViewType() == ADD  || ((MainActivity)activity).isEditMode() == false)
                 return 0;
             else
                 return super.getSwipeDirs(recyclerView, viewHolder);
