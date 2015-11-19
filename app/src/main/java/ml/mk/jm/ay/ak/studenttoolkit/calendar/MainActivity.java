@@ -10,7 +10,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.GestureDetector;
@@ -32,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
     private FragmentPagerAdapter pagerAdapter;
     private TabLayout tabLayout;
-    private DrawerLayout mDrawer;
     private NavigationView nvDrawer;
     private TextView tb_day_tv;
     private TextView tb_year_tv;
@@ -92,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         nvDrawer = (NavigationView) findViewById(R.id.nav_view);
         setupDrawerContent(nvDrawer);
 
