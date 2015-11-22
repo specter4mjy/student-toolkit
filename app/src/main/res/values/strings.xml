@@ -45,6 +45,7 @@
         <item>Select a time...</item>
     </string-array>
 
-
+    <string name="title_activity_maps">Map</string>
+    <string name="pos_not_available_err">Room position not available!</string>
 
 </resources>

@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import ml.mk.jm.ay.ak.studenttoolkit.R;
+import ml.mk.jm.ay.ak.studenttoolkit.map.MapsActivity;
 import ml.mk.jm.ay.ak.studenttoolkit.todo.ToDoActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         tb_day_tv = (TextView) findViewById(R.id.tb__day);
