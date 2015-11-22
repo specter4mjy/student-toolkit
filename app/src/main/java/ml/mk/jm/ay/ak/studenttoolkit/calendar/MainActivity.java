@@ -1,9 +1,11 @@
 package ml.mk.jm.ay.ak.studenttoolkit.calendar;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -64,13 +66,13 @@ public class MainActivity extends AppCompatActivity {
                 editMode = !editMode;
                 FloatingActionButton fab = (FloatingActionButton) v;
                 if (editMode) {
-                    fab.setImageDrawable(getDrawable(R.drawable.editmodeicon));
+                //    fab.setImageDrawable(getDrawable(R.drawable.editmodeicon));
                 } else {
-                    fab.setImageDrawable(getDrawable(R.drawable.viewmodeicon));
+                 //   fab.setImageDrawable(getDrawable(R.drawable.viewmodeicon));
                 }
                 viewPager.setEditmode(editMode);
-//                Vibrator vb = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-//                vb.vibrate(5000);
+                Vibrator vb = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                vb.vibrate(200);
                 return false;
             }
         });

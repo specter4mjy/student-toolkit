@@ -3,6 +3,7 @@
     <!--<color name="colorPrimary">#3F51B5</color>-->
     <color name="colorPrimary">#584C46</color>
     <color name="colorPrimaryDark">#303F9F</color>
+    <color name="white">#FFFFFF</color>
     <!--<color name="colorAccent">#FF4081</color>-->
     <color name="colorAccent">#237DCB</color>
     <color name="recyclerViewbacground">#A3B79A</color>

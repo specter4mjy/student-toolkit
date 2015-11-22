@@ -5,6 +5,7 @@
     android:padding="@dimen/activity_horizontal_margin"
     android:orientation="vertical"
     android:weightSum="1.0"
+    android:background="@color/colorAccent"
     tools:context="com.dragon.calendarprovidertest.calendar.EventDetailActivity">
 
     <LinearLayout
@@ -13,91 +14,103 @@
         android:layout_height="0dp"
         android:layout_width="match_parent"
         android:layout_weight="0.25"
-        android:weightSum="1.0">
+        android:weightSum="1.0"
+        android:background="@color/white"
+        android:onClick="editEvent"
+        android:layout_marginBottom="@dimen/activity_vertical_margin_bottom">
 
         <LinearLayout
             android:layout_weight="0.2"
             android:layout_width="0dp"
             android:layout_height="match_parent">
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_cancel"
-            android:id="@+id/imageTitle"
-            android:contentDescription="@string/cancel_btn" />
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_mode_edit"
+                android:id="@+id/imageTitle"/>
         </LinearLayout>
 
         <TextView
             android:layout_weight="0.8"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
+            android:text="medium"
+            android:textSize="22dp"
             android:id="@+id/tv_detail_title" />
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
-        android:layout_weight="0.8"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
-    <LinearLayout
-        android:id="@+id/ll_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:baselineAligned="false"
-        android:weightSum="1.0"
-        android:layout_marginBottom="@dimen/activity_vertical_margin_bottom" >
-
+        android:layout_marginBottom="@dimen/activity_vertical_margin_bottom">
         <LinearLayout
-            android:layout_weight="0.2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_cancel"
-                android:id="@+id/imageDetail"
-                android:contentDescription="@string/cancel_btn" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_weight="0.8"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/tvDay" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/tvTime" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/tvRepeat" />
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-            android:id="@+id/ll_detail_other"
+            android:id="@+id/ll_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_vertical_margin_bottom">
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/list_detail_other"/>
-    </LinearLayout>
+            android:orientation="horizontal"
+            android:baselineAligned="false"
+            android:weightSum="1.0"
+            android:layout_marginBottom="@dimen/activity_vertical_margin_bottom" >
+            <LinearLayout
+                android:layout_weight="0.2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/clock"
+                    android:id="@+id/imageDetail"
+                    android:contentDescription="@string/cancel_btn" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_weight="0.8"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/white"
+                    android:id="@+id/tvDate" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/white"
+                    android:id="@+id/tvTime" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_detail_location"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:weightSum="1.0"
+            android:onClick="showMap"
+            android:visibility="invisible">
+
+            <LinearLayout
+                android:layout_weight="0.2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/location"
+                    android:id="@+id/iconLocation"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_weight="0.8"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white"
+                android:id="@+id/tv_detail_location" />
+        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>
