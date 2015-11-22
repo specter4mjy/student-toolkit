@@ -22,6 +22,7 @@ public class AddEventDialog extends DialogFragment {
     private TextView endTimeText;
     private static long startFreeTimeMillis ;
     private static long endFreeTimeMillis;
+    private static int day_of_month;
     public AddEventDialog() {
     }
 
@@ -30,6 +31,7 @@ public class AddEventDialog extends DialogFragment {
         frag.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
         startFreeTimeMillis = eventDataModel.startTimeMillis;
         endFreeTimeMillis = eventDataModel.endTimeMillis;
+        day_of_month = eventDataModel.day_of_month;
         return frag;
     }
 
@@ -45,8 +47,8 @@ public class AddEventDialog extends DialogFragment {
 
         startTimeText = (TextView) view.findViewById(R.id.start_time);
         endTimeText = (TextView) view.findViewById(R.id.end_time);
-        startTimeText.setText(millisToHourAndMinuteStr(startFreeTimeMillis));
-        endTimeText.setText(millisToHourAndMinuteStr(endFreeTimeMillis));
+        startTimeText.setText(millisToHourAndMinuteStr(day_of_month,startFreeTimeMillis));
+        endTimeText.setText(millisToHourAndMinuteStr(day_of_month,endFreeTimeMillis));
 
         mEditText = (EditText) view.findViewById(R.id.title);
         mEditText.requestFocus();

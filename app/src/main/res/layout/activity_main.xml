@@ -28,6 +28,7 @@
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
@@ -40,20 +41,17 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tb__day"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="22sp" />
 
                     <TextView
                         android:id="@+id/tb__month"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingRight="10dp"
                         android:textSize="22sp" />
 
                     <TextView
                         android:id="@+id/tb_year"
+                        android:paddingLeft="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="22sp" />
@@ -66,9 +64,8 @@
             <android.support.design.widget.TabLayout
                 android:id="@+id/sliding_tabs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                app:tabMode="scrollable" />
+                android:layout_height="70dp"
+                android:layout_gravity="bottom" />
 
 
             <!--</android.support.design.widget.CollapsingToolbarLayout>-->

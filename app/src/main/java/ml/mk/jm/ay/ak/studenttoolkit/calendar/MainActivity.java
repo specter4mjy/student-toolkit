@@ -12,7 +12,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.GestureDetector;
+import android.view.HapticFeedbackConstants;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -20,21 +22,22 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import ml.mk.jm.ay.ak.studenttoolkit.R;
+import ml.mk.jm.ay.ak.studenttoolkit.calendar.helper.TimeFormatHelper;
 import ml.mk.jm.ay.ak.studenttoolkit.todo.ToDoActivity;
+
+import static ml.mk.jm.ay.ak.studenttoolkit.calendar.helper.TimeFormatHelper.dayOfWeekConverter;
 
 public class MainActivity extends AppCompatActivity {
 
     private FragmentPagerAdapter pagerAdapter;
     private TabLayout tabLayout;
     private NavigationView nvDrawer;
-    private TextView tb_day_tv;
     private TextView tb_year_tv;
     private TextView tb_month_tv;
+    private String tabTitles[] = new String[]{"Mon", "Tue ", "Wed", "Thu ", "Fri", "Sat", "Sun"};
 
     public boolean isEditMode() {
         return editMode;
@@ -47,10 +50,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        tb_day_tv = (TextView) findViewById(R.id.tb__day);
         tb_year_tv = (TextView) findViewById(R.id.tb_year);
         tb_month_tv = (TextView) findViewById(R.id.tb__month);
-        setToolbarTitle(0);
+        setToolbarTitle(dayOfWeekConverter(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)));//initiallize toolbaltitle
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         final ConditionalViewPager viewPager = (ConditionalViewPager) findViewById(R.id.pager);
@@ -64,13 +66,14 @@ public class MainActivity extends AppCompatActivity {
                 editMode = !editMode;
                 FloatingActionButton fab = (FloatingActionButton) v;
                 if (editMode) {
-                    fab.setImageDrawable(getDrawable(R.drawable.editmodeicon));
+                    fab.setImageResource(R.drawable.editmodeicon);
                 } else {
-                    fab.setImageDrawable(getDrawable(R.drawable.viewmodeicon));
+                    fab.setImageResource(R.drawable.viewmodeicon);
                 }
                 viewPager.setEditmode(editMode);
 //                Vibrator vb = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-//                vb.vibrate(5000);
+//                vb.vibrate(200);
+                v.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                 return false;
             }
         });
@@ -88,7 +91,50 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(pagerAdapter);
 
         tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tabLayout.setSelectedTabIndicatorHeight(10);
         tabLayout.setupWithViewPager(viewPager);
+        setTabLayout(tabLayout);
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+//                Calendar day= Calendar.getInstance();
+//                day.add(Calendar.DATE,Calendar.MONDAY-day.get(Calendar.DAY_OF_WEEK)+tab.getPosition());
+//                View view = tab.getCustomView();
+//                ViewGroup viewGroup = (ViewGroup) view.getParent();
+//                viewGroup.removeAllViews();
+//                tab.setCustomView(R.layout.select_tab_tablayout);
+//                TextView textView = (TextView) tab.getCustomView().findViewById(R.id.tv_select_tab);
+//                textView.setText(day.get(Calendar.DAY_OF_MONTH)+"");
+
+                TextView tvDate = (TextView) tab.getCustomView().findViewById(R.id.tv_date);
+                tvDate.setTextSize(27);
+                viewPager.setCurrentItem(tab.getPosition());
+//                if (tab.getPosition() == (day.get(Calendar.DAY_OF_WEEK) - Calendar.MONDAY)) {
+//                    TextView textView = (TextView) tab.getCustomView().findViewById(R.id.tv_date);
+//                    textView.setText("specter");
+//                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+//                Calendar day= Calendar.getInstance();
+//                day.add(Calendar.DATE,Calendar.MONDAY-day.get(Calendar.DAY_OF_WEEK)+tab.getPosition());
+//                View view = tab.getCustomView();
+//                ViewGroup viewGroup = (ViewGroup) view.getParent();
+//                viewGroup.removeAllViews();
+//                tab.setCustomView(R.layout.tab_of_tablayout);
+//                TextView tvDayOfWeek = (TextView) tab.getCustomView().findViewById(R.id.tv_day_of_week);
+//                tvDayOfWeek.setText(tabTitles[tab.getPosition()]);
+//                TextView tvDate = (TextView) tab.getCustomView().findViewById(R.id.tv_date);
+//                tvDate.setText(day.get(Calendar.DAY_OF_MONTH)+"");
+                TextView tvDate = (TextView) tab.getCustomView().findViewById(R.id.tv_date);
+                tvDate.setTextSize(19);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
 
         nvDrawer = (NavigationView) findViewById(R.id.nav_view);
         setupDrawerContent(nvDrawer);
@@ -113,34 +159,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setToolbarTitle(int position) {
-        tb_year_tv.setText(getYear(position));
-        tb_month_tv.setText(getMonth(position));
-        tb_day_tv.setText(getDay(position));
+        tb_year_tv.setText(TimeFormatHelper.getTimeField(Calendar.YEAR, position));
+        tb_month_tv.setText(TimeFormatHelper.getTimeField(Calendar.MONTH, position));
     }
 
+    private void setTabLayout(TabLayout tabLayout) {
+        Calendar day = Calendar.getInstance();
+        day.add(Calendar.DATE, -dayOfWeekConverter(day.get(Calendar.DAY_OF_WEEK)));
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            tab.setCustomView(R.layout.tab_of_tablayout);
+            TextView tvDayOfWeek = (TextView) tab.getCustomView().findViewById(R.id.tv_day_of_week);
+            tvDayOfWeek.setText(tabTitles[i]);
+            TextView tvDate = (TextView) tab.getCustomView().findViewById(R.id.tv_date);
+            tvDate.setText(day.get(Calendar.DAY_OF_MONTH) + "");
+            tvDayOfWeek.setTextSize(14);
+            tvDate.setTextSize(19);
+            day.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        day = Calendar.getInstance();
+        TabLayout.Tab todayTab = tabLayout.getTabAt(dayOfWeekConverter(day.get(Calendar.DAY_OF_WEEK)));
+        TextView tvDate = (TextView) todayTab.getCustomView().findViewById(R.id.tv_date);
+        tvDate.setTextSize(27);
+        todayTab.select();
+    }
 
-
-    private String getDay(int position) {
-        Calendar today = Calendar.getInstance();
-        return today.get(Calendar.DAY_OF_MONTH) + position + "";
-    }
-    private String getMonth(int position) {
-        Calendar today = Calendar.getInstance();
-        DateFormat monthFormatter = new SimpleDateFormat("MMMM");
-        return monthFormatter.format(today.getTime());
-    }
-    private String getYear(int position) {
-        Calendar today = Calendar.getInstance();
-        return today.get(Calendar.YEAR) + "";
-    }
 
     class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (e1.getY() - e2.getY() > 100) {
                 Toast.makeText(MainActivity.this, "Up Swipe", Toast.LENGTH_SHORT).show();
-            }
-            else if (e2.getY() - e1.getY() > 100) {
+            } else if (e2.getY() - e1.getY() > 100) {
                 Toast.makeText(MainActivity.this, "Down Swipe", Toast.LENGTH_SHORT).show();
             }
             return false;
@@ -213,7 +263,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
+            Log.i("Position", position + "");
             return ScreenSlideFragment.newInstance(position);
+
         }
     }
 

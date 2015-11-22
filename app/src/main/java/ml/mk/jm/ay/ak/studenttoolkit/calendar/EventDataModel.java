@@ -13,5 +13,6 @@ public class EventDataModel {
     int allDay;
     int hasAlarm;
     String description;
+    int day_of_month;
 
 }

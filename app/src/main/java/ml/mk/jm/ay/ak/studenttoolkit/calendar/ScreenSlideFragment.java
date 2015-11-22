@@ -24,6 +24,8 @@ import java.util.List;
 
 import ml.mk.jm.ay.ak.studenttoolkit.R;
 
+import static ml.mk.jm.ay.ak.studenttoolkit.calendar.helper.TimeFormatHelper.dayOfWeekConverter;
+
 /**
  * Created by specter on 10/24/15.
  */
@@ -98,7 +100,7 @@ public class ScreenSlideFragment extends android.support.v4.app.Fragment {
         Log.i("specter", page + "");
 
         nowTime = Calendar.getInstance();
-        nowTime.add(Calendar.DATE, page - 1);
+        nowTime.add(Calendar.DATE,-dayOfWeekConverter(nowTime.get(Calendar.DAY_OF_WEEK))+page);
         Calendar beginTime = nowTime;
         beginTime.set(Calendar.HOUR_OF_DAY, 0);
         beginTime.set(Calendar.MINUTE, 0);
@@ -122,7 +124,8 @@ public class ScreenSlideFragment extends android.support.v4.app.Fragment {
         cursor = cr.query(builder.build(),
                 INSTANCE_PROJECTION,
                 null,
-                null, null);
+                null,
+                CalendarContract.Instances.DTSTART+" ASC");
 
         List<EventDataModel> items = new ArrayList<>();
 
@@ -148,6 +151,8 @@ public class ScreenSlideFragment extends android.support.v4.app.Fragment {
             hasAlarm = cursor.getInt(PROJECTION_HAS_ALARM_INDEX);
             description = cursor.getString(PROJECTION_DESC_INDEX);
 
+            if (allday == 1)
+                continue;
 
             model = new EventDataModel();
 
@@ -160,6 +165,10 @@ public class ScreenSlideFragment extends android.support.v4.app.Fragment {
             model.allDay = allday;
             model.description = description;
             model.hasAlarm = hasAlarm;
+            model.day_of_month = nowTime.get(Calendar.DAY_OF_MONTH);
+
+            Log.i("data", "start time" + hasAlarm+ "\n");
+            Log.i("data", "end time" + allday+ "\n");
 
             if (eventBeginTime > lastEventEndTime) {
                 EventDataModel addModel = new EventDataModel();
