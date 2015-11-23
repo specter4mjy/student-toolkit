@@ -61,6 +61,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
+
     public EventDataModel getEvent(int position) {
         return events.get(position);
     }
@@ -175,7 +176,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         public void onClick(View v) {
             int position = getLayoutPosition();
             EventDataModel eventDataModel = events.get(position);
-            AddEventDialog addEventDialog = AddEventDialog.newInstance(eventDataModel);
+            AddEventDialog addEventDialog = AddEventDialog.newInstance(eventDataModel,RecyclerViewAdapter.this);
 
             addEventDialog.show(((AppCompatActivity) activity).getSupportFragmentManager(), "add event");
 
@@ -184,23 +185,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public class SwipeTouchHelper extends ItemTouchHelper.SimpleCallback {
 
-
-        /**
-         * Creates a Callback for the given drag and swipe allowance. These values serve as
-         * defaults
-         * and if you want to customize behavior per ViewHolder, you can override
-         * {@link #getSwipeDirs(RecyclerView, ViewHolder)}
-         * and / or {@link #getDragDirs(RecyclerView, ViewHolder)}.
-         *
-         * @param dragDirs  Binary OR of direction flags in which the Views can be dragged. Must be
-         *                  composed of {@link #LEFT}, {@link #RIGHT}, {@link #START}, {@link
-         *                  #END},
-         *                  {@link #UP} and {@link #DOWN}.
-         * @param swipeDirs Binary OR of direction flags in which the Views can be swiped. Must be
-         *                  composed of {@link #LEFT}, {@link #RIGHT}, {@link #START}, {@link
-         *                  #END},
-         *                  {@link #UP} and {@link #DOWN}.
-         */
         public SwipeTouchHelper() {
             super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         }
