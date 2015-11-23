@@ -8,7 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -32,12 +32,19 @@ import static ml.mk.jm.ay.ak.studenttoolkit.calendar.helper.TimeFormatHelper.day
 
 public class MainActivity extends AppCompatActivity {
 
-    private FragmentPagerAdapter pagerAdapter;
+    private MyPagerAdapter pagerAdapter;
     private TabLayout tabLayout;
     private NavigationView nvDrawer;
     private TextView tb_year_tv;
     private TextView tb_month_tv;
     private String tabTitles[] = new String[]{"Mon", "Tue ", "Wed", "Thu ", "Fri", "Sat", "Sun"};
+    private ConditionalViewPager viewPager;
+
+    public int getWeekOffset() {
+        return weekOffset;
+    }
+
+    private int weekOffset = 0;
 
     public boolean isEditMode() {
         return editMode;
@@ -56,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         setToolbarTitle(dayOfWeekConverter(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)));//initiallize toolbaltitle
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        final ConditionalViewPager viewPager = (ConditionalViewPager) findViewById(R.id.pager);
 
         fab.setOnLongClickListener(new View.OnLongClickListener() {
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -88,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
+        viewPager = (ConditionalViewPager) findViewById(R.id.pager);
         pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
 
@@ -166,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setTabLayout(TabLayout tabLayout) {
         Calendar day = Calendar.getInstance();
-        day.add(Calendar.DATE, -dayOfWeekConverter(day.get(Calendar.DAY_OF_WEEK)));
+        day.add(Calendar.DATE, -dayOfWeekConverter(day.get(Calendar.DAY_OF_WEEK))+7*weekOffset);
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
             tab.setCustomView(R.layout.tab_of_tablayout);
@@ -184,6 +191,24 @@ public class MainActivity extends AppCompatActivity {
         tvDate.setTextSize(27);
         todayTab.select();
     }
+    private void updaeTablayoutDate(TabLayout tabLayout) {
+        Calendar day = Calendar.getInstance();
+        day.add(Calendar.DATE, -dayOfWeekConverter(day.get(Calendar.DAY_OF_WEEK))+7*weekOffset);
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            TextView tvDayOfWeek = (TextView) tab.getCustomView().findViewById(R.id.tv_day_of_week);
+            tvDayOfWeek.setText(tabTitles[i]);
+            TextView tvDate = (TextView) tab.getCustomView().findViewById(R.id.tv_date);
+            tvDate.setText(day.get(Calendar.DAY_OF_MONTH) + "");
+            tvDayOfWeek.setTextSize(14);
+            tvDate.setTextSize(19);
+            day.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        TabLayout.Tab currentTab = tabLayout.getTabAt(tabLayout.getSelectedTabPosition());
+        TextView tvDate = (TextView) currentTab.getCustomView().findViewById(R.id.tv_date);
+        tvDate.setTextSize(27);
+        currentTab.select();
+    }
 
 
     class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
@@ -191,8 +216,17 @@ public class MainActivity extends AppCompatActivity {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (e1.getY() - e2.getY() > 100) {
                 Toast.makeText(MainActivity.this, "Up Swipe", Toast.LENGTH_SHORT).show();
+                weekOffset -= 1;
+                pagerAdapter.notifyDataSetChanged();
+                setToolbarTitle(tabLayout.getSelectedTabPosition() + 7 * weekOffset);
+                updaeTablayoutDate(tabLayout);
+
             } else if (e2.getY() - e1.getY() > 100) {
                 Toast.makeText(MainActivity.this, "Down Swipe", Toast.LENGTH_SHORT).show();
+                weekOffset += 1;
+                pagerAdapter.notifyDataSetChanged();
+                setToolbarTitle(tabLayout.getSelectedTabPosition() + 7 * weekOffset);
+                updaeTablayoutDate(tabLayout);
             }
             return false;
         }
@@ -244,12 +278,17 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static class MyPagerAdapter extends FragmentPagerAdapter {
-        private static int NUM_ITEM = 7;
+    public class MyPagerAdapter extends FragmentStatePagerAdapter{
+        private int NUM_ITEM = 7;
         private String tabTitles[] = new String[]{"Mon", "Tue ", "Wed", "Thu ", "Fri", "Sat", "Sun"};
 
         public MyPagerAdapter(android.support.v4.app.FragmentManager fm) {
             super(fm);
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
         }
 
         @Override
@@ -265,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             Log.i("Position", position + "");
-            return ScreenSlideFragment.newInstance(position);
+            return ScreenSlideFragment.newInstance(position,weekOffset);
 
         }
     }
