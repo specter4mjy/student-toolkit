@@ -10,12 +10,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ml.mk.jm.ay.ak.studenttoolkit.R;
+import ml.mk.jm.ay.ak.studenttoolkit.database.DatabaseConnection;
+
 
 public class EditToDoActivity extends AppCompatActivity {
 
     Todo todo;
     Intent intent;
-    Bundle bundle;
     TextView titleView;
     TextView descriptionView;
     TextView dateView;
@@ -24,6 +25,7 @@ public class EditToDoActivity extends AppCompatActivity {
     TextView editDateView;
     Button saveButton;
     Button cancelButton;
+    DatabaseConnection db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class EditToDoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_to_do);
         intent = getIntent();
         todo = intent.getParcelableExtra("todo");
+        db = ToDoActivity.db;
 
         //Connects widget variables with their GUI equivalents.
         titleView = (TextView) findViewById(R.id.titleView);
@@ -60,8 +63,8 @@ public class EditToDoActivity extends AppCompatActivity {
 
             try {
                 if (view.getId() == R.id.updateEditButton) {
-                    todo.setDescription(editDescriptionView.getText().toString());
-                    todo.setTitle(editTitleView.getText().toString());
+                    String update = "update todo set title = '" + editTitleView.getText().toString() + "', description = '" + editDescriptionView.getText().toString() + "' where _id = " + todo.getId();
+                    db.getWritableDatabase().execSQL(update);
                     Toast toast = Toast.makeText(getApplicationContext(), "To-Do edited successfully!", Toast.LENGTH_SHORT);
                     toast.show();
                     startActivity(todoIntent);
@@ -69,11 +72,9 @@ public class EditToDoActivity extends AppCompatActivity {
                     Toast toast = Toast.makeText(getApplicationContext(), "Update cancelled!", Toast.LENGTH_SHORT);
                     toast.show();
                     startActivity(todoIntent);
-                } else {
-
                 }
             } catch (Exception E) {
-                Log.e("Main Class", "Error when editing To-Do");
+                Log.e("EditToDoActivity", "Error when editing To-Do");
             }
 
         }

@@ -6,7 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowContentTransitions">true</item>
     </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -21,8 +20,15 @@
     </style>
 
     <style name="TextInputLayout">
-        <item name="android:textColorHint">@color/colorPrimary</item>
+        <item name="android:colorControlActivated">@color/textInputViewActived</item>
         <item name="android:textSize">14dp</item>
+    </style>
+
+    <style name="dialogTheme" parent="Theme.AppCompat.Light.Dialog">
+
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:windowBackground">@drawable/dialogbackground</item>
+
     </style>
 
 </resources>

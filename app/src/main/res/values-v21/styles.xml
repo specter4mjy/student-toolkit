@@ -5,4 +5,14 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
+    <style name="addDialogSaveButton">
+        <item name="android:colorButtonNormal">@color/textInputViewActived</item>
+        <item name="android:textColor">@color/cardview_light_background</item>
+    </style>
+
+    <style name="addDialogCancelButton">
+        <item name="android:colorButtonNormal">@android:color/transparent</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
 </resources>

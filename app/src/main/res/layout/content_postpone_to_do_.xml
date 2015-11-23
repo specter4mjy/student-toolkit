@@ -61,6 +61,35 @@
             android:text="@string/cancel"
             android:id="@+id/cancelPostponeButton" />
 
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TimePicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/timePicker"
+                android:layout_column="12" />
+        </TableRow>
+
     </TableLayout>
 
+    <CalendarView
+        android:id="@+id/calendar_ID"
+        android:weekNumberColor="@color/black"
+        android:focusedMonthDateColor="@color/black"
+        android:selectedWeekBackgroundColor="@color/black"
+        android:unfocusedMonthDateColor="@color/black"
+        android:weekSeparatorLineColor="@color/black"
+        android:layout_width="380dp"
+        android:layout_height="300dp"
+        android:contentDescription=""
+        android:showWeekNumber="false"
+        android:tag="my tag"
+        android:layout_marginTop="232dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

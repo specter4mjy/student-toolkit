@@ -5,8 +5,11 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="white">#FFFFFF</color>
     <!--<color name="colorAccent">#FF4081</color>-->
-    <color name="colorAccent">#237DCB</color>
+    <color name="colorAccent">#24a0d8</color>
     <color name="recyclerViewbacground">#A3B79A</color>
     <color name="timeColor">#1B8583</color>
     <color name="cardViewBackground">#f8ecc2</color>
+    <color name="black">#000000</color>
+    <color name="textInputViewActived">#24a0d8</color>
+
 </resources>

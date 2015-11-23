@@ -13,14 +13,12 @@ public class TimeFormatHelper {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis((millis));
-//        String hour = String.format("%02d", calendar.get(Calendar.HOUR_OF_DAY));
-//        if (hour.equals("00") && date != calendar.get(Calendar.DAY_OF_MONTH)) {
-//            hour = "24";
-//        }
-//        String minute = String.format("%02d", calendar.get(Calendar.MINUTE));
-        String s= calendar.get(Calendar.DAY_OF_MONTH)+"";
-        return s;
-//        return hour + " : " + minute;
+        String hour = String.format("%02d", calendar.get(Calendar.HOUR_OF_DAY));
+        if (hour.equals("00") && date != calendar.get(Calendar.DAY_OF_MONTH)) {
+            hour = "24";
+        }
+        String minute = String.format("%02d", calendar.get(Calendar.MINUTE));
+        return hour + " : " + minute;
     }
 
     public static String millisToHourAndMinuteStr(long millis) {

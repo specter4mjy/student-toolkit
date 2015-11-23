@@ -19,9 +19,9 @@ public class ToDoActivity extends AppCompatActivity {
 
     ListView listView;
     ToDoAdapter toDoAdapter;
-    private NavigationView nvDrawer;
-    static Cursor c;
     static DatabaseConnection db;
+    private NavigationView nvDrawer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,32 +29,20 @@ public class ToDoActivity extends AppCompatActivity {
         setContentView(R.layout.drawer_to_do);
         listView = (ListView) findViewById(R.id.listview);
 
-
         db = new DatabaseConnection(this.getApplicationContext());
-        db.getWritableDatabase().execSQL("INSERT INTO todo (title, description, due) VALUES ('EXAMPLETITLE','EXAMPLEDESCRIPTION', CURRENT_TIMESTAMP)");
+        //Uncomment the below line to add a row to the database every time this activity is created.
+        //db.getWritableDatabase().execSQL("INSERT INTO todo (title, description, due) VALUES ('EXAMPLETITLE','EXAMPLEDESCRIPTION', CURRENT_TIMESTAMP)");
 
-        Cursor d = db.getReadableDatabase().rawQuery("select * from todo",null);
-        while(d.moveToNext()){
-            String id = d.getString(0);
-            String title = d.getString(DatabaseConnection.TITLE);
-            String description = d.getString(DatabaseConnection.DESCRIPTION);
-            String due = d.getString(DatabaseConnection.DUE);
-            Log.w("DATABASE HERE!", title + description + due);
-        }
-
-        d.close();
-
-        c = db.getReadableDatabase().rawQuery("select * from todo",null);
-
+        Cursor cursor = db.getReadableDatabase().rawQuery("select * from todo",null);
         ImageButton newToDoButton = (ImageButton) findViewById(R.id.newToDoButton);
-        toDoAdapter = new ToDoAdapter(this.getApplicationContext(),c);
+        toDoAdapter = new ToDoAdapter(this.getApplicationContext(),cursor);
         listView.setAdapter(toDoAdapter);
         newToDoButton.setOnClickListener(new Click());
-
+        cursor.close();
         nvDrawer = (NavigationView) findViewById(R.id.nav_view);
         setupDrawerContent(nvDrawer);
-
     }
+
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
