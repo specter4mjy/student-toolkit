@@ -201,12 +201,12 @@ public class MainActivity extends AppCompatActivity {
             TextView tvDate = (TextView) tab.getCustomView().findViewById(R.id.tv_date);
             tvDate.setText(day.get(Calendar.DAY_OF_MONTH) + "");
             tvDayOfWeek.setTextSize(13);
-            tvDate.setTextSize(19);
+            tvDate.setTextSize(15);
             day.add(Calendar.DAY_OF_MONTH, 1);
         }
         TabLayout.Tab currentTab = tabLayout.getTabAt(tabLayout.getSelectedTabPosition());
         TextView tvDate = (TextView) currentTab.getCustomView().findViewById(R.id.tv_date);
-        tvDate.setTextSize(27);
+        tvDate.setTextSize(22);
         currentTab.select();
     }
 
