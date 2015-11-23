@@ -24,13 +24,14 @@ import java.util.List;
 
 import ml.mk.jm.ay.ak.studenttoolkit.R;
 
+import static ml.mk.jm.ay.ak.studenttoolkit.calendar.helper.TimeFormatHelper.dayOfWeekConverter;
+
 /**
  * Created by specter on 10/24/15.
  */
 public class ScreenSlideFragment extends android.support.v4.app.Fragment {
     RecyclerView recyclerView;
     RecyclerViewAdapter adapter;
-
 
     private static final String DEBUG_TAG = "MyActivity";
 
@@ -46,7 +47,8 @@ public class ScreenSlideFragment extends android.support.v4.app.Fragment {
             CalendarContract.Instances.END,
             CalendarContract.Instances.EVENT_COLOR,
             CalendarContract.Instances.EVENT_LOCATION,
-            CalendarContract.Instances.HAS_ALARM
+            CalendarContract.Instances.HAS_ALARM,
+            CalendarContract.Instances.CALENDAR_ID
 
 
     };
@@ -63,6 +65,7 @@ public class ScreenSlideFragment extends android.support.v4.app.Fragment {
     private static final int PROJECTION_COLOR_INDEX = 9;
     private static final int PROJECTION_LOCATION_INDEX = 10;
     private static final int PROJECTION_HAS_ALARM_INDEX = 11;
+    private static final int PROJECTION_CALENDAR_ID =12;
     Calendar nowTime;
 
     public static ScreenSlideFragment newInstance(int page) {
@@ -91,14 +94,13 @@ public class ScreenSlideFragment extends android.support.v4.app.Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
-
         DateFormat formatter = new SimpleDateFormat("HH/mm/ss/MM/dd/yyyy");
 
         int page = getArguments().getInt("page");
         Log.i("specter", page + "");
 
         nowTime = Calendar.getInstance();
-        nowTime.add(Calendar.DATE, page - 1);
+        nowTime.add(Calendar.DATE, -dayOfWeekConverter(nowTime.get(Calendar.DAY_OF_WEEK)) + page);
         Calendar beginTime = nowTime;
         beginTime.set(Calendar.HOUR_OF_DAY, 0);
         beginTime.set(Calendar.MINUTE, 0);
@@ -122,7 +124,8 @@ public class ScreenSlideFragment extends android.support.v4.app.Fragment {
         cursor = cr.query(builder.build(),
                 INSTANCE_PROJECTION,
                 null,
-                null, null);
+                null,
+                CalendarContract.Instances.DTSTART + " ASC");
 
         List<EventDataModel> items = new ArrayList<>();
 
@@ -137,6 +140,7 @@ public class ScreenSlideFragment extends android.support.v4.app.Fragment {
             int allday;
             int hasAlarm;
             String description;
+            String cal_id;
 
 
             eventBeginTime = cursor.getLong(PROJECTION_BEGIN_INDEX);
@@ -147,11 +151,14 @@ public class ScreenSlideFragment extends android.support.v4.app.Fragment {
             allday = cursor.getInt(PROJECTION_ALL_DAY_INDEX);
             hasAlarm = cursor.getInt(PROJECTION_HAS_ALARM_INDEX);
             description = cursor.getString(PROJECTION_DESC_INDEX);
+            cal_id = cursor.getString(PROJECTION_CALENDAR_ID);
 
+            if (allday == 1)
+                continue;
 
             model = new EventDataModel();
 
-
+            model.cal_id =cal_id;
             model.title = title;
             model.location = location;
             model.startTimeMillis = eventBeginTime;
@@ -160,6 +167,10 @@ public class ScreenSlideFragment extends android.support.v4.app.Fragment {
             model.allDay = allday;
             model.description = description;
             model.hasAlarm = hasAlarm;
+            model.day_of_month = nowTime.get(Calendar.DAY_OF_MONTH);
+
+            Log.i("data", "start time" + hasAlarm + "\n");
+            Log.i("data", "end time" + allday + "\n");
 
             if (eventBeginTime > lastEventEndTime) {
                 EventDataModel addModel = new EventDataModel();

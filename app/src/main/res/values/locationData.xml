@@ -1,0 +1,243 @@
+<resources>
+    <!--Defult, not wriitin data-->
+    <string name="roomNumber">0</string>
+    <string name="roomLat">0</string>
+    <string name="roomLng">0</string>
+
+    <!--Science Building Level 0-->
+    <!--left side-->
+    <string name="roomnumber1">L0.102</string>
+    <string name="roomLat1">53.3077686</string>
+    <string name="roomLng1">-6.2250597</string>
+
+    <string name="roomnumber2">L0.101</string>
+    <string name="roomLat2">53.3077642</string>
+    <string name="roomLng2">-6.2250148</string>
+
+    <string name="roomnumber3">L0.100</string>
+    <string name="roomLat3">53.307757</string>
+    <string name="roomLng3">-6.2249672</string>
+
+    <string name="roomnumber4">L0.99</string>
+    <string name="roomLat4">53.3077509</string>
+    <string name="roomLng4">-6.2249236</string>
+
+    <string name="roomnumber5">L0.98</string>
+    <string name="roomLat5">53.3077485</string>
+    <string name="roomLng5">-6.2248773</string>
+
+    <string name="roomnumber6">L0.97</string>
+    <string name="roomLat6">53.3077393</string>
+    <string name="roomLng6">-6.2248317</string>
+
+    <string name="roomnumber7">L0.96</string>
+    <string name="roomLat7">53.3077317</string>
+    <string name="roomLng7">-6.2247627</string>
+
+    <string name="roomnumber8">L0.114</string>
+    <string name="roomLat8">53.3077826</string>
+    <string name="roomLng8">-6.2246701</string>
+
+    <string name="roomnumber9">L0.111</string>
+    <string name="roomLat9">53.3078215</string>
+    <string name="roomLng9">-6.2246567</string>
+
+    <string name="roomnumber10">L0.92</string>
+    <string name="roomLat10">53.307809</string>
+    <string name="roomLng10">-6.2247345</string>
+
+    <string name="roomnumber11">L0.110</string>
+    <string name="roomLat11">53.3077978</string>
+    <string name="roomLng11">-6.2248103</string>
+
+    <string name="roomnumber12">L0.109</string>
+    <string name="roomLat12">53.3078379</string>
+    <string name="roomLng12">-6.2247969</string>
+
+    <string name="roomnumber13">L0.89</string>
+    <string name="roomLat13">53.3078074</string>
+    <string name="roomLng13">-6.2248747</string>
+
+    <string name="roomnumber14">L0.90</string>
+    <string name="roomLat14">53.3078451</string>
+    <string name="roomLng14">-6.2248572</string>
+
+    <string name="roomnumber15">L0.112</string>
+    <string name="roomLat15">53.307884</string>
+    <string name="roomLng15">-6.2247</string>
+
+    <string name="roomnumber16">L0.113</string>
+    <string name="roomLat16">53.3078948</string>
+    <string name="roomLng16">-6.2247503</string>
+
+    <string name="roomnumber17">L0.80</string>
+    <string name="roomLat17">53.3079265</string>
+    <string name="roomLng17">-6.2246658</string>
+
+    <string name="roomnumber18">L0.105</string>
+    <string name="roomLat18">53.3079381</string>
+    <string name="roomLng18">-6.2247697</string>
+
+    <string name="roomnumber19">L0.81</string>
+    <string name="roomLat19">53.3079421</string>
+    <string name="roomLng19">-6.2248683</string>
+
+    <string name="roomnumber20">L0.106</string>
+    <string name="roomLat20">53.3079521</string>
+    <string name="roomLng20">-6.2249695</string>
+
+    <string name="roomnumber21">L0.25</string>
+    <string name="roomLat21">53.3076777</string>
+    <string name="roomLng21">-6.2235936</string>
+
+    <!--front side-->
+    <string name="roomnumber22">L0.14</string>
+    <string name="roomLat22">53.3077646</string>
+    <string name="roomLng22">-6.2234843</string>
+
+    <string name="roomnumber23">L0.13</string>
+    <string name="roomLat23">53.3078127</string>
+    <string name="roomLng23">-6.2234668</string>
+
+    <string name="roomnumber24">L0.12</string>
+    <string name="roomLat24">53.307864</string>
+    <string name="roomLng24">-6.2234507</string>
+
+    <string name="roomnumber25">L0.11</string>
+    <string name="roomLat25">53.3079036</string>
+    <string name="roomLng25">-6.2234373</string>
+
+    <string name="roomnumber26">L0.10</string>
+    <string name="roomLat26">53.3079445</string>
+    <string name="roomLng26">-6.2234219</string>
+
+    <string name="roomnumber27">L0.09</string>
+    <string name="roomLat27">53.3079818</string>
+    <string name="roomLng27">-6.2234078</string>
+
+    <!--back side-->
+    <string name="roomnumber28">H0.60</string>
+    <string name="roomLat28">53.3080375</string>
+    <string name="roomLng28">-6.2241924</string>
+
+    <string name="roomnumber29">H0.59</string>
+    <string name="roomLat29">53.3081048</string>
+    <string name="roomLng29">-6.2241669</string>
+
+    <string name="roomnumber30">H0.56</string>
+    <string name="roomLat30">53.3081705</string>
+    <string name="roomLng30">-6.2241414</string>
+
+    <string name="roomnumber31">H0.57</string>
+    <string name="roomLat31">53.3082126</string>
+    <string name="roomLng31">-6.2241293</string>
+
+    <string name="roomnumber32">H0.68</string>
+    <string name="roomLat32">53.3081677</string>
+    <string name="roomLng32">-6.2242024</string>
+
+    <string name="roomnumber33">H0.58</string>
+    <string name="roomLat33">53.308219</string>
+    <string name="roomLng33">-6.2242353</string>
+
+    <string name="roomnumber34">H0.66</string>
+    <string name="roomLat34">53.3082266</string>
+    <string name="roomLng34">-6.2243359</string>
+
+    <string name="roomnumber35">H0.62</string>
+    <string name="roomLat35">53.3080983</string>
+    <string name="roomLng35">-6.2242604</string>
+
+    <string name="roomnumber36">H0.63</string>
+    <string name="roomLat36">53.3080679</string>
+    <string name="roomLng36">-6.2242748</string>
+
+    <string name="roomnumber37">H0.71</string>
+    <string name="roomLat37">53.3080367</string>
+    <string name="roomLng37">-6.2242621</string>
+
+    <string name="roomnumber38">H0.70</string>
+    <string name="roomLat38">53.3080391</string>
+    <string name="roomLng38">-6.224307</string>
+
+    <string name="roomnumber39">H0.64</string>
+    <string name="roomLat39">53.3081004</string>
+    <string name="roomLng39">-6.2243815</string>
+
+    <string name="roomnumber40">H0.12</string>
+    <string name="roomLat40">53.3081104</string>
+    <string name="roomLng40">-6.2247898</string>
+
+    <string name="roomnumber41">H0.21</string>
+    <string name="roomLat41">53.3081753</string>
+    <string name="roomLng41">-6.224594</string>
+
+    <string name="roomnumber42">H0.22</string>
+    <string name="roomLat42">53.3082245</string>
+    <string name="roomLng42">-6.2245789</string>
+
+    <string name="roomnumber43">H0.23</string>
+    <string name="roomLat43">53.3082694</string>
+    <string name="roomLng43">-6.2245628</string>
+
+    <string name="roomnumber44">H0.13</string>
+    <string name="roomLat44">53.308259</string>
+    <string name="roomLng44">-6.2247838</string>
+
+    <string name="roomnumber45">H0.46</string>
+    <string name="roomLat45">53.30836</string>
+    <string name="roomLng45">-6.2243238</string>
+
+    <string name="roomnumber46">H0.44</string>
+    <string name="roomLat46">53.3084325</string>
+    <string name="roomLng46">-6.2242976</string>
+
+    <string name="roomnumber47">H0.36</string>
+    <string name="roomLat47">53.3084429</string>
+    <string name="roomLng47">-6.2245022</string>
+
+
+    <!--CSI Building Level 0-->
+    <!--Right side-->
+    <string name="roomnumber48">Computer Sci and Informatics (B002 CSI)</string>
+    <string name="roomLat48">53.3092422</string>
+    <string name="roomLng48">-6.2238132</string>
+
+    <string name="roomnumber49">Computer Sci and Informatics (B003 CSI)</string>
+    <string name="roomLat49">53.309301</string>
+    <string name="roomLng49">-6.223692</string>
+
+    <string name="roomnumber50">Computer Sci and Informatics (B004 CSI)</string>
+    <string name="roomLat50">53.309347</string>
+    <string name="roomLng50">-6.2234481</string>
+
+    <!--CSI Buliding Level 1-->
+    <!--Right side-->
+    <!--<string name="roomnumber50">Computer Sci and Informatics (B101 CSI)</string>-->
+    <!--<string name="roomLat50">53.3091917</string>-->
+    <!--<string name="roomLng50">-6.2238179</string>-->
+
+    <!--<string name="roomnumber50">Computer Sci and Informatics (B102 CSI)</string>-->
+    <!--<string name="roomLat50">53.3092174</string>-->
+    <!--<string name="roomLng50">-6.2237495</string>-->
+
+    <!--<string name="roomnumber50">Computer Sci and Informatics (B103 CSI)</string>-->
+    <!--<string name="roomLat50">53.3092318</string>-->
+    <!--<string name="roomLng50">-6.2236569</string>-->
+
+    <!--<string name="roomnumber50">Computer Sci and Informatics (B104 CSI)</string>-->
+    <!--<string name="roomLat50">53.3092558</string>-->
+    <!--<string name="roomLng50">-6.2235724</string>-->
+
+    <!--<string name="roomnumber50">Computer Sci and Informatics (B106 CSI)</string>-->
+    <!--<string name="roomLat50">53.3093239</string>-->
+    <!--<string name="roomLng50">-6.2234504</string>-->
+
+    <!--<string name="roomnumber50">Computer Sci and Informatics (B108 CSI)</string>-->
+    <!--<string name="roomLat50">53.3093135</string>-->
+    <!--<string name="roomLng50">-6.2236583</string>-->
+
+    <!--<string name="roomnumber50">Computer Sci and Informatics (B109 CSI)</string>-->
+    <!--<string name="roomLat50">53.3092686</string>-->
+    <!--<string name="roomLng50">-6.2238447</string>-->
+</resources>

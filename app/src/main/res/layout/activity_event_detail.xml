@@ -5,7 +5,7 @@
     android:padding="@dimen/activity_horizontal_margin"
     android:orientation="vertical"
     android:weightSum="1.0"
-    android:background="@color/colorAccent"
+    android:background="@color/cardViewBackground"
     tools:context="com.dragon.calendarprovidertest.calendar.EventDetailActivity">
 
     <LinearLayout
@@ -15,7 +15,6 @@
         android:layout_width="match_parent"
         android:layout_weight="0.25"
         android:weightSum="1.0"
-        android:background="@color/white"
         android:onClick="editEvent"
         android:layout_marginBottom="@dimen/activity_vertical_margin_bottom">
 
@@ -72,16 +71,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/white"
                     android:id="@+id/tvDate" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/white"
                     android:id="@+id/tvTime" />
             </LinearLayout>
+        </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/ll_detail_location"
@@ -90,6 +88,7 @@
             android:layout_width="match_parent"
             android:weightSum="1.0"
             android:onClick="showMap"
+            android:background="@color/white"
             android:visibility="invisible">
 
             <LinearLayout
@@ -108,9 +107,6 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/white"
                 android:id="@+id/tv_detail_location" />
         </LinearLayout>
-
-    </LinearLayout>
 </LinearLayout>

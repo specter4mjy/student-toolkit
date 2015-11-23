@@ -17,7 +17,7 @@
 
     <style name="nav_text_them">
         <item name="android:textSize">18sp</item>
-        <item name="android:background">@color/recyclerViewbacground</item>
+        <item name="android:background">@color/cardViewBackground</item>
     </style>
 
     <style name="TextInputLayout">

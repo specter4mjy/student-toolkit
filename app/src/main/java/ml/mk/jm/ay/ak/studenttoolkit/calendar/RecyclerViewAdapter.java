@@ -15,9 +15,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import ml.mk.jm.ay.ak.studenttoolkit.R;
-
 import java.util.List;
+
+import ml.mk.jm.ay.ak.studenttoolkit.R;
 
 import static ml.mk.jm.ay.ak.studenttoolkit.calendar.helper.TimeFormatHelper.millisToHourAndMinuteStr;
 
@@ -85,8 +85,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 EventViewHolder eventViewHolder = (EventViewHolder) holder;
                 eventViewHolder.label.setText(model.title);
                 eventViewHolder.label.setTextColor(model.eventColor);
-                eventViewHolder.startTime.setText(millisToHourAndMinuteStr(model.startTimeMillis));
-                eventViewHolder.endTime.setText(millisToHourAndMinuteStr(model.endTimeMillis));
+                eventViewHolder.startTime.setText(millisToHourAndMinuteStr(model.day_of_month,model.startTimeMillis));
+                eventViewHolder.endTime.setText(millisToHourAndMinuteStr(model.day_of_month,model.endTimeMillis));
                 if (model.location.equals("")) {
                     eventViewHolder.location.setVisibility(View.GONE);
                 } else {
@@ -143,6 +143,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             intent.putExtra("description", event.description);
             intent.putExtra("allDay", event.allDay);
             intent.putExtra("hasAlarm", event.hasAlarm);
+            intent.putExtra("calendarId",event.cal_id);
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, (View) label, "event_title");
             activity.startActivity(intent, options.toBundle());
 

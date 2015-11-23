@@ -10,34 +10,45 @@ import android.widget.TextView;
 
 import ml.mk.jm.ay.ak.studenttoolkit.R;
 import ml.mk.jm.ay.ak.studenttoolkit.calendar.helper.TimeFormatHelper;
+import ml.mk.jm.ay.ak.studenttoolkit.map.MapsActivity;
 
 public class EventDetailActivity extends AppCompatActivity{
 
+    public static final String EVENT_DATA ="EVENT DATA";
     TextView tvTitle;
     TextView tvDate, tvTime, tvRecurrence; //for showing activity main detail
     TextView tvLocation, tvAlarm;
+    Bundle extras;
 
     ListView listDetail;
+
+    private String title, cal_id;
+    private long startTime, endTime;
+    private String location;
+    private int allDay, hasAlarm;
+    private String description;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail);
 
-        Bundle extras = getIntent().getExtras();
+        extras = getIntent().getExtras();
         if(extras!=null) {
-            String title = extras.getString("title");
-            String location = extras.getString("location");
-            long startTime = extras.getLong("startTime");
+            title = extras.getString("title");
+            location = extras.getString("location");
+            startTime = extras.getLong("startTime");
             String date = TimeFormatHelper.millisToDate(startTime);
 
             // format start and end time to show
-            long endTime = extras.getLong("endTime");
-            String timeOfEvent = TimeFormatHelper.millisToHourAndMinuteStr(startTime)
-                         + TimeFormatHelper.millisToHourAndMinuteStr(endTime);
+            endTime = extras.getLong("endTime");
+            String timeOfEvent = new StringBuilder()
+                    .append(TimeFormatHelper.millisToHourAndMinuteStr(startTime))
+                    .append(" - ")
+                    .append(TimeFormatHelper.millisToHourAndMinuteStr(endTime)).toString();
 
-            String description = extras.getString("description");
-            int allDay = extras.getInt("allDay");
-            int hasAlarm = extras.getInt("hasAlarm");
+            description = extras.getString("description");
+            allDay = extras.getInt("allDay");
+            hasAlarm = extras.getInt("hasAlarm");
 
             tvTitle = (TextView)findViewById(R.id.tv_detail_title);
             tvTitle.setText(title);
@@ -54,18 +65,29 @@ public class EventDetailActivity extends AppCompatActivity{
                 tvLocation = (TextView) findViewById(R.id.tv_detail_location);
                 tvLocation.setText(location);
             }
+            cal_id = extras.getString("calendarId");
 
 
         }
     }
 
-    public void showMap(){
+    public void showMap(View v){
         String location = tvLocation.getText().toString();
-        Intent mapIntent = new Intent(this,MapsActivity.class);
-        mapIntent.putExtra("EXTRA_TEXT",location);
+        Intent mapIntent = new Intent(this, MapsActivity.class);
+        mapIntent.putExtra("EXTRA_TEXT", location);
+        startActivity(mapIntent);
     }
 
-    public void editEvent(){
-
+    public void editEvent(View v){
+        Intent editIntent = new Intent(this,EditEventActivity.class);
+        editIntent.putExtra("title", title);
+        editIntent.putExtra("location", location);
+        editIntent.putExtra("startTime", startTime);// this is milliseconds formate ,use TimeFormatHelper to convert to string
+        editIntent.putExtra("endTime", endTime);
+        editIntent.putExtra("description", description);
+        editIntent.putExtra("allDay", allDay);
+        editIntent.putExtra("hasAlarm", hasAlarm);
+        editIntent.putExtra("calendarId", cal_id);
+        startActivity(editIntent);
     }
 }
