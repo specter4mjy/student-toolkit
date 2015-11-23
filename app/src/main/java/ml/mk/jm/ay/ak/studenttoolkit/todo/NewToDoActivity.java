@@ -162,6 +162,13 @@ public class NewToDoActivity extends AppCompatActivity {
         return formattedDate;
     }
 
+    //override the back button and make it go to the ToDoActivity class
+    public void onBackPressed() {
+        Intent startMain = new Intent(NewToDoActivity.this, ToDoActivity.class);
+        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(startMain);
+    }
+
 
     class Click implements View.OnClickListener {
         Intent todoIntent = new Intent(NewToDoActivity.this, ToDoActivity.class);
@@ -174,7 +181,7 @@ public class NewToDoActivity extends AppCompatActivity {
                     String formattedDate = join();
                     Date possiblePastDate = sdf.parse(formattedDate);
 
-                    if(possiblePastDate.after(new Date())) {
+                    if(possiblePastDate.getTime() > new Date().getTime()) {
                         String newToDo = "insert into todo (title, description, due) values ('" + newTitleView.getText().toString() + "', '" + newDescriptionView.getText().toString() + "', '" + formattedDate + "')";
                         db.getWritableDatabase().execSQL(newToDo);
                         Toast toast = Toast.makeText(getApplicationContext(), "To-Do created successfully!", Toast.LENGTH_SHORT);

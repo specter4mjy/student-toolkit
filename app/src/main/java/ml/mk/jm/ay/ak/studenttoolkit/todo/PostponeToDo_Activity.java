@@ -168,6 +168,14 @@ public class PostponeToDo_Activity extends AppCompatActivity {
         return formattedDate;
     }
 
+    //override the back button and make it go to the ToDoActivity class
+    public void onBackPressed() {
+        Intent startMain = new Intent(PostponeToDo_Activity.this, ToDoActivity.class);
+        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(startMain);
+    }
+
+
     class Click implements View.OnClickListener {
         Intent menuIntent;
 
@@ -177,9 +185,7 @@ public class PostponeToDo_Activity extends AppCompatActivity {
                     String formattedDate = join();
                     Date possiblePastDate = sdf.parse(formattedDate);
 
-                    Date present = new Date();
-
-                    if(possiblePastDate.after(new Date())) {
+                    if(possiblePastDate.getTime() > new Date().getTime()) {
                         menuIntent = new Intent(PostponeToDo_Activity.this, ToDoActivity.class);
                         String update = "update todo set due = '" + formattedDate + "' where _id = " + todo.getId();
                         db.getWritableDatabase().execSQL(update);

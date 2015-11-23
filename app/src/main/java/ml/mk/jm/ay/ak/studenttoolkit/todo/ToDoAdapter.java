@@ -116,4 +116,6 @@ public class ToDoAdapter extends CursorAdapter implements ListAdapter {
         String title = cursor.getString(cursor.getColumnIndexOrThrow("title"));
         listItemText.setText(title);
     }
+
+
 }
