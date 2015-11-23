@@ -261,7 +261,7 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
         newEvent.description = etDescription.getText().toString();
         newEvent.cal_id = cal_id;
 
-     //   CalendarHelper.updateEvent(getApplicationContext(), newEvent);
+//        CalendarProviderHelper.updateEvent(newEvent);
 
     }
 

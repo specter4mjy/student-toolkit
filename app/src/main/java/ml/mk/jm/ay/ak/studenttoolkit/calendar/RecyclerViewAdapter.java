@@ -50,6 +50,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         } else
             notifyItemRemoved(position);
     }
+    public void updateAllEvents(int direction,List<EventDataModel> newevents) {
+        for (int i = events.size() - 1; i >= 0; i--) {
+            events.remove(i);
+            notifyItemRemoved(i);
+        }
+        for (int i = newevents.size()-1; i >=0 ; i--) {
+            events.add(0,newevents.get(i));
+            notifyItemInserted(0);
+        }
+    }
 
     public EventDataModel getEvent(int position) {
         return events.get(position);
