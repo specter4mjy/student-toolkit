@@ -1,8 +1,8 @@
 package ml.mk.jm.ay.ak.studenttoolkit.todo;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +18,6 @@ public class ShowToDoActivity extends AppCompatActivity {
     TextView titleView;
     TextView descriptionView;
     TextView dateView;
-
     Button editButton;
     Button postponeButton;
 
@@ -33,10 +32,11 @@ public class ShowToDoActivity extends AppCompatActivity {
 
         //Connects widget variables with their GUI equivalents.
         titleView = (TextView) findViewById(R.id.showTitleView);
+
         descriptionView = (TextView) findViewById(R.id.showDescriptionView);
         dateView = (TextView) findViewById(R.id.showDateView);
 
-        editButton = (Button) findViewById(R.id.editButton);
+        editButton = (Button) findViewById(R.id.showEditButton);
         postponeButton = (Button) findViewById(R.id.postponeButton);
 
         //Sets widgets to display To-Do previously clicked on.
@@ -50,29 +50,28 @@ public class ShowToDoActivity extends AppCompatActivity {
 
     }
 
-    class Click implements View.OnClickListener {
+   class Click implements View.OnClickListener {
         Intent todoIntent;
+        Bundle bundle;
 
         public void onClick(View view) {
 
             try {
-                if (view.getId() == R.id.editButton) {
-                    Bundle bundle = new Bundle();
+                if (view.getId() == R.id.showEditButton) {
+                    bundle = new Bundle();
                     bundle.putParcelable("todo",todo);
-                    todoIntent = new Intent(ShowToDoActivity.this, EditToDoActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    todoIntent = new Intent(ShowToDoActivity.this , EditToDoActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     todoIntent.putExtras(bundle);
                     startActivity(todoIntent);
                 } else if (view.getId() == R.id.postponeButton) {
-                    Bundle bundle = new Bundle();
+                    bundle = new Bundle();
                     bundle.putParcelable("todo",todo);
                     todoIntent = new Intent(ShowToDoActivity.this, PostponeToDo_Activity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     todoIntent.putExtras(bundle);
                     startActivity(todoIntent);
-                } else {
-
                 }
             } catch (Exception E) {
-                Log.e("Main Class", "Error when editing To-Do");
+                Log.e("ShowToDoActivity", "Error before editing To-Do");
             }
 
         }

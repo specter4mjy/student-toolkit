@@ -3,7 +3,11 @@ package ml.mk.jm.ay.ak.studenttoolkit.todo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+
 
 /**
  * Created by Marc on 08/11/2015.
@@ -23,9 +27,18 @@ public class Todo implements Parcelable {
     }
 
     public Todo(Parcel parcel) {
+        SimpleDateFormat simpleDate = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyy", Locale.US);
+        Date parsedDate = new Date();
+        this.id = parcel.readInt();
         this.title = parcel.readString();
         this.description = parcel.readString();
-        this.due = new Date();
+        try {
+            parsedDate = simpleDate.parse(parcel.readString());
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.due = parsedDate;
     }
 
     public Integer getId() { return id; }
@@ -72,7 +85,7 @@ public class Todo implements Parcelable {
         parcel.writeString(this.due.toString());
     }
 
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+    public static final Creator CREATOR = new Creator() {
         public Todo createFromParcel(Parcel in) {
             return new Todo(in);
         }
