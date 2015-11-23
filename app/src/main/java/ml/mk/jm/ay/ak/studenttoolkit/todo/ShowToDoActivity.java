@@ -50,6 +50,13 @@ public class ShowToDoActivity extends AppCompatActivity {
 
     }
 
+    //override the back button and make it go to the ToDoActivity class
+    public void onBackPressed() {
+        Intent startMain = new Intent(ShowToDoActivity.this, ToDoActivity.class);
+        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(startMain);
+    }
+
    class Click implements View.OnClickListener {
         Intent todoIntent;
         Bundle bundle;
