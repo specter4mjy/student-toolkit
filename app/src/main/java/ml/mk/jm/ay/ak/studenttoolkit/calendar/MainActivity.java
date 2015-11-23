@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
 //                textView.setText(day.get(Calendar.DAY_OF_MONTH)+"");
 
                 TextView tvDate = (TextView) tab.getCustomView().findViewById(R.id.tv_date);
-                tvDate.setTextSize(27);
+                tvDate.setTextSize(22);
                 viewPager.setCurrentItem(tab.getPosition());
 //                if (tab.getPosition() == (day.get(Calendar.DAY_OF_WEEK) - Calendar.MONDAY)) {
 //                    TextView textView = (TextView) tab.getCustomView().findViewById(R.id.tv_date);
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
 //                TextView tvDate = (TextView) tab.getCustomView().findViewById(R.id.tv_date);
 //                tvDate.setText(day.get(Calendar.DAY_OF_MONTH)+"");
                 TextView tvDate = (TextView) tab.getCustomView().findViewById(R.id.tv_date);
-                tvDate.setTextSize(19);
+                tvDate.setTextSize(15);
             }
 
             @Override
@@ -181,14 +181,14 @@ public class MainActivity extends AppCompatActivity {
             tvDayOfWeek.setText(tabTitles[i]);
             TextView tvDate = (TextView) tab.getCustomView().findViewById(R.id.tv_date);
             tvDate.setText(day.get(Calendar.DAY_OF_MONTH) + "");
-            tvDayOfWeek.setTextSize(14);
-            tvDate.setTextSize(19);
+            tvDayOfWeek.setTextSize(13);
+            tvDate.setTextSize(15);
             day.add(Calendar.DAY_OF_MONTH, 1);
         }
         day = Calendar.getInstance();
         TabLayout.Tab todayTab = tabLayout.getTabAt(dayOfWeekConverter(day.get(Calendar.DAY_OF_WEEK)));
         TextView tvDate = (TextView) todayTab.getCustomView().findViewById(R.id.tv_date);
-        tvDate.setTextSize(27);
+        tvDate.setTextSize(22);
         todayTab.select();
     }
     private void updaeTablayoutDate(TabLayout tabLayout) {
@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
             tvDayOfWeek.setText(tabTitles[i]);
             TextView tvDate = (TextView) tab.getCustomView().findViewById(R.id.tv_date);
             tvDate.setText(day.get(Calendar.DAY_OF_MONTH) + "");
-            tvDayOfWeek.setTextSize(14);
+            tvDayOfWeek.setTextSize(13);
             tvDate.setTextSize(19);
             day.add(Calendar.DAY_OF_MONTH, 1);
         }
