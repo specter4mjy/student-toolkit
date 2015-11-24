@@ -4,6 +4,7 @@ package ml.mk.jm.ay.ak.studenttoolkit.calendar;
  * Created by specter on 10/24/15.
  */
 public class EventDataModel {
+    public String event_id;
     public String cal_id;
     public String title;
     public long startTimeMillis;

@@ -11,5 +11,7 @@
     <color name="cardViewBackground">#f8ecc2</color>
     <color name="black">#000000</color>
     <color name="textInputViewActived">#24a0d8</color>
+    <color name="buttonbgcolor">#A3BF9A</color>
+    <color name="editEventHead">#f8b5f2</color>
 
 </resources>

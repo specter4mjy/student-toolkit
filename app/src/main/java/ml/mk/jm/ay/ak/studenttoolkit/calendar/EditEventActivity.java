@@ -18,11 +18,13 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import ml.mk.jm.ay.ak.studenttoolkit.R;
+import ml.mk.jm.ay.ak.studenttoolkit.calendar.helper.CalendarProviderHelper;
 import ml.mk.jm.ay.ak.studenttoolkit.calendar.helper.TimeFormatHelper;
 public class EditEventActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -40,7 +42,7 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
     private int fHour, fMin;   //start time of activity
     private int tHour, tMin;   //end time of activity
 
-    private String cal_id;
+    private String cal_id, event_id;
 
     String[] WeekOfDay;
 
@@ -133,6 +135,8 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
             }
 
             cal_id = extras.getString("calendarId");
+            event_id = extras.getString("event_id");
+            Log.d("Mukesh", "event_id"+event_id);
 
         }
     }
@@ -260,12 +264,29 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
         newEvent.location = etLocation.getText().toString();
         newEvent.description = etDescription.getText().toString();
         newEvent.cal_id = cal_id;
+        newEvent.event_id=event_id;
 
-//        CalendarProviderHelper.updateEvent(newEvent);
+        Log.d("Mukesh","final event id"+newEvent.event_id + event_id);
+
+        int result = CalendarProviderHelper.updateEvent(getApplicationContext(),newEvent);
+        if(result>=0)
+            Toast.makeText(getApplicationContext()," updated",Toast.LENGTH_SHORT).show();
+            finish();
 
     }
 
     public void deleteEvent(View v){
+        EventDataModel newEvent = new EventDataModel();
+
+        newEvent.cal_id = cal_id;
+        newEvent.event_id=event_id;
+
+        Log.d("Mukesh","event id to be deleted "+event_id + "cal_id" +cal_id);
+        long result = CalendarProviderHelper.deleteEvent(getApplicationContext(), newEvent);
+        if(result>=0)
+            Toast.makeText(getApplicationContext(),"result "+result,Toast.LENGTH_SHORT).show();
+        finish();
+
 
     }
 

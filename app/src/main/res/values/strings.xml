@@ -31,8 +31,8 @@
 
     <string name="event_title">Edit Event</string>
     <string name="location">Location</string>
-    <string name="all_day">All Day Event...</string>
-    <string name="alarm">Alarm...</string>
+    <string name="all_day">All Day Event</string>
+    <string name="alarm">Alarm</string>
     <string name="repeat">Repeats</string>
     <string name="edit_title">Title</string>
 
