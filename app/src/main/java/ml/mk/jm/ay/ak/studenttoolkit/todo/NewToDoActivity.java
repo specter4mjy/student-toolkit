@@ -118,7 +118,7 @@ public class NewToDoActivity extends AppCompatActivity {
         //Setup calendarView. When the date on the timePicker is changed, change the due date.
         cv = (CalendarView)findViewById(R.id.newCalView);
         //http://stackoverflow.com/questions/18322786/prevent-selecting-past-dates-in-timepicker-dialogfragment
-        cv.setMinDate(calendar.getTimeInMillis());
+        cv.setMinDate(calendar.getTimeInMillis()-1000);
         cv.setVisibility(CalendarView.GONE);
         cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override

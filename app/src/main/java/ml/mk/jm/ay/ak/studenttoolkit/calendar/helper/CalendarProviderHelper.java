@@ -129,6 +129,10 @@ public class CalendarProviderHelper {
                 int hasAlarm;
                 String description;
 
+                allday = cursor.getInt(PROJECTION_ALL_DAY_INDEX);
+                if (allday == 1)
+                    continue;
+
                 cal_id=cursor.getString(PROJECTION_CALENDAR_ID_INDEX);
                 event_id=cursor.getString(PROJECTION_CALENDAR_ID_INDEX);
                 eventBeginTime = cursor.getLong(PROJECTION_BEGIN_INDEX);
@@ -136,12 +140,9 @@ public class CalendarProviderHelper {
                 title = cursor.getString(PROJECTION_TITLE_INDEX);
                 location = cursor.getString(PROJECTION_LOCATION_INDEX);
                 eventColor = cursor.getInt(PROJECTION_COLOR_INDEX);
-                allday = cursor.getInt(PROJECTION_ALL_DAY_INDEX);
                 hasAlarm = cursor.getInt(PROJECTION_HAS_ALARM_INDEX);
                 description = cursor.getString(PROJECTION_DESC_INDEX);
 
-                if (allday == 1)
-                    continue;
 
                 model = new EventDataModel();
 
