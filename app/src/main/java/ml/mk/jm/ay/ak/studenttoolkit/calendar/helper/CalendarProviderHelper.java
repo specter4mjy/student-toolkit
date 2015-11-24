@@ -40,7 +40,8 @@ public class CalendarProviderHelper {
             CalendarContract.Instances.EVENT_COLOR,
             CalendarContract.Instances.EVENT_LOCATION,
             CalendarContract.Instances.HAS_ALARM,
-            CalendarContract.Instances.CALENDAR_ID
+            CalendarContract.Instances.CALENDAR_ID,
+            CalendarContract.Instances.EVENT_ID
     };
 
 //    public static final String[] EVENT_PROJECTION = new String[]{
@@ -82,6 +83,7 @@ public class CalendarProviderHelper {
     private static final int PROJECTION_LOCATION_INDEX = 10;
     private static final int PROJECTION_HAS_ALARM_INDEX = 11;
     private static final int PROJECTION_CALENDAR_ID_INDEX = 12;
+    private static final int PROJECTION_EVENT_ID_INDEX = 13;
     private static Calendar nowTime;
 
 
@@ -129,19 +131,20 @@ public class CalendarProviderHelper {
                 int hasAlarm;
                 String description;
 
+                allday = cursor.getInt(PROJECTION_ALL_DAY_INDEX);
+                if (allday == 1)
+                    continue;
+
                 cal_id=cursor.getString(PROJECTION_CALENDAR_ID_INDEX);
-                event_id=cursor.getString(PROJECTION_CALENDAR_ID_INDEX);
+                event_id=cursor.getString(PROJECTION_EVENT_ID_INDEX);
                 eventBeginTime = cursor.getLong(PROJECTION_BEGIN_INDEX);
                 eventEndTime = cursor.getLong(PROJECTION_END_INDEX);
                 title = cursor.getString(PROJECTION_TITLE_INDEX);
                 location = cursor.getString(PROJECTION_LOCATION_INDEX);
                 eventColor = cursor.getInt(PROJECTION_COLOR_INDEX);
-                allday = cursor.getInt(PROJECTION_ALL_DAY_INDEX);
                 hasAlarm = cursor.getInt(PROJECTION_HAS_ALARM_INDEX);
                 description = cursor.getString(PROJECTION_DESC_INDEX);
 
-                if (allday == 1)
-                    continue;
 
                 model = new EventDataModel();
 
@@ -186,30 +189,36 @@ public class CalendarProviderHelper {
     public static int updateEvent(Context context, EventDataModel event) {
         Calendar cal = Calendar.getInstance();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(CalendarContract.Events.CALENDAR_ID,event.cal_id);
+//        contentValues.put(CalendarContract.Events.CALENDAR_ID,event.cal_id);
         contentValues.put(CalendarContract.Events.TITLE, event.title);
-        contentValues.put(CalendarContract.Events.DTSTART, event.startTimeMillis);
-        contentValues.put(CalendarContract.Events.DTEND, event.endTimeMillis);
-        contentValues.put(CalendarContract.Events.DESCRIPTION, event.description);
-        contentValues.put(CalendarContract.Events.EVENT_LOCATION, event.location);
-        contentValues.put(CalendarContract.Events.HAS_ALARM, event.hasAlarm);
-        contentValues.put(CalendarContract.Events.ALL_DAY, event.allDay);
-        contentValues.put("eventTimezone", TimeZone.getDefault().getID());
+//        contentValues.put(CalendarContract.Events.DTSTART, event.startTimeMillis);
+//        contentValues.put(CalendarContract.Events.DTEND, event.endTimeMillis);
+//        contentValues.put(CalendarContract.Events.DESCRIPTION, event.description);
+//        contentValues.put(CalendarContract.Events.EVENT_LOCATION, event.location);
+//        contentValues.put(CalendarContract.Events.HAS_ALARM, event.hasAlarm);
+//        contentValues.put(CalendarContract.Events.ALL_DAY, event.allDay);
+//        contentValues.put("eventTimezone", TimeZone.getDefault().getID());
 
         long event_id = Long.parseLong(event.event_id);
         long cal_id = Long.parseLong(event.cal_id);
-        String[] selArgs =
-                new String[]{Long.toString(event_id), Long.toString(cal_id)};
-        Log.d("Mukesh", "selArgs"+ event_id+ "cal" + cal_id);
+//        String[] selArgs =
+//                new String[]{Long.toString(event_id), Long.toString(cal_id)};
+//        Log.d("Mukesh", "selArgs"+ event_id+ "cal" + cal_id);
+        Uri updateUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, event_id);
 
-        if (ActivityCompat.checkSelfPermission(context,
-                Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-            return 0;
-        }
+//        if (ActivityCompat.checkSelfPermission(context,
+//                Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+//            return 0;
+//        }
 
-        int result = context.getContentResolver().update(CalendarContract.Events.CONTENT_URI,
-                contentValues, CalendarContract.Instances._ID + " =? "+ " AND " +CalendarContract.Instances.CALENDAR_ID + " =? ",selArgs);
-        return result;
+//        int result = context.getContentResolver().update(CalendarContract.Events.CONTENT_URI,
+//                contentValues, CalendarContract.Instances._ID + " =? "+ " AND " +CalendarContract.Instances.CALENDAR_ID + " =? ",selArgs);
+        int rows = context.getContentResolver().update(updateUri, contentValues, null, null);
+//        return result;
+        Log.i("updatespecter", "row:" + rows);
+        Log.i("updatespecter", "event id:"+ event_id);
+        Log.i("updatespecter", "cal id:" + cal_id);
+        return rows;
     }
 
     public static long addEvent(Context context, EventDataModel event) {
