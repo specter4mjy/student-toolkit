@@ -22,20 +22,19 @@ public class ToDoActivity extends AppCompatActivity {
     static DatabaseConnection db;
     private NavigationView nvDrawer;
 
-
+    //onCreate, called when activity is created.
+    //How the To-Do works: It essentially rebuilds the database every time the activity is called,
+    //then puts the results into an ArrayList of To-dos. This way, we can guarantee that the data
+    //is correct.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_to_do);
         listView = (ListView) findViewById(R.id.listview);
-
         db = new DatabaseConnection(this.getApplicationContext());
-        //Uncomment the below line to add a row to the database every time this activity is created.
-        //db.getWritableDatabase().execSQL("INSERT INTO todo (title, description, due) VALUES ('EXAMPLETITLE','EXAMPLEDESCRIPTION', CURRENT_TIMESTAMP)");
-
         Cursor cursor = db.getReadableDatabase().rawQuery("select * from todo",null);
         ImageButton newToDoButton = (ImageButton) findViewById(R.id.newToDoButton);
-        toDoAdapter = new ToDoAdapter(this.getApplicationContext(),cursor);
+        toDoAdapter = new ToDoAdapter(this.getApplicationContext(),cursor, ToDoActivity.this);
         listView.setAdapter(toDoAdapter);
         newToDoButton.setOnClickListener(new Click());
         cursor.close();
@@ -43,6 +42,7 @@ public class ToDoActivity extends AppCompatActivity {
         setupDrawerContent(nvDrawer);
     }
 
+    //Required setup for the drawer to work.
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -53,6 +53,8 @@ public class ToDoActivity extends AppCompatActivity {
         });
     }
 
+    //When a drawer item is select, if it was the calendar, then open the calendar (Main) activity.
+    //If it was the To-Do item, then open the main To-Do activity.
     public void selectDrawerItem(MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
@@ -67,16 +69,21 @@ public class ToDoActivity extends AppCompatActivity {
         }
     }
 
-    //override the back button and have it exit.
+    //Override the back button and have it exit the application.
+    //There is no-where else for the application to go at this point, hence the exit.
+    //http://stackoverflow.com/questions/11807554/go-to-home-screen-instead-of-previous-activity
     public void onBackPressed() {
-//        Intent startMain = new Intent(Intent.ACTION_MAIN);
-//        startMain.addCategory(Intent.CATEGORY_HOME);
-//        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startActivity(startMain);
-
+        Intent startMain = new Intent(Intent.ACTION_MAIN);
+        startMain.addCategory(Intent.CATEGORY_HOME);
+        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(startMain);
     }
+
+    //A Click class to deal with Click events
     class Click implements View.OnClickListener {
         Intent newToDoIntent;
+
+        //If the "new" button is pressed, start off the new To-Do activity.
         public void onClick(View view) {
 
             try {

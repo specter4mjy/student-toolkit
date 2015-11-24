@@ -37,8 +37,9 @@ public class NewToDoActivity extends AppCompatActivity {
     Calendar calendar;
 
     //http://stackoverflow.com/questions/10062608/simpledateformat-unparseable-date
-    final SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyy", Locale.US);
+    final SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyy", Locale.ENGLISH);
 
+    //onCreate, called when activity is created.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,16 +53,20 @@ public class NewToDoActivity extends AppCompatActivity {
 
         saveButton.setOnClickListener(new Click());
         cancelButton.setOnClickListener(new Click());
-
         calendar = Calendar.getInstance();
 
+        //Setup spinner for dates/days
         daySpinner = (Spinner) findViewById(R.id.new_date_spinner);
         ArrayAdapter<CharSequence> dayAdapter = ArrayAdapter.createFromResource(this, R.array.day_array, android.R.layout.simple_spinner_item);
         dayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         daySpinner.setAdapter(dayAdapter);
 
+        //Sets actual logic behind date/day spinner. In this case, the user either picks a pre-defined dateslot
+        //or selects an option that opens a calendar view, giving them more options.
         //http://stackoverflow.com/questions/19301458/the-specified-child-already-has-a-parent-you-must-call-removeview-on-the-chil
         daySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            //When an itemSelected event is thrown...
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 cv.setVisibility(CalendarView.GONE);
 
@@ -71,28 +76,34 @@ public class NewToDoActivity extends AppCompatActivity {
                 }
             }
 
+            //An inherited method. Only required as part of Listeners contract.
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-
-
+        //Setup spinner for time.
         timeSpinner = (Spinner) findViewById(R.id.new_time_spinner);
         ArrayAdapter<CharSequence> timeAdapter = ArrayAdapter.createFromResource(this, R.array.time_array, android.R.layout.simple_spinner_item);
         timeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         timeSpinner.setAdapter(timeAdapter);
 
+        //Sets actual logic behind time spinner. In this case, the user either picks a pre-defined timeslot
+        //or selects an option that opens a timepicker, giving them more options.
         timeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            //When an itemSelected event is thrown...
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 if (timeSpinner.getSelectedItem().equals("Select a time...")) {
+                    cv.setVisibility(CalendarView.GONE);
                     tp.setVisibility(TimePicker.VISIBLE);
                     timeSpinner.setVisibility(Spinner.GONE);
                 }
             }
 
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
+            //An inherited method. Only required as part of Listeners contract.
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
+        //Setup timePicker. When the time on the timePicker is changed, change the due date.
         tp = (TimePicker) findViewById(R.id.newTimePicker);
         tp.setVisibility(CalendarView.GONE);
         tp.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
@@ -104,6 +115,7 @@ public class NewToDoActivity extends AppCompatActivity {
             }
         });
 
+        //Setup calendarView. When the date on the timePicker is changed, change the due date.
         cv = (CalendarView)findViewById(R.id.newCalView);
         //http://stackoverflow.com/questions/18322786/prevent-selecting-past-dates-in-timepicker-dialogfragment
         cv.setMinDate(calendar.getTimeInMillis());
@@ -115,6 +127,8 @@ public class NewToDoActivity extends AppCompatActivity {
                 due.setDate(dayOfMonth);
                 due.setYear(year);
 
+                //We don't have enough space on-screen for both widgets.
+                //To combat this, only show one at a time.
                 cv.setVisibility(CalendarView.GONE);
                 if(timeSpinner.getVisibility() == Spinner.GONE){
                     tp.setVisibility(TimePicker.VISIBLE);
@@ -123,15 +137,19 @@ public class NewToDoActivity extends AppCompatActivity {
         });
     }
 
+    //A method that, when called, determines how to calculate the date from the options the user chose
+    //on-screen. These can be any combination of calendarView, timePicker and the pre-defined times and dates
+    //shown in the spinners.
     //http://stackoverflow.com/questions/3747490/android-get-date-before-7-days-one-week
     public String join() {
         Date today = new Date();
         String dayText = daySpinner.getSelectedItem().toString();
         String timeText = timeSpinner.getSelectedItem().toString();
-
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(today);
 
+        //As long as the user is defining their own date, use whatever one was
+        //selected from the pre-defined dates in the daySpinner.
         if (!dayText.equals("Select a date...")) {
             if (dayText.equals("Today")) {
 
@@ -142,6 +160,11 @@ public class NewToDoActivity extends AppCompatActivity {
                 due.setDate(new Date().getDate() + 7);
             }
         }
+
+        //As long as the timeSpinner is GONE, we know that the user is defining their own time with the timePicker.
+        //There is no option for the user to go back to using pre-defined times once they've chosen to pick the time themselves
+        //with the timePicker, so its visibility is set to GONE for the duration of the activity. If it isn't, then the user
+        //wants to use a pre-defined time, so act accordingly.
         if (timeSpinner.getVisibility() != Spinner.GONE ) {
 
             if (timeText.equals("Morning (9:00)")) {
@@ -163,16 +186,22 @@ public class NewToDoActivity extends AppCompatActivity {
     }
 
     //override the back button and make it go to the ToDoActivity class
+    //http://stackoverflow.com/questions/11807554/go-to-home-screen-instead-of-previous-activity
     public void onBackPressed() {
         Intent startMain = new Intent(NewToDoActivity.this, ToDoActivity.class);
         startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(startMain);
     }
 
-
+    //A Click class to deal with Click events
     class Click implements View.OnClickListener {
         Intent todoIntent = new Intent(NewToDoActivity.this, ToDoActivity.class);
 
+        //When a Click events occurs, find out which button caused the event.
+        //If it was the save button, then check to make sure that the date isn't in the past (To-Do's aren't meant
+        //to be created retroactively), and if it is, stop the user with an error message. If the date is in the future,
+        //save this To-Do to the database and redirect.
+        //If the cancel button was selected, simply return to the main screen.
         public void onClick(View view) {
 
             try {
