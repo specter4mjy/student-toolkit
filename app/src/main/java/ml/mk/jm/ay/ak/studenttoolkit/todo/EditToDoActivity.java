@@ -22,11 +22,11 @@ public class EditToDoActivity extends AppCompatActivity {
     TextView dateView;
     TextView editTitleView;
     TextView editDescriptionView;
-    TextView editDateView;
     Button saveButton;
     Button cancelButton;
     DatabaseConnection db;
 
+    //onCreate, called when activity is created.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +41,6 @@ public class EditToDoActivity extends AppCompatActivity {
         dateView = (TextView) findViewById(R.id.dateView);
         editTitleView = (TextView) findViewById(R.id.editTitle);
         editDescriptionView = (TextView) findViewById(R.id.editDescription);
-        editDateView = (TextView) findViewById(R.id.editDate);
         saveButton = (Button) findViewById(R.id.updateEditButton);
         cancelButton = (Button) findViewById(R.id.cancelEditButton);
 
@@ -57,15 +56,21 @@ public class EditToDoActivity extends AppCompatActivity {
     }
 
     //override the back button and make it go to the ToDoActivity class
+    //http://stackoverflow.com/questions/11807554/go-to-home-screen-instead-of-previous-activity
     public void onBackPressed() {
         Intent startMain = new Intent(EditToDoActivity.this, ToDoActivity.class);
         startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(startMain);
     }
 
+    //Click class to handle click events.
+    //Used for updating the to-do(And updating the database)
+    //as well as cancelling out of the current activity.
     class Click implements View.OnClickListener {
         Intent todoIntent = new Intent(EditToDoActivity.this, ToDoActivity.class);
 
+        //Deals with onClick events.
+        //Checks ID of calling widget before deciding on what to do.
         public void onClick(View view) {
 
             try {
