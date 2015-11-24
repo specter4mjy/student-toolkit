@@ -3,6 +3,7 @@ package ml.mk.jm.ay.ak.studenttoolkit.calendar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -22,7 +23,7 @@ public class EventDetailActivity extends AppCompatActivity{
 
     ListView listDetail;
 
-    private String title, cal_id;
+    private String title, cal_id, event_id;
     private long startTime, endTime;
     private String location;
     private int allDay, hasAlarm;
@@ -66,7 +67,9 @@ public class EventDetailActivity extends AppCompatActivity{
                 tvLocation.setText(location);
             }
             cal_id = extras.getString("calendarId");
+            event_id = extras.getString("event_id");
 
+            Log.d("Mukesh","data "+extras.toString());
 
         }
     }
@@ -88,6 +91,7 @@ public class EventDetailActivity extends AppCompatActivity{
         editIntent.putExtra("allDay", allDay);
         editIntent.putExtra("hasAlarm", hasAlarm);
         editIntent.putExtra("calendarId", cal_id);
+        editIntent.putExtra("event_id",event_id);
         startActivity(editIntent);
     }
 }

@@ -48,7 +48,8 @@
         <activity
             android:name=".calendar.EditEventActivity"
             android:label="@string/title_activity_edit_event"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="orientation|keyboardHidden">
         </activity>
 
         <activity

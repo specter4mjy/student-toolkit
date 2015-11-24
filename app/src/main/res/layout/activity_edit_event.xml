@@ -5,35 +5,35 @@
     android:fitsSystemWindows="true"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:background="@color/recyclerViewbacground"
     tools:context=".EditEventActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/recyclerViewbacground"
         android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
         tools:context="com.dragon.calendarprovidertest.calendar.EditEventActivity">
 
         <LinearLayout
             android:id="@+id/llHeader"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_height="@dimen/header_height"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:background="@color/textInputViewActived"
             android:weightSum="1.0">
 
             <LinearLayout
+                android:layout_weight="0.2"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.2">
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/ivDelete"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
                     android:layout_marginRight="@dimen/widget_margin"
+                    android:alpha="0.7"
                     android:onClick="deleteEvent"
                     android:src="@drawable/ic_remove" />
             </LinearLayout>
@@ -42,28 +42,30 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/widget_margin"
-                android:layout_weight="0.6"
-                android:background="@color/cardview_light_background">
+                android:layout_weight="0.65">
 
                 <TextView
                     android:id="@+id/tv_event_head"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:textColor="@color/white"
                     android:text="@string/event_title"
-                    android:textSize="26dp" />
+                    android:textSize="30dp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:layout_weight="0.2">
 
                 <ImageView
                     android:id="@+id/ivSave"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
                     android:layout_marginRight="@dimen/widget_margin"
+                    android:alpha="0.7"
                     android:onClick="saveEvent"
                     android:src="@drawable/ic_save" />
             </LinearLayout>
@@ -73,6 +75,7 @@
         <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="@dimen/activity_vertical_margin"
             android:layout_below="@+id/llHeader">
 
             <LinearLayout
@@ -91,6 +94,7 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginRight="@dimen/widget_margin"
+                        android:alpha="0.7"
                         android:src="@drawable/ic_subject" />
 
                     <EditText
@@ -114,34 +118,32 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginRight="@dimen/widget_margin"
-                        android:src="@drawable/clock" />
+                        android:alpha="0.7"
+                        android:src="@drawable/clock"/>
 
                     <Button
                         android:id="@+id/btnDate"
                         android:layout_width="0dp"
-                        android:layout_height="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/recyclerViewbacground"
                         android:layout_marginRight="@dimen/widget_margin"
-                        android:layout_weight="0.45"
-                        android:background="@color/common_signin_btn_light_text_default"
-                        android:textSize="20dp" />
+                        android:layout_weight="0.45"/>
 
                     <Button
                         android:id="@+id/btnFromTime"
                         android:layout_width="0dp"
-                        android:layout_height="fill_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/widget_margin"
-                        android:layout_weight="0.25"
-                        android:background="@color/common_signin_btn_light_text_default"
-                        android:textSize="20dp" />
+                        android:background="@color/recyclerViewbacground"
+                        android:layout_weight="0.25"/>
 
                     <Button
                         android:id="@+id/btnToTime"
                         android:layout_width="0dp"
-                        android:layout_height="fill_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/widget_margin"
-                        android:layout_weight="0.25"
-                        android:background="@color/common_signin_btn_light_text_default"
-                        android:textSize="20dp" />
+                        android:background="@color/recyclerViewbacground"
+                        android:layout_weight="0.25"/>
 
                 </LinearLayout>
 
@@ -157,6 +159,7 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginRight="@dimen/widget_margin"
+                        android:alpha="0.7"
                         android:src="@drawable/alldayicon" />
 
                     <LinearLayout
@@ -184,6 +187,7 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginRight="@dimen/widget_margin"
+                        android:alpha="0.7"
                         android:src="@drawable/alarmicon" />
 
                     <LinearLayout
@@ -212,6 +216,7 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginRight="@dimen/widget_margin"
+                        android:alpha="0.7"
                         android:src="@drawable/ic_repeat" />
 
                     <Spinner
@@ -234,6 +239,7 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginRight="@dimen/widget_margin"
+                        android:alpha="0.7"
                         android:src="@drawable/location" />
 
                     <EditText
@@ -255,6 +261,7 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginRight="@dimen/widget_margin"
+                        android:alpha="0.7"
                         android:src="@drawable/descriptionicon" />
 
                     <EditText

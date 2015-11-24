@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -97,7 +98,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 eventViewHolder.label.setTextColor(model.eventColor);
                 eventViewHolder.startTime.setText(millisToHourAndMinuteStr(model.day_of_month,model.startTimeMillis));
                 eventViewHolder.endTime.setText(millisToHourAndMinuteStr(model.day_of_month,model.endTimeMillis));
-                if (model.location.equals("")) {
+                if (model.location==null || model.location.equals("")) {
                     eventViewHolder.location.setVisibility(View.GONE);
                 } else {
                     eventViewHolder.location.setText(model.location);
@@ -146,6 +147,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             int position = getLayoutPosition();
             EventDataModel event = events.get(position);
             Intent intent = new Intent(activity, EventDetailActivity.class);
+            intent.putExtra("event_id",event.event_id);
             intent.putExtra("title", event.title);
             intent.putExtra("location", event.location);
             intent.putExtra("startTime", event.startTimeMillis);// this is milliseconds formate ,use TimeFormatHelper to convert to string
@@ -154,6 +156,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             intent.putExtra("allDay", event.allDay);
             intent.putExtra("hasAlarm", event.hasAlarm);
             intent.putExtra("calendarId",event.cal_id);
+
+            Log.d("Mukesh", "calendar id "+event.cal_id);
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, (View) label, "event_title");
             activity.startActivity(intent, options.toBundle());
 
