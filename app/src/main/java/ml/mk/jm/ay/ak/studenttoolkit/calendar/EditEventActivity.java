@@ -44,6 +44,8 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
 
     private String cal_id, event_id;
 
+    private static long begintimeMillis, endtimeMillis;
+
     String[] WeekOfDay;
 
     @Override
@@ -141,92 +143,94 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-        @Override
-        public void onClick (View v){
-            final Calendar cal = Calendar.getInstance();
-            final SimpleDateFormat dateFormat = new SimpleDateFormat("E, dd MMM");
-            final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+    @Override
+    public void onClick (View v){
+        final Calendar cal = Calendar.getInstance();
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("E, dd MMM");
+        final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
-            switch (v.getId()) {
-                case R.id.btnDate:
-                    // TODO add  date picker logic
-                    fYear = cal.get(Calendar.YEAR);
-                    fMonth = cal.get(Calendar.MONTH);
-                    fDay = cal.get(Calendar.DAY_OF_MONTH);
-                    final int fWeekDay = cal.get(Calendar.DAY_OF_WEEK);
+        switch (v.getId()) {
+            case R.id.btnDate:
+                // TODO add  date picker logic
+                fYear = cal.get(Calendar.YEAR);
+                fMonth = cal.get(Calendar.MONTH);
+                fDay = cal.get(Calendar.DAY_OF_MONTH);
+                final int fWeekDay = cal.get(Calendar.DAY_OF_WEEK);
 
-                    DatePickerDialog fromDpd = new DatePickerDialog(this,
-                            new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog fromDpd = new DatePickerDialog(this,
+                        new DatePickerDialog.OnDateSetListener() {
 
-                                @Override
-                                public void onDateSet(DatePicker view, int year,
-                                                      int monthOfYear, int dayOfMonth) {
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
 //                                String str = new StringBuilder().append(' ').append(dayOfMonth).append(' ').append(monthOfYear)
 //                                        .append(' ').append(year).toString();
 //                                String.format(str, "");
-                                    cal.set(Calendar.YEAR, year);
-                                    cal.set(Calendar.MONTH, monthOfYear);
-                                    cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                                cal.set(Calendar.YEAR, year);
+                                cal.set(Calendar.MONTH, monthOfYear);
+                                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                                    bDate.setText(dateFormat.format(cal.getTime()));
-                                }
-                            }, fYear, fMonth, fDay);
-                    fromDpd.show();
-                    Log.d("Mukesh", "Date :: " + fYear + fMonth + fDay);
-                    break;
+                                bDate.setText(dateFormat.format(cal.getTime()));
+                            }
+                        }, fYear, fMonth, fDay);
+                fromDpd.show();
+                Log.d("Mukesh", "Date :: " + fYear + fMonth + fDay);
+                break;
 
-                case R.id.btnFromTime:
-                    // TODO add  time picker logic
-                    fHour = cal.get(Calendar.HOUR_OF_DAY);
-                    fMin = cal.get(Calendar.MINUTE);
+            case R.id.btnFromTime:
+                // TODO add  time picker logic
+                fHour = cal.get(Calendar.HOUR_OF_DAY);
+                fMin = cal.get(Calendar.MINUTE);
 
-                    TimePickerDialog fromTpd = new TimePickerDialog(this,
-                            new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog fromTpd = new TimePickerDialog(this,
+                        new TimePickerDialog.OnTimeSetListener() {
 
-                                @Override
-                                public void onTimeSet(TimePicker view, int hourOfDay,
-                                                      int minute) {
-                                    cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                                    cal.set(Calendar.MINUTE, minute);
-                                    bFromTime.setText(timeFormat.format(cal.getTime()));
-                                }
-                            }, fHour, fMin, false);
-                    fromTpd.show();
-                    Log.d("Mukesh", "time :: " + fHour + fMin);
-                    break;
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay,
+                                                  int minute) {
+                                cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                cal.set(Calendar.MINUTE, minute);
+                                bFromTime.setText(timeFormat.format(cal.getTime()));
+                                begintimeMillis = cal.getTimeInMillis();
+                            }
+                        }, fHour, fMin, false);
+                fromTpd.show();
+                Log.d("Mukesh", "time :: " + fHour + fMin);
+                break;
 
-                case R.id.btnToTime:
-                    // TODO add time picker logic
-                    tHour = cal.get(Calendar.HOUR_OF_DAY);
-                    tMin = cal.get(Calendar.MINUTE);
-                    TimePickerDialog toTpd = new TimePickerDialog(this,
-                            new TimePickerDialog.OnTimeSetListener() {
+            case R.id.btnToTime:
+                // TODO add time picker logic
+                tHour = cal.get(Calendar.HOUR_OF_DAY);
+                tMin = cal.get(Calendar.MINUTE);
+                TimePickerDialog toTpd = new TimePickerDialog(this,
+                        new TimePickerDialog.OnTimeSetListener() {
 
-                                @Override
-                                public void onTimeSet(TimePicker view, int hourOfDay,
-                                                      int minute) {
-                                    cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                                    cal.set(Calendar.MINUTE, minute);
-                                    bToTime.setText(timeFormat.format(cal.getTime()));
-                                }
-                            }, tHour, tMin, false);
-                    toTpd.show();
-                    Log.d("Mukesh", "Time :: " + tHour + tMin);
-                    break;
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay,
+                                                  int minute) {
+                                cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                cal.set(Calendar.MINUTE, minute);
+                                bToTime.setText(timeFormat.format(cal.getTime()));
+                                endtimeMillis = cal.getTimeInMillis();
+                            }
+                        }, tHour, tMin, false);
+                toTpd.show();
+                Log.d("Mukesh", "Time :: " + tHour + tMin);
+                break;
 
-            }
         }
-        private class SpinnerListener implements AdapterView.OnItemSelectedListener {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String recurrence = parent.getItemAtPosition(position).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+    }
+    private class SpinnerListener implements AdapterView.OnItemSelectedListener {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            String recurrence = parent.getItemAtPosition(position).toString();
         }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    }
 
     private void addNotification() {
         final String[] choices = getResources().getStringArray(R.array.NotificationChoices);
@@ -256,8 +260,8 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
         cal.set(fYear,fMonth,fDay,tHour,tMin);
         long endTime = cal.getTimeInMillis();
 
-        newEvent.startTimeMillis = startTime;
-        newEvent.endTimeMillis = endTime;
+        newEvent.startTimeMillis = begintimeMillis;
+        newEvent.endTimeMillis = endtimeMillis;
 
         newEvent.allDay= sAllDay.isChecked()?1:0;
         newEvent.hasAlarm = sAlarm.isChecked()?1:0;
@@ -266,12 +270,10 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
         newEvent.cal_id = cal_id;
         newEvent.event_id=event_id;
 
-        Log.d("Mukesh","final event id"+newEvent.event_id + event_id);
-
-        int result = CalendarProviderHelper.updateEvent(getApplicationContext(),newEvent);
+        int result = CalendarProviderHelper.updateEvent(getApplicationContext(), newEvent);
         if(result>=0)
             Toast.makeText(getApplicationContext()," updated",Toast.LENGTH_SHORT).show();
-            finish();
+        finish();
 
     }
 
