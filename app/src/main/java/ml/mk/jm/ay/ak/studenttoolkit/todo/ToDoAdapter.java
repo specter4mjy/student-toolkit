@@ -1,12 +1,15 @@
 package ml.mk.jm.ay.ak.studenttoolkit.todo;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +55,34 @@ public class ToDoAdapter extends CursorAdapter implements ListAdapter {
             Date date = new Date();
             try {
                 date = simpleDateFormat.parse(c.getString(DatabaseConnection.DUE));
+
+
+                /*//setAlarm
+                //long milliseconds = d.getTime();
+                long alarmTime = date.getTime();
+                //long alarmTime = new GregorianCalendar().getTimeInMillis()+2*1000;
+                //long alarmTime = new GregorianCalendar().getTimeInMillis()+milliseconds;
+                Log.d("Ademola", "Alarm time [" + alarmTime + " ]");
+                //String msg, String msgText, String msgAlert
+                Intent alarmIntent = new Intent(context, AlertReceiver.class);
+                alarmIntent.putExtra("TODO_ID", c.getInt(DatabaseConnection.ID) );
+                alarmIntent.putExtra("TODO_TITLE", c.getString(DatabaseConnection.TITLE) );
+                alarmIntent.putExtra("TODO_DESCRIPTION", c.getString(DatabaseConnection.DESCRIPTION));
+
+                //, c.getInt(DatabaseConnection.ID)
+                *//*Intent intent = new Intent(getBaseContext(), SignoutActivity.class);
+                intent.putExtra("EXTRA_SESSION_ID",);
+                startActivity(intent)*//*
+
+                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime, PendingIntent.getBroadcast(context, 1,
+                        alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT));
+                Toast.makeText(context, "Alarm has been set for " + alarmTime + " seconds", Toast.LENGTH_SHORT).show();
+                Log.d("Ademola", "Alarm Manager [" + alarmManager + " ]");
+
+                //end setAlarm*/
+
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }

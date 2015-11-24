@@ -4,8 +4,10 @@
 
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.VIBRATE" />
-
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+
+    <!--set alarm-->
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -38,8 +40,21 @@
         </activity>
         <activity android:name=".todo.ShowToDoActivity" >
         </activity>
+
+        <!--AlertReceiver-->
+        <receiver android:name=".todo.AlertReceiver" />
         <activity android:name=".todo.NewToDoActivity" >
+        <!--Diamond-->
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.SEND" />
+                <data android:mimeType="text/*" />
+            </intent-filter>
+        <!--End Diamond-->
         </activity>
+
+
+
         <activity
             android:name=".todo.PostponeToDo_Activity"
             android:label="@string/title_activity_postpone_to_do_"

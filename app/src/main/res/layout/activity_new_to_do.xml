@@ -12,6 +12,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!--Diamond-->
+        <CheckBox android:id="@+id/checkboxShowVoice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/show"
+            android:onClick="onCheckboxClicked"/>
+        <ImageButton
+            android:id="@+id/imageButtonSpeak"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/microphone"
+            android:onClick="onClickSpeak"
+            android:background="@color/recyclerViewbacground" />
+
+        <TextView
+            android:id="@+id/txtViewTap"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Tap Mic to speak"
+            android:gravity="center"
+            />
+        <!--End Diamond-->
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

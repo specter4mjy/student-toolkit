@@ -1,7 +1,14 @@
 package ml.mk.jm.ay.ak.studenttoolkit.todo;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -9,15 +16,23 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.Random;
 
 import ml.mk.jm.ay.ak.studenttoolkit.R;
 import ml.mk.jm.ay.ak.studenttoolkit.database.DatabaseConnection;
@@ -35,6 +50,13 @@ public class NewToDoActivity extends AppCompatActivity {
     TimePicker tp;
     Date due = new Date();
     Calendar calendar;
+
+    //declare global
+    private EditText editTextTitle;
+    private EditText editTextDescription;
+    // end declare global
+
+
 
     //http://stackoverflow.com/questions/10062608/simpledateformat-unparseable-date
     final SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyy", Locale.ENGLISH);
@@ -135,7 +157,145 @@ public class NewToDoActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+
+
+        /**************Diamond********************/
+        //start share
+        //get the EditText
+
+        EditText txtDescription = (EditText) findViewById(R.id.newDescription);
+        Intent receivedIntent = getIntent();
+        //String action = receivedIntent.getAction();
+        String receivedType = receivedIntent.getType();
+        //get the action
+        String receivedAction = receivedIntent.getAction();
+
+        if(Intent.ACTION_SEND.equals(receivedAction) && receivedType != null){
+            //content is being shared
+            if(receivedType.startsWith("text/")){
+                //handle sent text
+                String receivedText = receivedIntent.getStringExtra(Intent.EXTRA_TEXT);
+                if (receivedText != null) {
+                    //set the text
+                    txtDescription.setText(receivedText);
+                }
+            }
+
+        }
+        else if(Intent.ACTION_MAIN.equals(receivedAction)){
+            //app has been launched directly, not from share list
+            txtDescription.setText("Description");
+        }
+        //end share
+
+    }//end onCreate
+
+    public void onCheckboxClicked(View view) {
+        boolean checked = ((CheckBox) view).isChecked();
+        ImageButton imgVoice = (ImageButton) findViewById(R.id.imageButtonSpeak);
+        TextView txtViewVoice =  (TextView) findViewById(R.id.txtViewTap);
+        switch(view.getId()){
+            case R.id.checkboxShowVoice:
+                if(checked)
+                {
+                    imgVoice.setVisibility(View.GONE);
+                    txtViewVoice.setVisibility(View.GONE);
+                }
+                else
+                {
+                    imgVoice.setVisibility(View.VISIBLE);
+                    txtViewVoice.setVisibility(View.VISIBLE);
+                }
+                break;
+
+        }//end switch
     }
+
+
+   /* private View.OnFocusChangeListener myEditTextFocus =  new View.OnFocusChangeListener() {
+        public void onFocusChange(View view, boolean gainFocus) {
+            //onFocus
+            if (gainFocus) {
+                //set the text
+                ((EditText) view).setText("In focus now");
+            }
+            //onBlur
+            else {
+                //clear the text
+                ((EditText) view).setText("");
+            }
+        };
+    };*/
+
+
+    public void onClickSpeak(View view) {
+        //declare global
+        editTextTitle = (EditText) findViewById(R.id.newTitle);
+        editTextDescription = (EditText) findViewById(R.id.newDescription);
+        // end declare global
+        if(view.getId()==R.id.imageButtonSpeak && editTextTitle.hasFocus()){
+           // EditText editText = (EditText) findViewById(R.id.newTitle);
+            callSpeakTitle();
+        }
+        else if(view.getId()==R.id.imageButtonSpeak && editTextDescription.hasFocus())
+            callSpeakDescription();
+
+    }
+    private void callSpeakTitle() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say Something");
+        try {
+            startActivityForResult(intent, 500);
+        }
+        catch(ActivityNotFoundException anfe)
+        {
+            Toast.makeText(NewToDoActivity.this, "Sorry! Your device does not recognize speech.", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+    private void callSpeakDescription() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say Something");
+        try {
+            startActivityForResult(intent, 1000);
+        }
+        catch(ActivityNotFoundException anfe)
+        {
+            Toast.makeText(NewToDoActivity.this, "Sorry! This device does not recognize speech.", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent dataIntent) {
+        super.onActivityResult(requestCode, resultCode, dataIntent);
+        switch (requestCode)
+        {
+            case 500:
+                if(resultCode==RESULT_OK && dataIntent!= null){
+                    ArrayList<String> resultValue = dataIntent.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    editTextTitle.setText(resultValue.get(0));
+                }
+                break;
+            case 1000:
+                if(resultCode==RESULT_OK && dataIntent!= null){
+                    ArrayList<String> resultValue = dataIntent.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    editTextDescription.setText(resultValue.get(0));
+                }
+                break;
+        }
+
+
+    }
+    /*****************Diamond****************/
+
+
 
     //A method that, when called, determines how to calculate the date from the options the user chose
     //on-screen. These can be any combination of calendarView, timePicker and the pre-defined times and dates
@@ -215,6 +375,58 @@ public class NewToDoActivity extends AppCompatActivity {
                         db.getWritableDatabase().execSQL(newToDo);
                         Toast toast = Toast.makeText(getApplicationContext(), "To-Do created successfully!", Toast.LENGTH_SHORT);
                         toast.show();
+
+
+                        //setAlarm
+                        Cursor cursor = db.getReadableDatabase().rawQuery("select * from todo",null);
+
+
+
+                        while(cursor.moveToNext()){
+                            try {
+                                Date d = sdf.parse(cursor.getString(DatabaseConnection.DUE));
+                                //Date d = sdf.parse(formattedDate);
+                        //long milliseconds = d.getTime();
+                        long alarmTime = d.getTime();
+                        //Random rand = new Random(10000000);
+                        //int rand = (int) (Math.random() * 1000);
+                        //long alarmTime = new GregorianCalendar().getTimeInMillis()+2*1000;
+                        //long alarmTime = new GregorianCalendar().getTimeInMillis()+milliseconds;
+                        Log.d("AlarmTime", "Alarm time [" + alarmTime + " ]");
+                        //String msg, String msgText, String msgAlert
+                                int rand = cursor.getInt(DatabaseConnection.ID);
+                                String title = cursor.getString(DatabaseConnection.TITLE);
+                                String desc = cursor.getString(DatabaseConnection.DESCRIPTION);
+                                        //, date
+                        Intent alarmIntent = new Intent(view.getContext(), AlertReceiver.class);
+                        alarmIntent.putExtra("TODO_ID", rand);
+                        alarmIntent.putExtra("TODO_TITLE", title );
+                        alarmIntent.putExtra("TODO_DESCRIPTION", desc);
+
+                        //, c.getInt(DatabaseConnection.ID)
+                /*Intent intent = new Intent(getBaseContext(), SignoutActivity.class);
+                intent.putExtra("EXTRA_SESSION_ID",);
+                startActivity(intent)*/
+
+                        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                        alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime, PendingIntent.getBroadcast(view.getContext(), 1,
+                                alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT));
+                                Date dt = new Date(alarmTime);
+                        Toast.makeText(view.getContext(), "Alarm has been set for " + dt , Toast.LENGTH_SHORT).show();
+                        Log.d("Ademola", "Alarm Manager [" + alarmManager + " ]");
+
+
+
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            //Todo todo = new Todo(c.getInt(DatabaseConnection.ID), c.getString(DatabaseConnection.TITLE),c.getString(DatabaseConnection.DESCRIPTION), date);// new Date());
+                            //todos.add(todo);
+                        }
+                        cursor.close();
+                        //end setAlarm
+
+
                         startActivity(todoIntent);
                     }
                     else {
