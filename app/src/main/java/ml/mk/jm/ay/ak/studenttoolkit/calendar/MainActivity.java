@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -198,6 +199,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setTabLayout(TabLayout tabLayout) {
         Calendar day = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+        long todayMillis = today.getTimeInMillis();
         day.add(Calendar.DATE, -dayOfWeekConverter(day.get(Calendar.DAY_OF_WEEK)) + 7 * weekOffset);
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
@@ -208,6 +211,13 @@ public class MainActivity extends AppCompatActivity {
             tvDate.setText(day.get(Calendar.DAY_OF_MONTH) + "");
             tvDayOfWeek.setTextSize(13);
             tvDate.setTextSize(15);
+            if (day.getTimeInMillis() == todayMillis) {
+                // today tablayout
+                tvDate.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.colorAccent));
+            }
+            else{
+                tvDate.setTextColor(0xeeffffff);
+            }
             day.add(Calendar.DAY_OF_MONTH, 1);
         }
         day = Calendar.getInstance();
@@ -219,6 +229,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void updaeTablayoutDate(TabLayout tabLayout) {
         Calendar day = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+        long todayMillis = today.getTimeInMillis();
         day.add(Calendar.DATE, -dayOfWeekConverter(day.get(Calendar.DAY_OF_WEEK)) + 7 * weekOffset);
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
@@ -228,6 +240,13 @@ public class MainActivity extends AppCompatActivity {
             tvDate.setText(day.get(Calendar.DAY_OF_MONTH) + "");
             tvDayOfWeek.setTextSize(13);
             tvDate.setTextSize(15);
+            if (day.getTimeInMillis() == todayMillis) {
+                // today tablayout
+                tvDate.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.colorAccent));
+            }
+            else{
+                tvDate.setTextColor(0xeeffffff);
+            }
             day.add(Calendar.DAY_OF_MONTH, 1);
         }
         TabLayout.Tab currentTab = tabLayout.getTabAt(tabLayout.getSelectedTabPosition());

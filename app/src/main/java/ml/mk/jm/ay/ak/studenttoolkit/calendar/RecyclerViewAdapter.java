@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import ml.mk.jm.ay.ak.studenttoolkit.R;
 import ml.mk.jm.ay.ak.studenttoolkit.calendar.helper.CalendarProviderHelper;
@@ -47,19 +49,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public void removeEvent(int position) {
         events.remove(position);
-        if (getItemCount() >= 2 && events.get(position - 1).addIcon && events.get(position).addIcon) {
-            events.remove(position);
-            notifyItemRangeRemoved(position, 2);
-        } else
-            notifyItemRemoved(position);
+//        if (getItemCount() >= 2 && events.get(position - 1).addIcon && events.get(position).addIcon) {
+//            events.remove(position);
+//            notifyItemRangeRemoved(position, 2);
+//        } else
+        notifyItemRemoved(position);
     }
-    public void updateAllEvents(int direction,List<EventDataModel> newevents) {
+
+    public void updateAllEvents(int direction, List<EventDataModel> newevents) {
         for (int i = events.size() - 1; i >= 0; i--) {
             events.remove(i);
             notifyItemRemoved(i);
         }
-        for (int i = newevents.size()-1; i >=0 ; i--) {
-            events.add(0,newevents.get(i));
+        for (int i = newevents.size() - 1; i >= 0; i--) {
+            events.add(0, newevents.get(i));
             notifyItemInserted(0);
         }
     }
@@ -97,14 +100,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case EVENT:
                 EventDataModel model = events.get(position);
                 EventViewHolder eventViewHolder = (EventViewHolder) holder;
-                eventViewHolder.label.setText(model.title);
+                eventViewHolder.label.setText(model.title.replaceAll("^COMP\\d{5}: ", ""));
                 eventViewHolder.label.setTextColor(model.eventColor);
-                eventViewHolder.startTime.setText(millisToHourAndMinuteStr(false,model.startTimeMillis));
-                eventViewHolder.endTime.setText(millisToHourAndMinuteStr(true,model.endTimeMillis));
-                if (model.location==null || model.location.equals("")) {
+                eventViewHolder.startTime.setText(millisToHourAndMinuteStr(false, model.startTimeMillis));
+                eventViewHolder.endTime.setText(millisToHourAndMinuteStr(true, model.endTimeMillis));
+                if (model.location == null || model.location.equals("")) {
                     eventViewHolder.location.setVisibility(View.GONE);
                 } else {
-                    eventViewHolder.location.setText(model.location);
+                    Pattern pattern = Pattern.compile("\\((.*?)\\)");
+                    Matcher matcher = pattern.matcher(model.location);
+                    if (matcher.find())
+                        eventViewHolder.location.setText(matcher.group(1));
+                    else
+                        eventViewHolder.location.setText(model.location);
                     eventViewHolder.location.setVisibility(View.VISIBLE);
                 }
                 break;
@@ -150,7 +158,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             int position = getLayoutPosition();
             EventDataModel event = events.get(position);
             Intent intent = new Intent(activity, EventDetailActivity.class);
-            intent.putExtra("event_id",event.event_id);
+            intent.putExtra("event_id", event.event_id);
             intent.putExtra("title", event.title);
             intent.putExtra("location", event.location);
             intent.putExtra("startTime", event.startTimeMillis);// this is milliseconds formate ,use TimeFormatHelper to convert to string
@@ -158,9 +166,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             intent.putExtra("description", event.description);
             intent.putExtra("allDay", event.allDay);
             intent.putExtra("hasAlarm", event.hasAlarm);
-            intent.putExtra("calendarId",event.cal_id);
+            intent.putExtra("calendarId", event.cal_id);
 
-            Log.d("Mukesh", "calendar id "+event.cal_id);
+            Log.d("Mukesh", "calendar id " + event.cal_id);
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, (View) label, "event_title");
             activity.startActivity(intent, options.toBundle());
 
@@ -182,7 +190,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         public void onClick(View v) {
             int position = getLayoutPosition();
             EventDataModel eventDataModel = events.get(position);
-            AddEventDialog addEventDialog = AddEventDialog.newInstance(eventDataModel,RecyclerViewAdapter.this,activity);
+            AddEventDialog addEventDialog = AddEventDialog.newInstance(eventDataModel, RecyclerViewAdapter.this, activity);
 
             addEventDialog.show(((AppCompatActivity) activity).getSupportFragmentManager(), "add event");
 
@@ -202,7 +210,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         @Override
         public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-            if (viewHolder.getItemViewType() == ADD  || ((MainActivity)activity).isEditMode() == false)
+            if (viewHolder.getItemViewType() == ADD || ((MainActivity) activity).isEditMode() == false)
                 return 0;
             else
                 return super.getSwipeDirs(recyclerView, viewHolder);
@@ -212,6 +220,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
             final boolean[] yesClicked = {false};
             final EventDataModel eventData = events.get(viewHolder.getAdapterPosition());
+            removeEvent(viewHolder.getAdapterPosition());
             Snackbar.make(viewHolder.itemView, "Event deleted", Snackbar.LENGTH_LONG)
                     .setAction("undo", new View.OnClickListener() {
                         @Override
@@ -230,7 +239,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         }
                     })
                     .show();
-            removeEvent(viewHolder.getAdapterPosition());
         }
     }
 }
