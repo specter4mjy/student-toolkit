@@ -32,8 +32,7 @@ public class TimeFormatHelper {
 
     public static String millisToDate(long millis) {
         // String array containing name of week days
-        String[] WeekOfDay = {"SUN", "MON", "TUE", "WED", "THU", "FRI"
-                               ,"SAT"};
+        String[] WeekOfDay = {"SUN", "MON", "TUE", "WED", "THU", "FRI","SAT"};
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(millis);
         String dayOfWeek = WeekOfDay[calendar.get(Calendar.DAY_OF_WEEK)];
