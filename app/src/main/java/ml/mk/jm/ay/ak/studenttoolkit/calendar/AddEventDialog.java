@@ -74,7 +74,7 @@ public class AddEventDialog extends DialogFragment {
         setupHourAndMinute();
         startTimeText = (TextView) view.findViewById(R.id.start_time);
         endTimeText = (TextView) view.findViewById(R.id.end_time);
-        startTimeText.setText(millisToHourAndMinuteStr(day_of_month, startFreeTimeMillis));
+        startTimeText.setText(millisToHourAndMinuteStr(false, startFreeTimeMillis));
 
         final TimePickerDialog.OnTimeSetListener onStartTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
@@ -86,7 +86,7 @@ public class AddEventDialog extends DialogFragment {
                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 calendar.set(Calendar.MINUTE, minute);
                 startFreeTimeMillis = calendar.getTimeInMillis();
-                startTimeText.setText(millisToHourAndMinuteStr(day_of_month, startFreeTimeMillis));
+                startTimeText.setText(millisToHourAndMinuteStr(false, startFreeTimeMillis));
             }
         };
         startTimeText.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +97,7 @@ public class AddEventDialog extends DialogFragment {
 
             }
         });
-        endTimeText.setText(millisToHourAndMinuteStr(day_of_month, endFreeTimeMillis));
+        endTimeText.setText(millisToHourAndMinuteStr(true, endFreeTimeMillis));
 
         final TimePickerDialog.OnTimeSetListener onEndTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
@@ -109,7 +109,7 @@ public class AddEventDialog extends DialogFragment {
                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 calendar.set(Calendar.MINUTE, minute);
                 endFreeTimeMillis = calendar.getTimeInMillis();
-                endTimeText.setText(millisToHourAndMinuteStr(day_of_month, endFreeTimeMillis));
+                endTimeText.setText(millisToHourAndMinuteStr(true, endFreeTimeMillis));
             }
         };
         endTimeText.setOnClickListener(new View.OnClickListener() {

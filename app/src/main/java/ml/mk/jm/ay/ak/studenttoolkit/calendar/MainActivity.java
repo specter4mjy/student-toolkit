@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(pagerAdapter);
 
         tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
-        tabLayout.setSelectedTabIndicatorHeight(10);
+        tabLayout.setSelectedTabIndicatorHeight(7);
         tabLayout.setupWithViewPager(viewPager);
         setTabLayout(tabLayout);
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

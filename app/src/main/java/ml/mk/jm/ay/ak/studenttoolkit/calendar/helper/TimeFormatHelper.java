@@ -9,12 +9,12 @@ import java.util.Calendar;
  * Created by specter on 11/18/15.
  */
 public class TimeFormatHelper {
-    public static String millisToHourAndMinuteStr(int date, long millis) {
+    public static String millisToHourAndMinuteStr(boolean endTime, long millis) {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis((millis));
         String hour = String.format("%02d", calendar.get(Calendar.HOUR_OF_DAY));
-        if (hour.equals("00") && date != calendar.get(Calendar.DAY_OF_MONTH)) {
+        if (hour.equals("00") && endTime) {
             hour = "24";
         }
         String minute = String.format("%02d", calendar.get(Calendar.MINUTE));

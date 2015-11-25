@@ -99,8 +99,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 EventViewHolder eventViewHolder = (EventViewHolder) holder;
                 eventViewHolder.label.setText(model.title);
                 eventViewHolder.label.setTextColor(model.eventColor);
-                eventViewHolder.startTime.setText(millisToHourAndMinuteStr(model.day_of_month,model.startTimeMillis));
-                eventViewHolder.endTime.setText(millisToHourAndMinuteStr(model.day_of_month,model.endTimeMillis));
+                eventViewHolder.startTime.setText(millisToHourAndMinuteStr(false,model.startTimeMillis));
+                eventViewHolder.endTime.setText(millisToHourAndMinuteStr(true,model.endTimeMillis));
                 if (model.location==null || model.location.equals("")) {
                     eventViewHolder.location.setVisibility(View.GONE);
                 } else {
