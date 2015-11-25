@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -20,7 +21,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     private MyPagerAdapter pagerAdapter;
     private TabLayout tabLayout;
-    private NavigationView nvDrawer;
+    public static NavigationView nvDrawer;
     private TextView tb_year_tv;
     private TextView tb_month_tv;
     private String tabTitles[] = new String[]{"Mon", "Tue ", "Wed", "Thu ", "Fri", "Sat", "Sun"};
@@ -58,6 +58,26 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                weekOffset = 0;
+                refreshEvents();
+                setToolbarTitle(tabLayout.getSelectedTabPosition());
+                updaeTablayoutDate(tabLayout);
+                Calendar day = Calendar.getInstance();
+                TabLayout.Tab todayTab = tabLayout.getTabAt(dayOfWeekConverter(day.get(Calendar.DAY_OF_WEEK)));
+                todayTab.select();
+                Calendar today= Calendar.getInstance();
+                int weekOfNow=today.get(Calendar.WEEK_OF_YEAR);
+                Calendar startOfSemester = Calendar.getInstance();
+                startOfSemester.set(2015, 8, 7);
+                int weekStartOfSemester = startOfSemester.get(Calendar.WEEK_OF_YEAR);
+                Log.i("week", "" + weekOfNow + " " + weekStartOfSemester);
+                Snackbar.make(MainActivity.nvDrawer, "Week " +(weekOfNow-weekStartOfSemester+1), Snackbar.LENGTH_SHORT).show();
+            }
+        });
+
         tb_year_tv = (TextView) findViewById(R.id.tb_year);
         tb_month_tv = (TextView) findViewById(R.id.tb__month);
         setToolbarTitle(dayOfWeekConverter(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)));//initiallize toolbaltitle
@@ -164,6 +184,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    public void refreshEvents() {
+        pagerAdapter.notifyDataSetChanged();
     }
 
     private void setToolbarTitle(int position) {
@@ -173,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setTabLayout(TabLayout tabLayout) {
         Calendar day = Calendar.getInstance();
-        day.add(Calendar.DATE, -dayOfWeekConverter(day.get(Calendar.DAY_OF_WEEK))+7*weekOffset);
+        day.add(Calendar.DATE, -dayOfWeekConverter(day.get(Calendar.DAY_OF_WEEK)) + 7 * weekOffset);
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
             tab.setCustomView(R.layout.tab_of_tablayout);
@@ -191,9 +216,10 @@ public class MainActivity extends AppCompatActivity {
         tvDate.setTextSize(22);
         todayTab.select();
     }
+
     private void updaeTablayoutDate(TabLayout tabLayout) {
         Calendar day = Calendar.getInstance();
-        day.add(Calendar.DATE, -dayOfWeekConverter(day.get(Calendar.DAY_OF_WEEK))+7*weekOffset);
+        day.add(Calendar.DATE, -dayOfWeekConverter(day.get(Calendar.DAY_OF_WEEK)) + 7 * weekOffset);
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
             TextView tvDayOfWeek = (TextView) tab.getCustomView().findViewById(R.id.tv_day_of_week);
@@ -215,16 +241,30 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (e1.getY() - e2.getY() > 100) {
-                Toast.makeText(MainActivity.this, "Up Swipe", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, "Up Swipe", Toast.LENGTH_SHORT).show();
                 weekOffset -= 1;
-                pagerAdapter.notifyDataSetChanged();
+                Calendar today= Calendar.getInstance();
+                int weekOfNow=today.get(Calendar.WEEK_OF_YEAR);
+                Calendar startOfSemester = Calendar.getInstance();
+                startOfSemester.set(2015, 8, 7);
+                int weekStartOfSemester = startOfSemester.get(Calendar.WEEK_OF_YEAR);
+                Log.i("week", "" + weekOfNow + " " + weekStartOfSemester);
+                Snackbar.make(MainActivity.nvDrawer, "Week " +(weekOfNow-weekStartOfSemester+1+weekOffset), Snackbar.LENGTH_SHORT).show();
+                refreshEvents();
                 setToolbarTitle(tabLayout.getSelectedTabPosition() + 7 * weekOffset);
                 updaeTablayoutDate(tabLayout);
 
             } else if (e2.getY() - e1.getY() > 100) {
-                Toast.makeText(MainActivity.this, "Down Swipe", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, "Down Swipe", Toast.LENGTH_SHORT).show();
                 weekOffset += 1;
-                pagerAdapter.notifyDataSetChanged();
+                Calendar today= Calendar.getInstance();
+                int weekOfNow=today.get(Calendar.WEEK_OF_YEAR);
+                Calendar startOfSemester = Calendar.getInstance();
+                startOfSemester.set(2015, 8, 7);
+                int weekStartOfSemester = startOfSemester.get(Calendar.WEEK_OF_YEAR);
+                Log.i("week", "" + weekOfNow + " " + weekStartOfSemester);
+                Snackbar.make(MainActivity.nvDrawer, "Week " +(weekOfNow-weekStartOfSemester+1+weekOffset), Snackbar.LENGTH_SHORT).show();
+                refreshEvents();
                 setToolbarTitle(tabLayout.getSelectedTabPosition() + 7 * weekOffset);
                 updaeTablayoutDate(tabLayout);
             }
@@ -278,7 +318,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public class MyPagerAdapter extends FragmentStatePagerAdapter{
+    public class MyPagerAdapter extends FragmentStatePagerAdapter {
         private int NUM_ITEM = 7;
         private String tabTitles[] = new String[]{"Mon", "Tue ", "Wed", "Thu ", "Fri", "Sat", "Sun"};
 
@@ -304,7 +344,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             Log.i("Position", position + "");
-            return ScreenSlideFragment.newInstance(position,weekOffset);
+            return ScreenSlideFragment.newInstance(position, weekOffset);
 
         }
     }

@@ -3,6 +3,7 @@ package ml.mk.jm.ay.ak.studenttoolkit.calendar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import ml.mk.jm.ay.ak.studenttoolkit.R;
+import ml.mk.jm.ay.ak.studenttoolkit.calendar.helper.CalendarProviderHelper;
 
 import static ml.mk.jm.ay.ak.studenttoolkit.calendar.helper.TimeFormatHelper.millisToHourAndMinuteStr;
 
@@ -29,12 +31,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private List<EventDataModel> events;
     private SparseBooleanArray selectedItems;
     private Context context;
-    private Activity activity;
+    private AppCompatActivity activity;
     private final int ADD = 0, EVENT = 1;
 
     public RecyclerViewAdapter(Activity activity, List<EventDataModel> events) {
         this.events = events;
-        this.activity = activity;
+        this.activity = (AppCompatActivity) activity;
     }
 
     public void addEvent(EventDataModel newModelData, int position) {
@@ -180,7 +182,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         public void onClick(View v) {
             int position = getLayoutPosition();
             EventDataModel eventDataModel = events.get(position);
-            AddEventDialog addEventDialog = AddEventDialog.newInstance(eventDataModel,RecyclerViewAdapter.this);
+            AddEventDialog addEventDialog = AddEventDialog.newInstance(eventDataModel,RecyclerViewAdapter.this,activity);
 
             addEventDialog.show(((AppCompatActivity) activity).getSupportFragmentManager(), "add event");
 
@@ -208,6 +210,26 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            final boolean[] yesClicked = {false};
+            final EventDataModel eventData = events.get(viewHolder.getAdapterPosition());
+            Snackbar.make(viewHolder.itemView, "Event deleted", Snackbar.LENGTH_LONG)
+                    .setAction("undo", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            yesClicked[0] = true;
+                        }
+                    })
+                    .setCallback(new Snackbar.Callback() {
+                        @Override
+                        public void onDismissed(Snackbar snackbar, int event) {
+                            super.onDismissed(snackbar, event);
+                            if (yesClicked[0] == false) {
+                                CalendarProviderHelper.deleteEvent(activity, eventData);
+                            }
+                            ((MainActivity) activity).refreshEvents();
+                        }
+                    })
+                    .show();
             removeEvent(viewHolder.getAdapterPosition());
         }
     }

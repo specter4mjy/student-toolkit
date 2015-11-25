@@ -64,4 +64,5 @@ public class ScreenSlideFragment extends android.support.v4.app.Fragment {
 
         return rootView;
     }
+
 }

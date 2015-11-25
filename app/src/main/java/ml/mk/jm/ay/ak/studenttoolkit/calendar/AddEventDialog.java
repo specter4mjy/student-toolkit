@@ -4,6 +4,7 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.TimePicker;
 import java.util.Calendar;
 
 import ml.mk.jm.ay.ak.studenttoolkit.R;
+import ml.mk.jm.ay.ak.studenttoolkit.calendar.helper.CalendarProviderHelper;
 
 import static ml.mk.jm.ay.ak.studenttoolkit.calendar.helper.TimeFormatHelper.millisToHourAndMinuteStr;
 
@@ -36,21 +38,25 @@ public class AddEventDialog extends DialogFragment {
     private int startMinute;
     private int endHour;
     private int endMinute;
+    private static String cal_id;
     private static long startFreeTimeMillis;
     private static long endFreeTimeMillis;
     private static int day_of_month;
     private static RecyclerViewAdapter recyclerViewAdapter;
+    private static MainActivity activity;
 
 
 
 
-    public static AddEventDialog newInstance(EventDataModel eventDataModel,RecyclerViewAdapter recyclerViewAdapter) {
+    public static AddEventDialog newInstance(EventDataModel eventDataModel,RecyclerViewAdapter recyclerViewAdapter,AppCompatActivity activity) {
         AddEventDialog frag = new AddEventDialog();
         frag.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
         startFreeTimeMillis = eventDataModel.startTimeMillis;
         endFreeTimeMillis = eventDataModel.endTimeMillis;
         day_of_month = eventDataModel.day_of_month;
+        cal_id = eventDataModel.cal_id;
         AddEventDialog.recyclerViewAdapter = recyclerViewAdapter;
+        AddEventDialog.activity = (MainActivity) activity;
         return frag;
     }
 
@@ -162,8 +168,9 @@ public class AddEventDialog extends DialogFragment {
         eventDataModel.title = edTitle.getText().toString();
         eventDataModel.description = edDescription.getText().toString();
         eventDataModel.location = edLocation.getText().toString();
-        eventDataModel.addIcon = false;
-        recyclerViewAdapter.addEvent(eventDataModel,0);
+        eventDataModel.cal_id = cal_id;
+        CalendarProviderHelper.addEvent(getContext(), eventDataModel);
+        activity.refreshEvents();
     }
 
 }

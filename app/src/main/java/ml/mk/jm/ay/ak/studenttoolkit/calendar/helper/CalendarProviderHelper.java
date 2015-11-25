@@ -85,6 +85,7 @@ public class CalendarProviderHelper {
     private static final int PROJECTION_CALENDAR_ID_INDEX = 12;
     private static final int PROJECTION_EVENT_ID_INDEX = 13;
     private static Calendar nowTime;
+    private static String cal_id = "0";
 
 
         public static List<EventDataModel> getTodayEvents(Activity activity,int dayOffset) {
@@ -113,7 +114,7 @@ public class CalendarProviderHelper {
                     INSTANCE_PROJECTION,
                     null,
                     null,
-                    CalendarContract.Instances.DTSTART+" ASC");
+                    CalendarContract.Instances.BEGIN+" ASC");
 
             List<EventDataModel> items = new ArrayList<>();
 
@@ -122,7 +123,6 @@ public class CalendarProviderHelper {
             long eventBeginTime = 0;
             long eventEndTime = 0;
             while (cursor.moveToNext()) {
-                String cal_id;
                 String event_id;
                 String title;
                 String location;
@@ -169,6 +169,7 @@ public class CalendarProviderHelper {
                     addModel.startTimeMillis = lastEventEndTime;
                     addModel.endTimeMillis = eventBeginTime;
                     addModel.addIcon = true;
+                    addModel.cal_id = cal_id;
                     items.add(addModel);
                 }
                 lastEventEndTime = eventEndTime;
@@ -180,6 +181,7 @@ public class CalendarProviderHelper {
                 addModel.startTimeMillis = lastEventEndTime;
                 addModel.endTimeMillis = endOfDayMillis;
                 addModel.addIcon = true;
+                addModel.cal_id = cal_id;
                 items.add(addModel);
             }
             return items;
@@ -232,7 +234,7 @@ public class CalendarProviderHelper {
         contentValues.put(CalendarContract.Events.EVENT_LOCATION, event.location);
         contentValues.put(CalendarContract.Events.HAS_ALARM, event.hasAlarm);
         contentValues.put(CalendarContract.Events.ALL_DAY, event.allDay);
-        contentValues.put("eventTimezone", TimeZone.getDefault().getID());
+        contentValues.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
 
         if (ActivityCompat.checkSelfPermission(context,
                 Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
@@ -246,18 +248,23 @@ public class CalendarProviderHelper {
     public static long deleteEvent(Context context, EventDataModel event){
         long event_id = Long.parseLong(event.event_id);
         long cal_id = Long.parseLong(event.cal_id);
-        String[] selArgs =
-                new String[]{Long.toString(event_id), Long.toString(cal_id)};
-        Log.d("Mukesh", "selArgs"+ event_id+ "cal" + cal_id);
+//        String[] selArgs =
+//                new String[]{Long.toString(event_id), Long.toString(cal_id)};
+//        Log.d("Mukesh", "selArgs"+ event_id+ "cal" + cal_id);
 
-        if (ActivityCompat.checkSelfPermission(context,
-                Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-            return 0;
-        }
+//        if (ActivityCompat.checkSelfPermission(context,
+//                Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+//            return 0;
+//        }
+        ContentResolver contentResolver = context.getContentResolver();
+        Uri deleteUri = null;
+        deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, event_id);
+        int rows = contentResolver.delete(deleteUri, null, null);
 
-        int result = context.getContentResolver().delete(CalendarContract.Events.CONTENT_URI, CalendarContract.Instances._ID + " =? " + " AND " + CalendarContract.Instances.CALENDAR_ID + " =? ", selArgs);
-        Log.d("Mukesh","result delete"+ result);
-        return result;
+//        int result = context.getContentResolver().delete(CalendarContract.Events.CONTENT_URI, CalendarContract.Instances._ID + " =? " + " AND " + CalendarContract.Instances.CALENDAR_ID + " =? ", selArgs);
+//        Log.d("Mukesh","result delete"+ result);
+//        return result;
+        return rows;
 
     }
 }
