@@ -11,9 +11,7 @@ import android.util.Log;
 import ml.mk.jm.ay.ak.studenttoolkit.R;
 import ml.mk.jm.ay.ak.studenttoolkit.database.DatabaseConnection;
 
-/**
- * Created by Forbes Diamond.
- */
+/**This class is used to receive alarm from the set alarm by users.*/
 public class AlertReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -23,7 +21,7 @@ public class AlertReceiver extends BroadcastReceiver {
         String todoDesc =  intent.getStringExtra("TODO_DESCRIPTION");
         Log.d("todo", "todo Id: " + todoId + " todoTitle: " + todoTitle + " todoDes" + todoDesc);
 
-        //createNotification(context, "Times up", "5 minutes has passed", "Alert", todoId);
+        
         createNotification(context, todoTitle, todoDesc, "Todo Alert", todoId);
     }
 
@@ -35,7 +33,6 @@ public class AlertReceiver extends BroadcastReceiver {
                 .setContentText(msgText)
                 .setTicker(msgAlert);
         nBuilder.setContentIntent(notifyIntent);
-        //nBuilder.setDefaults(NotificationCompat.DEFAULT_SOUND);
         nBuilder.setDefaults(NotificationCompat.DEFAULT_ALL);
         nBuilder.setAutoCancel(true);
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
