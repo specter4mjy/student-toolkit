@@ -1,6 +1,11 @@
 package ml.mk.jm.ay.ak.studenttoolkit.map;
 
+/**
+ * Created by Ahmed.
+ */
+
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
@@ -12,6 +17,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.net.URLEncoder;
 
 import ml.mk.jm.ay.ak.studenttoolkit.R;
 
@@ -28,7 +35,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        setUpMapIfNeeded();
+        if(savedInstanceState == null) {
+            setUpMapIfNeeded();
+        }
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -44,11 +53,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //number, (4) look for the location of that room in the data base (5)if the location found, put a marker on it otherwise show toast that the room location
     //not a available.
     public void onMapReady(GoogleMap map) {
-
         map.setMyLocationEnabled(true); //set the user location
-
         LatLng ucd = new LatLng(53.3068254,-6.2212337); //save the coordinate of the cerner point of the ucd as defult value in case the room position not available.
-
         db.createDatabase(this); //create the data base
 
         //Extract intent
@@ -62,14 +68,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             map.addMarker(new MarkerOptions().position(ucd).title("Room: " + roomNumber)); //add the room name to the marker
         }
         else{
-            CharSequence text = this.getString(R.string.pos_not_available_err); //showing toast in case the room location not available
-            int duration = Toast.LENGTH_LONG;
-            Toast.makeText(this, text, duration).show();
+            String query = URLEncoder.encode(roomNumber);
+            Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + query);
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                startActivity(mapIntent);
+                CharSequence text = this.getString(R.string.lunch_google_map); //showing toast in case the room location not available
+                int duration = Toast.LENGTH_LONG;
+                Toast.makeText(this, text, duration).show();
+            }
+            else{
+                CharSequence text = this.getString(R.string.pos_not_available_err); //showing toast in case the room location not available
+                int duration = Toast.LENGTH_LONG;
+                Toast.makeText(this, text, duration).show();
+            }
         }
-
         //move and zoom the camera to the room location (or to the default location if the room location not available).
-        CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(ucd, (float) 17.0);
-        map.animateCamera(yourLocation);
+        CameraUpdate center= CameraUpdateFactory.newLatLng(ucd);
+        CameraUpdate zoom=CameraUpdateFactory.zoomTo((float) 17.5);
+        map.moveCamera(center);
+        map.animateCamera(zoom);
     }
 
     //setUpMapIfNeeded method will chcek and setup the map if it is not been set yet.

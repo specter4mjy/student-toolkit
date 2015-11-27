@@ -1,5 +1,9 @@
 package ml.mk.jm.ay.ak.studenttoolkit.map;
 
+/**
+ * Created by Ahmed.
+ */
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -41,7 +45,7 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
         if (!mCursor.moveToNext())
         {
             //Writing information from res/locationData.xml file to the data base.
-            for (int i = 1; i <= 50; i++) {
+            for (int i = 1; i <= 89; i++) {
                 ContentValues values = new ContentValues();
                 values.put(KEY_ROOM, context.getString(R.string.roomNumber + i));// Getting room number
                 values.put(KEY_LAT, context.getString(R.string.roomLat + i)); // Getting room Lat

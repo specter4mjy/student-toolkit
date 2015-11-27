@@ -1,4 +1,7 @@
 package ml.mk.jm.ay.ak.studenttoolkit.map;
+/**
+ * Created by Ahmed.
+ */
 
 //this class used to create object has room number, room lat and room lng in it.
 public class Location {

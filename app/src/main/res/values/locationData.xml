@@ -1,10 +1,185 @@
+<!--Create by Ahmed-->
 <resources>
     <!--Defult, not wriitin data-->
     <string name="roomNumber">0</string>
     <string name="roomLat">0</string>
     <string name="roomLng">0</string>
 
-    <!--Science Building Level 0-->
+    <!--CSI Building Level 0-->
+    <!--Right side-->
+    <string name="roomnumber48">Computer Sci and Informatics (B002 CSI)</string>
+    <string name="roomLat48">53.3092358</string>
+    <string name="roomLng48">-6.2237448</string>
+
+    <string name="roomnumber49">Computer Sci and Informatics (B003 CSI)</string>
+    <string name="roomLat49">53.309301</string>
+    <string name="roomLng49">-6.223692</string>
+
+    <string name="roomnumber50">Computer Sci and Informatics (B004 CSI)</string>
+    <string name="roomLat50">53.309347</string>
+    <string name="roomLng50">-6.2234481</string>
+
+    <string name="roomnumber51">Computer Sci and Informatics (A001 CSI)</string>
+    <string name="roomLat51">53.3091821</string>
+    <string name="roomLng51">-6.2241149</string>
+
+    <string name="roomnumber52">Computer Sci and Informatics (A002 CSI)</string>
+    <string name="roomLat52">53.3092053</string>
+    <string name="roomLng52">-6.22422351</string>
+
+    <string name="roomnumber53">Computer Sci and Informatics (A003 CSI)</string>
+    <string name="roomLat53">53.3092134</string>
+    <string name="roomLng53">-6.2243255</string>
+
+    <string name="roomnumber54">Computer Sci and Informatics (A004 CSI)</string>
+    <string name="roomLat54">53.309215</string>
+    <string name="roomLng54">-6.2243898</string>
+
+    <!--Left Side-->
+    <string name="roomnumber55">Computer Sci and Informatics (A005 CSI)</string>
+    <string name="roomLat55">53.3092238</string>
+    <string name="roomLng55">-6.2244582</string>
+
+    <string name="roomnumber56">Computer Sci and Informatics (A005A CSI)</string>
+    <string name="roomLat56">53.3092302</string>
+    <string name="roomLng56">-6.2244851</string>
+
+    <string name="roomnumber57">Computer Sci and Informatics (A006 CSI)</string>
+    <string name="roomLat57">53.3092534</string>
+    <string name="roomLng57">-6.2245561</string>
+
+    <string name="roomnumber58">Computer Sci and Informatics (A007 CSI)</string>
+    <string name="roomLat58">53.3092967</string>
+    <string name="roomLng58">-6.2245548</string>
+
+    <string name="roomnumber59">Computer Sci and Informatics (A008 CSI)</string>
+    <string name="roomLat59">53.3092903</string>
+    <string name="roomLng59">-6.2244623</string>
+
+    <string name="roomnumber60">Computer Sci and Informatics (A009 CSI)</string>
+    <string name="roomLat60">53.3092887</string>
+    <string name="roomLng60">-6.2244113</string>
+
+    <string name="roomnumber61">Computer Sci and Informatics (A009B CSI)</string>
+    <string name="roomLat61">53.3092863</string>
+    <string name="roomLng61">-6.2243603</string>
+
+    <string name="roomnumber62">Computer Sci and Informatics (A010 CSI)</string>
+    <string name="roomLat62">53.3092662</string>
+    <string name="roomLng62">-6.2243013</string>
+
+    <string name="roomnumber63">Computer Sci and Informatics (A011 CSI)</string>
+    <string name="roomLat163">53.3093015</string>
+    <string name="roomLng163">-6.2243</string>
+
+    <string name="roomnumber64">Computer Sci and Informatics (A012 CSI)</string>
+    <string name="roomLat64">53.3093223</string>
+    <string name="roomLng64">-6.22422221</string>
+
+    <!--CSI Buliding Level 1-->
+    <!--Right side-->
+    <string name="roomnumber65">Computer Sci and Informatics (B102 CSI)</string>
+    <string name="roomLat65">53.3091917</string>
+    <string name="roomLng65">-6.2238179</string>
+
+    <string name="roomnumber66">Computer Sci and Informatics (B103 CSI)</string>
+    <string name="roomLat66">53.3092174</string>
+    <string name="roomLng566">-6.2237495</string>
+
+    <string name="roomnumber67">Computer Sci and Informatics (B104 CSI)</string>
+    <string name="roomLat67">53.3092318</string>
+    <string name="roomLng67">-6.2236569</string>
+
+    <string name="roomnumber68">Computer Sci and Informatics (B105 CSI)</string>
+    <string name="roomLat68">53.3092558</string>
+    <string name="roomLng68">-6.2235724</string>
+
+    <string name="roomnumber69">Computer Sci and Informatics (B106 CSI)</string>
+    <string name="roomLat69">53.3093239</string>
+    <string name="roomLng69">-6.2234504</string>
+
+    <string name="roomnumber70">Computer Sci and Informatics (B108 CSI)</string>
+    <string name="roomLat70">53.3093135</string>
+    <string name="roomLng70">-6.2236583</string>
+
+    <string name="roomnumber71">Computer Sci and Informatics (B109 CSI)</string>
+    <string name="roomLat71">53.3092686</string>
+    <string name="roomLng71">-6.2238447</string>
+
+    <string name="roomnumber72">Computer Sci and Informatics (A101 CSI)</string>
+    <string name="roomLat72">53.3091869</string>
+    <string name="roomLng72">-6.2241049</string>
+
+    <string name="roomnumber73">Computer Sci and Informatics (A102 CSI)</string>
+    <string name="roomLat73">53.3091861</string>
+    <string name="roomLng73">-6.224133</string>
+
+    <string name="roomnumber74">Computer Sci and Informatics (A103 CSI)</string>
+    <string name="roomLat74">53.3091877</string>
+    <string name="roomLng74">-6.2241692</string>
+
+    <string name="roomnumber75">Computer Sci and Informatics (A104 CSI)</string>
+    <string name="roomLat75">53.3091925</string>
+    <string name="roomLng75">-6.2242041</string>
+
+    <string name="roomnumber76">Computer Sci and Informatics (A105 CSI)</string>
+    <string name="roomLat76">53.3092029</string>
+    <string name="roomLng76">-6.2242484</string>
+
+    <string name="roomnumber77">Computer Sci and Informatics (A106 CSI)</string>
+    <string name="roomLat77">53.3092069</string>
+    <string name="roomLng77">-6.2242832</string>
+
+    <string name="roomnumber78">Computer Sci and Informatics (A107 CSI)</string>
+    <string name="roomLat78">53.3092262</string>
+    <string name="roomLn78">-6.2242712</string>
+
+    <string name="roomnumber79">Computer Sci and Informatics (A108 CSI)</string>
+    <string name="roomLat79">53.3092358</string>
+    <string name="roomLng79">-6.2242685</string>
+
+    <string name="roomnumber80">Computer Sci and Informatics (A109 CSI)</string>
+    <string name="roomLat80">53.3092678</string>
+    <string name="roomLng80">-6.2242591</string>
+
+    <!--Left side-->
+    <string name="roomnumber81">Computer Sci and Informatics (A110 CSI)</string>
+    <string name="roomLat81">53.3093007</string>
+    <string name="roomLng81">-6.224239</string>
+
+    <string name="roomnumber82">Computer Sci and Informatics (A111 CSI)</string>
+    <string name="roomLat82">53.3093215</string>
+    <string name="roomLng82">-6.2242309</string>
+
+    <string name="roomnumber83">Computer Sci and Informatics (A112 CSI)</string>
+    <string name="roomLat83">53.3093568</string>
+    <string name="roomLng83">-6.2242189</string>
+
+    <string name="roomnumber84">Computer Sci and Informatics (A113 CSI)</string>
+    <string name="roomLat84">53.3093488</string>
+    <string name="roomLng84">-6.2241625</string>
+
+    <string name="roomnumber85">Computer Sci and Informatics (A114 CSI)</string>
+    <string name="roomLat85">53.3093488</string>
+    <string name="roomLng85">-6.2241411</string>
+
+    <string name="roomnumber86">Computer Sci and Informatics (A115 CSI)</string>
+    <string name="roomLat86">53.3092686</string>
+    <string name="roomLng86">-6.2238447</string>
+
+    <string name="roomnumber87">Computer Sci and Informatics (A116 CSI)</string>
+    <string name="roomLat87">53.3093472</string>
+    <string name="roomLng87">-6.2241022</string>
+
+    <string name="roomnumber88">Computer Sci and Informatics (A117 CSI)</string>
+    <string name="roomLat88">53.3092951</string>
+    <string name="roomLng88">-6.2241183</string>
+
+    <string name="roomnumber89">Computer Sci and Informatics (A118 CSI)</string>
+    <string name="roomLat89">53.3092662</string>
+    <string name="roomLng89">-6.2241894</string>
+
+    <!--Science Building Level 0-->  <!--The full room name for science building will added before the app released. current room number completely match teh coordinates-->
     <!--left side-->
     <string name="roomnumber1">L0.102</string>
     <string name="roomLat1">53.3077686</string>
@@ -195,49 +370,4 @@
     <string name="roomnumber47">H0.36</string>
     <string name="roomLat47">53.3084429</string>
     <string name="roomLng47">-6.2245022</string>
-
-
-    <!--CSI Building Level 0-->
-    <!--Right side-->
-    <string name="roomnumber48">Computer Sci and Informatics (B002 CSI)</string>
-    <string name="roomLat48">53.3092422</string>
-    <string name="roomLng48">-6.2238132</string>
-
-    <string name="roomnumber49">Computer Sci and Informatics (B003 CSI)</string>
-    <string name="roomLat49">53.309301</string>
-    <string name="roomLng49">-6.223692</string>
-
-    <string name="roomnumber50">Computer Sci and Informatics (B004 CSI)</string>
-    <string name="roomLat50">53.309347</string>
-    <string name="roomLng50">-6.2234481</string>
-
-    <!--CSI Buliding Level 1-->
-    <!--Right side-->
-    <!--<string name="roomnumber50">Computer Sci and Informatics (B101 CSI)</string>-->
-    <!--<string name="roomLat50">53.3091917</string>-->
-    <!--<string name="roomLng50">-6.2238179</string>-->
-
-    <!--<string name="roomnumber50">Computer Sci and Informatics (B102 CSI)</string>-->
-    <!--<string name="roomLat50">53.3092174</string>-->
-    <!--<string name="roomLng50">-6.2237495</string>-->
-
-    <!--<string name="roomnumber50">Computer Sci and Informatics (B103 CSI)</string>-->
-    <!--<string name="roomLat50">53.3092318</string>-->
-    <!--<string name="roomLng50">-6.2236569</string>-->
-
-    <!--<string name="roomnumber50">Computer Sci and Informatics (B104 CSI)</string>-->
-    <!--<string name="roomLat50">53.3092558</string>-->
-    <!--<string name="roomLng50">-6.2235724</string>-->
-
-    <!--<string name="roomnumber50">Computer Sci and Informatics (B106 CSI)</string>-->
-    <!--<string name="roomLat50">53.3093239</string>-->
-    <!--<string name="roomLng50">-6.2234504</string>-->
-
-    <!--<string name="roomnumber50">Computer Sci and Informatics (B108 CSI)</string>-->
-    <!--<string name="roomLat50">53.3093135</string>-->
-    <!--<string name="roomLng50">-6.2236583</string>-->
-
-    <!--<string name="roomnumber50">Computer Sci and Informatics (B109 CSI)</string>-->
-    <!--<string name="roomLat50">53.3092686</string>-->
-    <!--<string name="roomLng50">-6.2238447</string>-->
 </resources>

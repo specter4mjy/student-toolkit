@@ -53,6 +53,7 @@
 
     <string name="title_activity_maps">Map</string>
     <string name="pos_not_available_err">Room position not available!</string>
+    <string name="lunch_google_map">Location not available! google map will lunch!</string>
     <string name="show">Do not use Voice</string>
 
 </resources>
