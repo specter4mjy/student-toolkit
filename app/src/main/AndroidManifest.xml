@@ -46,13 +46,13 @@
         <!--AlertReceiver-->
         <receiver android:name=".todo.AlertReceiver" />
         <activity android:name=".todo.NewToDoActivity" >
-        <!--Diamond-->
+       
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
                 <action android:name="android.intent.action.SEND" />
                 <data android:mimeType="text/*" />
             </intent-filter>
-        <!--End Diamond-->
+        
         </activity>
 
 
