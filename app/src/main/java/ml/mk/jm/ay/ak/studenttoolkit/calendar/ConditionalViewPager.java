@@ -7,7 +7,9 @@ import android.view.MotionEvent;
 
 /**
  * Created by specter on 11/19/15.
+ *  forbid swipe base on condition i.e. editmode value
  */
+
 public class ConditionalViewPager extends ViewPager {
     private boolean editmode;
 
@@ -16,6 +18,11 @@ public class ConditionalViewPager extends ViewPager {
         editmode = false;
     }
 
+    /**
+     * when in edit mode, forbid user swipe left and right in viewpager
+     * @param ev
+     * @return
+     */
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         if (editmode) {
@@ -34,6 +41,10 @@ public class ConditionalViewPager extends ViewPager {
     }
 
 
+    /**
+     * set the editmode value
+     * @param editmode
+     */
     public void setEditmode(boolean editmode) {
         this.editmode = editmode;
     }

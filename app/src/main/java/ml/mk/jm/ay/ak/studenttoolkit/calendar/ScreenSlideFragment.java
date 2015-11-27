@@ -14,6 +14,7 @@ import ml.mk.jm.ay.ak.studenttoolkit.calendar.helper.CalendarProviderHelper;
 
 /**
  * Created by specter on 10/24/15.
+ * Custom Fragment for each day
  */
 public class ScreenSlideFragment extends android.support.v4.app.Fragment {
     private RecyclerView recyclerView;
@@ -24,6 +25,12 @@ public class ScreenSlideFragment extends android.support.v4.app.Fragment {
 
     private static final String DEBUG_TAG = "MyActivity";
 
+    /**
+     * create new fragement
+     * @param page paper position
+     * @param weekOffset
+     * @return new fragment object created
+     */
     public static ScreenSlideFragment newInstance(int page, int weekOffset) {
         ScreenSlideFragment screenSlideFragment = new ScreenSlideFragment();
         Bundle args = new Bundle();
@@ -42,6 +49,13 @@ public class ScreenSlideFragment extends android.support.v4.app.Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     *  create linear layout recycler view adn setup the event data for recyclerView
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,6 +72,9 @@ public class ScreenSlideFragment extends android.support.v4.app.Fragment {
 
         adapter = new RecyclerViewAdapter(getActivity(), CalendarProviderHelper.getTodayEvents(getActivity(), page + 7 * weekOffset));
         recyclerView.setAdapter(adapter);
+        /**
+         * bind item swipe gesture listener
+         */
         ItemTouchHelper.Callback callback = adapter.new SwipeTouchHelper();
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(recyclerView);

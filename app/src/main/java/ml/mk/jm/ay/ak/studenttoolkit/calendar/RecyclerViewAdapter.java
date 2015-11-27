@@ -28,6 +28,7 @@ import static ml.mk.jm.ay.ak.studenttoolkit.calendar.helper.TimeFormatHelper.mil
 
 /**
  * Created by specter on 10/24/15.
+ * Recycler View Adapter
  */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<EventDataModel> events;
@@ -36,38 +37,42 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private AppCompatActivity activity;
     private final int ADD = 0, EVENT = 1;
 
+    /**
+     * constructor
+     * @param activity
+     * @param events
+     */
     public RecyclerViewAdapter(Activity activity, List<EventDataModel> events) {
         this.events = events;
         this.activity = (AppCompatActivity) activity;
     }
 
+    /**
+     * add event in List
+     * @param newModelData
+     * @param position
+     */
     public void addEvent(EventDataModel newModelData, int position) {
         events.add(position, newModelData);
         notifyItemInserted(position);
     }
 
 
+    /**
+     * remove event in List
+     * @param position
+     */
     public void removeEvent(int position) {
         events.remove(position);
-//        if (getItemCount() >= 2 && events.get(position - 1).addIcon && events.get(position).addIcon) {
-//            events.remove(position);
-//            notifyItemRangeRemoved(position, 2);
-//        } else
         notifyItemRemoved(position);
     }
 
-    public void updateAllEvents(int direction, List<EventDataModel> newevents) {
-        for (int i = events.size() - 1; i >= 0; i--) {
-            events.remove(i);
-            notifyItemRemoved(i);
-        }
-        for (int i = newevents.size() - 1; i >= 0; i--) {
-            events.add(0, newevents.get(i));
-            notifyItemInserted(0);
-        }
-    }
 
-
+    /**
+     * get the event in postion
+     * @param position
+     * @return
+     */
     public EventDataModel getEvent(int position) {
         return events.get(position);
     }
@@ -120,6 +125,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     }
 
+    /**
+     * return current item is add button or a event
+     * @param position
+     * @return
+     */
     @Override
     public int getItemViewType(int position) {
         if (events.get(position).addIcon) {
@@ -135,6 +145,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
 
+    /**
+     * this is for event item
+     */
     public class EventViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView label;
         TextView startTime;
@@ -153,6 +166,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
 
 
+        /**
+         * called when user click the event in RecyclerView and it will trigger the edit event activity
+         * @param v
+         */
         @Override
         public void onClick(View v) {
             int position = getLayoutPosition();
@@ -176,6 +193,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
+    /**
+     * theis is for add button
+     */
     public class AddViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView ivAdd;
 
@@ -186,6 +206,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             itemView.setOnClickListener(this);
         }
 
+        /**
+         * called when user click the add button and a create event dialog will be created
+         * @param v
+         */
         @Override
         public void onClick(View v) {
             int position = getLayoutPosition();
@@ -197,6 +221,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
+    /**
+     * add swipe to delete item function
+     */
     public class SwipeTouchHelper extends ItemTouchHelper.SimpleCallback {
 
         public SwipeTouchHelper() {
@@ -208,6 +235,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             return false;
         }
 
+        /**
+         * return 0 to make swipe disabled in add icon
+         * @param recyclerView
+         * @param viewHolder
+         * @return
+         */
         @Override
         public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
             if (viewHolder.getItemViewType() == ADD || ((MainActivity) activity).isEditMode() == false)
@@ -216,6 +249,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 return super.getSwipeDirs(recyclerView, viewHolder);
         }
 
+        /**
+         * triggered by user swipe on event item and pop up a snack bar
+         * @param viewHolder
+         * @param direction
+         */
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
             final boolean[] yesClicked = {false};
