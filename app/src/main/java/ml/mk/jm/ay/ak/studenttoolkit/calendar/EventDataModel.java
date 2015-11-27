@@ -2,6 +2,11 @@ package ml.mk.jm.ay.ak.studenttoolkit.calendar;
 
 /**
  * Created by specter on 10/24/15.
+ * Cooperate with Muckesh
+ */
+
+/**
+ * event data structure
  */
 public class EventDataModel {
     public String event_id;

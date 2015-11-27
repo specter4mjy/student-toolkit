@@ -23,6 +23,7 @@ import static ml.mk.jm.ay.ak.studenttoolkit.calendar.helper.TimeFormatHelper.mil
 
 /**
  * Created by specter on 11/3/15.
+ * Create add event dialog
  */
 public class AddEventDialog extends DialogFragment {
     private EditText edTitle;
@@ -46,8 +47,13 @@ public class AddEventDialog extends DialogFragment {
     private static MainActivity activity;
 
 
-
-
+    /**
+     * create new add event dialog object
+     * @param eventDataModel
+     * @param recyclerViewAdapter
+     * @param activity
+     * @return a dialog object
+     */
     public static AddEventDialog newInstance(EventDataModel eventDataModel,RecyclerViewAdapter recyclerViewAdapter,AppCompatActivity activity) {
         AddEventDialog frag = new AddEventDialog();
         frag.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
@@ -61,12 +67,24 @@ public class AddEventDialog extends DialogFragment {
     }
 
 
+    /**
+     * infalte the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.add_event_dialog, container);
     }
 
+    /**
+     * setup widget and bind click listener on two time textview and two buttons
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -89,6 +107,9 @@ public class AddEventDialog extends DialogFragment {
                 startTimeText.setText(millisToHourAndMinuteStr(false, startFreeTimeMillis));
             }
         };
+        /**
+         * when user click the time text view, create a default time picker dialog to let user change the time
+         */
         startTimeText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,6 +168,9 @@ public class AddEventDialog extends DialogFragment {
 
     }
 
+    /**
+     * predefined the start and end time
+     */
     private void setupHourAndMinute() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(startFreeTimeMillis);
@@ -157,6 +181,9 @@ public class AddEventDialog extends DialogFragment {
         endMinute = calendar.get(Calendar.MINUTE);
     }
 
+    /**
+     * called when user click save button and new event will saved with calendarprovider
+     */
     private void saveNewEvent() {
 
 

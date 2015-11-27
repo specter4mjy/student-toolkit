@@ -7,8 +7,19 @@ import java.util.Calendar;
 
 /**
  * Created by specter on 11/18/15.
+ * Cooperate with Muckesh
+ */
+
+/**
+ * some helper function to convert time format
  */
 public class TimeFormatHelper {
+    /**
+     * convert milliseconds to hour : minute String
+     * @param endTime is it the end tiem , if true, change hour 00 to 24
+     * @param millis
+     * @return
+     */
     public static String millisToHourAndMinuteStr(boolean endTime, long millis) {
 
         Calendar calendar = Calendar.getInstance();
@@ -21,6 +32,11 @@ public class TimeFormatHelper {
         return hour + " : " + minute;
     }
 
+    /**
+     * convert milliseconds to hour:minute String
+     * @param millis
+     * @return
+     */
     public static String millisToHourAndMinuteStr(long millis) {
 
         Calendar calendar = Calendar.getInstance();
@@ -30,6 +46,11 @@ public class TimeFormatHelper {
         return hour + ":" + minute;
     }
 
+    /**
+     * convert milliseconds to date String
+     * @param millis
+     * @return
+     */
     public static String millisToDate(long millis) {
         // String array containing name of week days
         String[] WeekOfDay = {"SUN", "MON", "TUE", "WED", "THU", "FRI","SAT"};
@@ -44,6 +65,12 @@ public class TimeFormatHelper {
         return date;
     }
 
+    /**
+     * get day, month ,year from miliseccond
+     * @param field
+     * @param position day offset
+     * @return
+     */
     public static String getTimeField(int field, int position) {
         Calendar day = Calendar.getInstance();
         day.add(Calendar.DATE, -dayOfWeekConverter(day.get(Calendar.DAY_OF_WEEK)) + position);
@@ -63,6 +90,12 @@ public class TimeFormatHelper {
         return result;
     }
 
+    /**
+     * int value of dayOfWeed converter
+     * because in android sunday= 1  monday=2 ....saturday=7 , we need monday=0,tuesday=1....sunday=6
+     * @param day
+     * @return
+     */
     public static int dayOfWeekConverter(int day) {
         int result = 0;
         switch (day) {

@@ -25,8 +25,16 @@ import static ml.mk.jm.ay.ak.studenttoolkit.calendar.helper.TimeFormatHelper.day
 
 /**
  * Created by specter on 11/23/15.
+ * Cooperate with Muckesh
+ */
+
+/**
+ * CalendarProvider CRUD
  */
 public class CalendarProviderHelper {
+    /**
+     * Instance Projection
+     */
     public static final String[] INSTANCE_PROJECTION = new String[]{
             CalendarContract.Instances._ID,
             CalendarContract.Instances.BEGIN,
@@ -64,6 +72,12 @@ public class CalendarProviderHelper {
     private static String cal_id = "0";
 
 
+    /**
+     * get offset day's events and save them in List
+     * @param activity
+     * @param dayOffset
+     * @return list of events
+     */
     public static List<EventDataModel> getTodayEvents(Activity activity,int dayOffset) {
         nowTime = Calendar.getInstance();
         nowTime.add(Calendar.DATE, -dayOfWeekConverter(nowTime.get(Calendar.DAY_OF_WEEK)) + dayOffset);
@@ -163,6 +177,12 @@ public class CalendarProviderHelper {
         return items;
     }
 
+    /**
+     * update the events' data
+     * @param context
+     * @param event
+     * @return
+     */
     // code to update event in calendar
     public static int updateEvent(Context context, EventDataModel event) {
         Calendar cal = Calendar.getInstance();
@@ -186,6 +206,12 @@ public class CalendarProviderHelper {
         return rows;
     }
 
+    /**
+     * add new event with CalendarProvider
+     * @param context
+     * @param event
+     * @return
+     */
     public static long addEvent(Context context, EventDataModel event) {
         Calendar cal = Calendar.getInstance();
         ContentValues contentValues = new ContentValues();
@@ -207,6 +233,12 @@ public class CalendarProviderHelper {
         return new Long(uri.getLastPathSegment());
     }
 
+    /**
+     * delete a event with CalendarProvider
+     * @param context
+     * @param event
+     * @return
+     */
     public static long deleteEvent(Context context, EventDataModel event){
         long event_id = Long.parseLong(event.event_id);
         ContentResolver contentResolver = context.getContentResolver();
