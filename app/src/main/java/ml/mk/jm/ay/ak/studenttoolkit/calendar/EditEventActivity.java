@@ -16,7 +16,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -26,17 +25,23 @@ import java.util.Calendar;
 import ml.mk.jm.ay.ak.studenttoolkit.R;
 import ml.mk.jm.ay.ak.studenttoolkit.calendar.helper.CalendarProviderHelper;
 import ml.mk.jm.ay.ak.studenttoolkit.calendar.helper.TimeFormatHelper;
+
+/*
+* Activity to allow user to edit some or all of the details of an event
+* Also allows to delete event.
+ */
 public class EditEventActivity extends AppCompatActivity implements View.OnClickListener {
 
-    static final int DATE_DIALOG_ID = 0;
-    static final int TIME_DIALOG_ID = 1;
-    ArrayAdapter<CharSequence> adapter;
-    Spinner rec;
+    private static final String TAG = EditEventActivity.class.getName();
+
+    // UI elements to handle recurrence of an event
+    private ArrayAdapter<CharSequence> adapter;
+    private Spinner rec;
     private SpinnerListener spl;
+
     private Switch sAllDay, sAlarm;
     private Button bDate, bFromTime, bToTime;
 
-    private TextView tvEventHead;
     private EditText etTitle, etLocation, etDescription;
     private int fYear, fMonth, fDay; //select start date of activity
     private int fHour, fMin;   //start time of activity
@@ -46,7 +51,6 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
 
     private static long begintimeMillis, endtimeMillis;
 
-    String[] WeekOfDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +66,8 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
 // Apply the adapter to the spinner
         rec.setAdapter(adapter);
         rec.setOnItemSelectedListener(this.spl);
+
+        // buttons to select time/date of event
         bDate = (Button) findViewById(R.id.btnDate);
         bDate.setOnClickListener(this);
 
@@ -85,6 +91,7 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
             }
         });
 
+        // switch to add/remove alarm associated with the event
         sAlarm = (Switch) findViewById(R.id.switchAlarm);
         sAlarm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -95,15 +102,17 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
             }
         });
 
+        /* parse data received to present this information to the User
+         * and allow easy modification  of some or all of these details
+        */
+
         Bundle extras = getIntent().getExtras();
-        Log.d("Mukesh", "extras "+extras.toString());
+        Log.d(TAG, "data received "+extras.toString());
         if (extras != null) {
             String title = extras.getString("title");
             etTitle =(EditText) findViewById(R.id.etTitle);
             etTitle.setText(title);
             String location = extras.getString("location");
-
-            Log.d("Mukesh", "title "+title+location);
 
             etLocation = (EditText)findViewById(R.id.etLocation);
             if (null!=location && !location.equals("")) {
@@ -138,11 +147,17 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
 
             cal_id = extras.getString("calendarId");
             event_id = extras.getString("event_id");
-            Log.d("Mukesh", "event_id"+event_id);
+            Log.d(TAG, "event_id "+event_id);
 
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    // callback when the user selects to change date and time information of the event
     @Override
     public void onClick (View v){
         final Calendar cal = Calendar.getInstance();
@@ -151,21 +166,20 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
 
         switch (v.getId()) {
             case R.id.btnDate:
-                // TODO add  date picker logic
                 fYear = cal.get(Calendar.YEAR);
                 fMonth = cal.get(Calendar.MONTH);
                 fDay = cal.get(Calendar.DAY_OF_MONTH);
                 final int fWeekDay = cal.get(Calendar.DAY_OF_WEEK);
 
+                /*
+                 * Open datepickerdialog and set the date on textbox once the user selects a date
+                 */
                 DatePickerDialog fromDpd = new DatePickerDialog(this,
                         new DatePickerDialog.OnDateSetListener() {
 
                             @Override
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
-//                                String str = new StringBuilder().append(' ').append(dayOfMonth).append(' ').append(monthOfYear)
-//                                        .append(' ').append(year).toString();
-//                                String.format(str, "");
                                 cal.set(Calendar.YEAR, year);
                                 cal.set(Calendar.MONTH, monthOfYear);
                                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -174,14 +188,17 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
                             }
                         }, fYear, fMonth, fDay);
                 fromDpd.show();
-                Log.d("Mukesh", "Date :: " + fYear + fMonth + fDay);
+                Log.d(TAG, "Date :: " + fYear + fMonth + fDay);
                 break;
 
             case R.id.btnFromTime:
-                // TODO add  time picker logic
                 fHour = cal.get(Calendar.HOUR_OF_DAY);
                 fMin = cal.get(Calendar.MINUTE);
 
+                /*
+                 * Open TimePicker to select a start time for the event
+                 * and set the time on textbox once the user selects one.
+                 */
                 TimePickerDialog fromTpd = new TimePickerDialog(this,
                         new TimePickerDialog.OnTimeSetListener() {
 
@@ -195,13 +212,16 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
                             }
                         }, fHour, fMin, false);
                 fromTpd.show();
-                Log.d("Mukesh", "time :: " + fHour + fMin);
                 break;
 
             case R.id.btnToTime:
-                // TODO add time picker logic
                 tHour = cal.get(Calendar.HOUR_OF_DAY);
                 tMin = cal.get(Calendar.MINUTE);
+
+                                /*
+                 * Open TimePicker to select a start time for the event
+                 * and set the time on textbox once the user selects one.
+                 */
                 TimePickerDialog toTpd = new TimePickerDialog(this,
                         new TimePickerDialog.OnTimeSetListener() {
 
@@ -215,7 +235,6 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
                             }
                         }, tHour, tMin, false);
                 toTpd.show();
-                Log.d("Mukesh", "Time :: " + tHour + tMin);
                 break;
 
         }
@@ -223,15 +242,20 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
     private class SpinnerListener implements AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            String recurrence = parent.getItemAtPosition(position).toString();
+            parent.getItemAtPosition(position).toString();
         }
 
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
 
+            // do nothing
         }
     }
 
+    /*
+    * opens a chooser dialog to choose an approriate time prior to event
+    * at which user wants to get notified by alarm
+     */
     private void addNotification() {
         final String[] choices = getResources().getStringArray(R.array.NotificationChoices);
 
@@ -240,29 +264,22 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
         builder.setSingleChoiceItems(choices, -1, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 dialog.dismiss();
-                Log.d("Mukesh", "selected " + choices[item]);
             }
         });
         AlertDialog alert = builder.create();
         alert.show();
     }
 
+    /*
+    * update calendar content provider with new values of event details
+     * when the user clicks on save icon after modifying some of the details
+     */
     public void saveEvent(View v){
 
         EventDataModel newEvent = new EventDataModel();
         newEvent.title = etTitle.getText().toString();
-
-        // calculate start and end time in millis to store in calendar
-        Calendar cal = Calendar.getInstance();
-        cal.set(fYear,fMonth,fDay,fHour,fMin);
-        long startTime = cal.getTimeInMillis();
-
-        cal.set(fYear,fMonth,fDay,tHour,tMin);
-        long endTime = cal.getTimeInMillis();
-
         newEvent.startTimeMillis = begintimeMillis;
         newEvent.endTimeMillis = endtimeMillis;
-
         newEvent.allDay= sAllDay.isChecked()?1:0;
         newEvent.hasAlarm = sAlarm.isChecked()?1:0;
         newEvent.location = etLocation.getText().toString();
@@ -270,23 +287,28 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
         newEvent.cal_id = cal_id;
         newEvent.event_id=event_id;
 
+        // update query to be called by CalendarProviderHelper with new data
         int result = CalendarProviderHelper.updateEvent(getApplicationContext(), newEvent);
         if(result>=0)
             Toast.makeText(getApplicationContext()," updated",Toast.LENGTH_SHORT).show();
-        finish();
 
+        // return to last activity once the event details are saved
+        finish();
     }
 
+    /*
+    * Delete an event once the user selects remove icon
+     */
     public void deleteEvent(View v){
         EventDataModel newEvent = new EventDataModel();
 
         newEvent.cal_id = cal_id;
         newEvent.event_id=event_id;
 
-        Log.d("Mukesh","event id to be deleted "+event_id + "cal_id" +cal_id);
         long result = CalendarProviderHelper.deleteEvent(getApplicationContext(), newEvent);
         if(result>=0)
-            Toast.makeText(getApplicationContext(),"result "+result,Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"result : success",Toast.LENGTH_SHORT).show();
+        // return to last activity once the event is deleted
         finish();
 
 
