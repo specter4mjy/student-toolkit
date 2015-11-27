@@ -29,7 +29,10 @@ import ml.mk.jm.ay.ak.studenttoolkit.R;
 import ml.mk.jm.ay.ak.studenttoolkit.database.DatabaseConnection;
 
 /**
- * Created by Marc on 10/11/2015.
+ * Created by Marc.
+ * This is the adapter that it shown on the main To-Do screen. It is used by the ToDoActivity to
+ * display several To-Do item in a scrolling list to the user. From here, the user has the option to create
+ * a new To-Do, view an existing To-Do in detail or delete an existing To-Do.
  */
 public class ToDoAdapter extends CursorAdapter implements ListAdapter {
 
@@ -55,34 +58,6 @@ public class ToDoAdapter extends CursorAdapter implements ListAdapter {
             Date date = new Date();
             try {
                 date = simpleDateFormat.parse(c.getString(DatabaseConnection.DUE));
-
-
-                /*//setAlarm
-                //long milliseconds = d.getTime();
-                long alarmTime = date.getTime();
-                //long alarmTime = new GregorianCalendar().getTimeInMillis()+2*1000;
-                //long alarmTime = new GregorianCalendar().getTimeInMillis()+milliseconds;
-                Log.d("Ademola", "Alarm time [" + alarmTime + " ]");
-                //String msg, String msgText, String msgAlert
-                Intent alarmIntent = new Intent(context, AlertReceiver.class);
-                alarmIntent.putExtra("TODO_ID", c.getInt(DatabaseConnection.ID) );
-                alarmIntent.putExtra("TODO_TITLE", c.getString(DatabaseConnection.TITLE) );
-                alarmIntent.putExtra("TODO_DESCRIPTION", c.getString(DatabaseConnection.DESCRIPTION));
-
-                //, c.getInt(DatabaseConnection.ID)
-                *//*Intent intent = new Intent(getBaseContext(), SignoutActivity.class);
-                intent.putExtra("EXTRA_SESSION_ID",);
-                startActivity(intent)*//*
-
-                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime, PendingIntent.getBroadcast(context, 1,
-                        alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT));
-                Toast.makeText(context, "Alarm has been set for " + alarmTime + " seconds", Toast.LENGTH_SHORT).show();
-                Log.d("Ademola", "Alarm Manager [" + alarmManager + " ]");
-
-                //end setAlarm*/
-
-
             } catch (ParseException e) {
                 e.printStackTrace();
             }

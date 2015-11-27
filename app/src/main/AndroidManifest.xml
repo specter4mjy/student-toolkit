@@ -30,15 +30,17 @@
 
         <activity
             android:name=".todo.ToDoActivity"
-            android:label="@string/title_activity_to_do"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
             android:name=".todo.EditToDoActivity"
-            android:label="@string/title_activity_edit_to_do"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
-        <activity android:name=".todo.ShowToDoActivity" >
+        <activity
+            android:name=".todo.ShowToDoActivity"
+            android:label="@string/app_name">
         </activity>
 
         <!--AlertReceiver-->
@@ -56,8 +58,8 @@
 
 
         <activity
-            android:name=".todo.PostponeToDo_Activity"
-            android:label="@string/title_activity_postpone_to_do_"
+            android:name=".todo.PostponeToDoActivity"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity

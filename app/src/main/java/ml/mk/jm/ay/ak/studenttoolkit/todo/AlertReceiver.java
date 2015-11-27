@@ -12,7 +12,7 @@ import ml.mk.jm.ay.ak.studenttoolkit.R;
 import ml.mk.jm.ay.ak.studenttoolkit.database.DatabaseConnection;
 
 /**
- * Created by Forbes Diamond on 11/24/2015.
+ * Created by Forbes Diamond.
  */
 public class AlertReceiver extends BroadcastReceiver {
     @Override

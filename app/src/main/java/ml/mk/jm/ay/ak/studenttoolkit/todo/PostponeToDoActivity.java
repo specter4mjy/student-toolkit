@@ -21,7 +21,13 @@ import java.util.Locale;
 import ml.mk.jm.ay.ak.studenttoolkit.R;
 import ml.mk.jm.ay.ak.studenttoolkit.database.DatabaseConnection;
 
-public class PostponeToDo_Activity extends AppCompatActivity {
+/**
+ * Created by Marc.
+ * This screen allows the user to postpone a To-Do object. We felt it necessary to distinguish between editing a date and
+ * postponing a To-Do, hence why this activity was created. The user can use several widgets to postpone an activity.
+ */
+
+public class PostponeToDoActivity extends AppCompatActivity {
 
     Intent intent;
     Bundle bundle;
@@ -191,7 +197,7 @@ public class PostponeToDo_Activity extends AppCompatActivity {
     //override the back button and make it go to the ToDoActivity class
     //http://stackoverflow.com/questions/11807554/go-to-home-screen-instead-of-previous-activity
     public void onBackPressed() {
-        Intent startMain = new Intent(PostponeToDo_Activity.this, ToDoActivity.class);
+        Intent startMain = new Intent(PostponeToDoActivity.this, ToDoActivity.class);
         startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(startMain);
     }
@@ -212,7 +218,7 @@ public class PostponeToDo_Activity extends AppCompatActivity {
                     Date possiblePastDate = sdf.parse(formattedDate);
 
                     if(possiblePastDate.getTime() > new Date().getTime()) {
-                        menuIntent = new Intent(PostponeToDo_Activity.this, ToDoActivity.class);
+                        menuIntent = new Intent(PostponeToDoActivity.this, ToDoActivity.class);
                         String update = "update todo set due = '" + formattedDate + "' where _id = " + todo.getId();
                         db.getWritableDatabase().execSQL(update);
                         Toast toast = Toast.makeText(getApplicationContext(), "To-Do Postponed!", Toast.LENGTH_SHORT);
@@ -225,7 +231,7 @@ public class PostponeToDo_Activity extends AppCompatActivity {
                     }
 
                 } else if (view.getId() == R.id.cancelPostponeButton) {
-                    menuIntent = new Intent(PostponeToDo_Activity.this, ToDoActivity.class);
+                    menuIntent = new Intent(PostponeToDoActivity.this, ToDoActivity.class);
                     Toast toast = Toast.makeText(getApplicationContext(), "Postpone cancelled!", Toast.LENGTH_SHORT);
                     toast.show();
                     startActivity(menuIntent);

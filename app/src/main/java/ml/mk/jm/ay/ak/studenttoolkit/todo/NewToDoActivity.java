@@ -37,6 +37,11 @@ import java.util.Random;
 import ml.mk.jm.ay.ak.studenttoolkit.R;
 import ml.mk.jm.ay.ak.studenttoolkit.database.DatabaseConnection;
 
+/**
+ * Created by Marc.
+ * This activity was created to allow the user to create new To-Do objects.
+ */
+
 public class NewToDoActivity extends AppCompatActivity {
 
     TextView newTitleView;
@@ -55,8 +60,6 @@ public class NewToDoActivity extends AppCompatActivity {
     private EditText editTextTitle;
     private EditText editTextDescription;
     // end declare global
-
-
 
     //http://stackoverflow.com/questions/10062608/simpledateformat-unparseable-date
     final SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyy", Locale.ENGLISH);

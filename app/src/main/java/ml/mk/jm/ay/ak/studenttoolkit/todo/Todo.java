@@ -10,7 +10,9 @@ import java.util.Locale;
 
 
 /**
- * Created by Marc on 08/11/2015.
+ * Created by Marc.
+ * A simply POJO class to hold To-Do data. nothing special, aside from implementing Parcelable
+ * to allow these objects to be placed in bundle and sent from one activity to another.
  */
 public class Todo implements Parcelable {
 

@@ -12,6 +12,11 @@ import android.widget.Toast;
 import ml.mk.jm.ay.ak.studenttoolkit.R;
 import ml.mk.jm.ay.ak.studenttoolkit.database.DatabaseConnection;
 
+/**
+ * Created by Marc.
+ * This activity is used to edit the title and description of To-Do objects.
+ * It includes widgets to make this easier for the user.
+ */
 
 public class EditToDoActivity extends AppCompatActivity {
 

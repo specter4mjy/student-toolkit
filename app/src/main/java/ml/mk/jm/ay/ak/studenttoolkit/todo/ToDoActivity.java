@@ -15,6 +15,14 @@ import ml.mk.jm.ay.ak.studenttoolkit.R;
 import ml.mk.jm.ay.ak.studenttoolkit.calendar.MainActivity;
 import ml.mk.jm.ay.ak.studenttoolkit.database.DatabaseConnection;
 
+/**
+ * Created by Marc.
+ * This is the main activity for the To-Do function. It uses a ToDoAdapter to display a list of To-Do objects, which
+ * the user can execute commands on (From the adapter). A navigation view is provided to allow the user to use the
+ * drawer present when the user first opened the application. A database connection is also created here, which is used
+ * in several other classes.
+ */
+
 public class ToDoActivity extends AppCompatActivity {
 
     ListView listView;

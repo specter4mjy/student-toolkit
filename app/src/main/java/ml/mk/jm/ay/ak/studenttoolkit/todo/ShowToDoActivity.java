@@ -13,6 +13,12 @@ import java.util.Locale;
 
 import ml.mk.jm.ay.ak.studenttoolkit.R;
 
+/**
+ * Created by Marc.
+ * This activity is used to show a To-Do in more detail. From here, the user click on options to edit the text fields of a To-Do
+ * or go to the due-date postponement screen.
+ */
+
 public class ShowToDoActivity extends AppCompatActivity {
 
     Todo todo;
@@ -81,7 +87,7 @@ public class ShowToDoActivity extends AppCompatActivity {
                 } else if (view.getId() == R.id.postponeButton) {
                     bundle = new Bundle();
                     bundle.putParcelable("todo",todo);
-                    todoIntent = new Intent(ShowToDoActivity.this, PostponeToDo_Activity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    todoIntent = new Intent(ShowToDoActivity.this, PostponeToDoActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     todoIntent.putExtras(bundle);
                     startActivity(todoIntent);
                 }
