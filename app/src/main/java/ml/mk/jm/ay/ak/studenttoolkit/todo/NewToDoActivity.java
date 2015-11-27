@@ -164,13 +164,13 @@ public class NewToDoActivity extends AppCompatActivity {
 
 
 
-        /**************Diamond********************/
-        //start share
-        //get the EditText
+        /**************The share with todo function stars here*******************
+        get the EditText
+        */
 
         EditText txtDescription = (EditText) findViewById(R.id.newDescription);
         Intent receivedIntent = getIntent();
-        //String action = receivedIntent.getAction();
+        
         String receivedType = receivedIntent.getType();
         //get the action
         String receivedAction = receivedIntent.getAction();
@@ -194,7 +194,9 @@ public class NewToDoActivity extends AppCompatActivity {
         //end share
 
     }//end onCreate
-
+    
+ /***This function let user select whether to use voice to text or not, once a user select it, it shows and
+     * once the user deselect it, it disappears***/
     public void onCheckboxClicked(View view) {
         boolean checked = ((CheckBox) view).isChecked();
         ImageButton imgVoice = (ImageButton) findViewById(R.id.imageButtonSpeak);
@@ -215,22 +217,10 @@ public class NewToDoActivity extends AppCompatActivity {
 
         }//end switch
     }
+    /*************end selection */
 
 
-   /* private View.OnFocusChangeListener myEditTextFocus =  new View.OnFocusChangeListener() {
-        public void onFocusChange(View view, boolean gainFocus) {
-            //onFocus
-            if (gainFocus) {
-                //set the text
-                ((EditText) view).setText("In focus now");
-            }
-            //onBlur
-            else {
-                //clear the text
-                ((EditText) view).setText("");
-            }
-        };
-    };*/
+   
 
 
     public void onClickSpeak(View view) {
@@ -239,10 +229,11 @@ public class NewToDoActivity extends AppCompatActivity {
         editTextDescription = (EditText) findViewById(R.id.newDescription);
         // end declare global
         if(view.getId()==R.id.imageButtonSpeak && editTextTitle.hasFocus()){
-           // EditText editText = (EditText) findViewById(R.id.newTitle);
+          //call function callSpeakTitle if you want to use voice to text for title
             callSpeakTitle();
         }
         else if(view.getId()==R.id.imageButtonSpeak && editTextDescription.hasFocus())
+         //call function callSpeakDescription if you want to use voice to text for Description
             callSpeakDescription();
 
     }
@@ -260,6 +251,7 @@ public class NewToDoActivity extends AppCompatActivity {
         }
 
     }
+    /*the function that let you speak to the text for description*/
     private void callSpeakDescription() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -274,7 +266,7 @@ public class NewToDoActivity extends AppCompatActivity {
         }
 
     }
-
+   /*This gets the result of your voice and put it in an appropriate EditText widget.*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent dataIntent) {
         super.onActivityResult(requestCode, resultCode, dataIntent);
@@ -296,7 +288,7 @@ public class NewToDoActivity extends AppCompatActivity {
 
 
     }
-    /*****************Diamond****************/
+    /********End result****************/
 
 
 
@@ -388,15 +380,7 @@ public class NewToDoActivity extends AppCompatActivity {
                         while(cursor.moveToNext()){
                             try {
                                 Date d = sdf.parse(cursor.getString(DatabaseConnection.DUE));
-                                //Date d = sdf.parse(formattedDate);
-                        //long milliseconds = d.getTime();
-                        long alarmTime = d.getTime();
-                        //Random rand = new Random(10000000);
-                        //int rand = (int) (Math.random() * 1000);
-                        //long alarmTime = new GregorianCalendar().getTimeInMillis()+2*1000;
-                        //long alarmTime = new GregorianCalendar().getTimeInMillis()+milliseconds;
-                        Log.d("AlarmTime", "Alarm time [" + alarmTime + " ]");
-                        //String msg, String msgText, String msgAlert
+                                long alarmTime = d.getTime();
                                 int rand = cursor.getInt(DatabaseConnection.ID);
                                 String title = cursor.getString(DatabaseConnection.TITLE);
                                 String desc = cursor.getString(DatabaseConnection.DESCRIPTION);
@@ -406,25 +390,21 @@ public class NewToDoActivity extends AppCompatActivity {
                         alarmIntent.putExtra("TODO_TITLE", title );
                         alarmIntent.putExtra("TODO_DESCRIPTION", desc);
 
-                        //, c.getInt(DatabaseConnection.ID)
-                /*Intent intent = new Intent(getBaseContext(), SignoutActivity.class);
-                intent.putExtra("EXTRA_SESSION_ID",);
-                startActivity(intent)*/
+                       
 
                         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                         alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime, PendingIntent.getBroadcast(view.getContext(), 1,
                                 alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT));
                                 Date dt = new Date(alarmTime);
                         Toast.makeText(view.getContext(), "Alarm has been set for " + dt , Toast.LENGTH_SHORT).show();
-                        Log.d("Ademola", "Alarm Manager [" + alarmManager + " ]");
+                       
 
 
 
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-                            //Todo todo = new Todo(c.getInt(DatabaseConnection.ID), c.getString(DatabaseConnection.TITLE),c.getString(DatabaseConnection.DESCRIPTION), date);// new Date());
-                            //todos.add(todo);
+                           
                         }
                         cursor.close();
                         //end setAlarm
