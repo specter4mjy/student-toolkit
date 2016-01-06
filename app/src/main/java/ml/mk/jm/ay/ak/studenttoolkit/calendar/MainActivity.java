@@ -1,13 +1,16 @@
 package ml.mk.jm.ay.ak.studenttoolkit.calendar;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
@@ -55,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private int weekOffset = 0;
+    private final int MY_PERMISSIONS_REQUEST_READ_CALENDAR = 123;
+    private final int MY_PERMISSIONS_REQUEST_WRITE_CALENDAR = 124;
 
     /**
      * return view mode state
@@ -136,10 +141,140 @@ public class MainActivity extends AppCompatActivity {
         );
 
         viewPager = (ConditionalViewPager) findViewById(R.id.pager);
-        pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(pagerAdapter);
 
         tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+
+
+
+        nvDrawer = (NavigationView) findViewById(R.id.nav_view);
+        setupDrawerContent(nvDrawer);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                setToolbarTitle(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+/**
+ * requare permission to access user calendar data
+ */
+        loadData();
+    }
+
+    /**
+     * require permision to show calendar data
+     */
+    void loadData() {
+/**
+ * request access calendar read permission
+ */
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_CALENDAR)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_CALENDAR)) {
+
+                explanPermission("We need you permission to show your calendar events!");
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_CALENDAR},
+                        MY_PERMISSIONS_REQUEST_READ_CALENDAR);
+            }
+        } else {
+/**
+ * request access calendar write permission
+ */
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.WRITE_CALENDAR)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                // Should we show an explanation?
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.WRITE_CALENDAR)) {
+                    explanPermission("We need you permission to show your calendar events!");
+                } else {
+
+                    // No explanation needed, we can request the permission.
+
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.WRITE_CALENDAR},
+                            MY_PERMISSIONS_REQUEST_WRITE_CALENDAR);
+                }
+            } else {
+                /**
+                 * have gotten access calendar permission
+                 */
+                setupAdapter();
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_CALENDAR: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    setupAdapter();
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    explanPermission("Calendar data is essential for this part, plear allow us access your calendar!");
+                }
+                return;
+            }
+            case MY_PERMISSIONS_REQUEST_WRITE_CALENDAR: { if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // permission was granted, yay! Do the
+                // contacts-related task you need to do.
+                setupAdapter();
+            } else {
+                // permission denied, boo! Disable the
+                // functionality that depends on this permission.
+                explanPermission("Calendar data is essential for this part, plear allow us access your calendar!");
+            }
+                return;
+            }
+        }
+    }
+
+    void explanPermission(String explanTxt){
+        Snackbar.make(nvDrawer,explanTxt,
+                Snackbar.LENGTH_INDEFINITE)
+                .setAction("OK", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ActivityCompat.requestPermissions(MainActivity.this,
+                                new String[]{Manifest.permission.WRITE_CALENDAR},
+                                MY_PERMISSIONS_REQUEST_WRITE_CALENDAR);
+                    }
+                })
+                .show();
+    }
+
+    /**
+     * showing calendar data after getting user's permission
+     */
+    void setupAdapter(){
+        pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(pagerAdapter);
         tabLayout.setSelectedTabIndicatorHeight(7);
         tabLayout.setupWithViewPager(viewPager);
         setTabLayout(tabLayout);
@@ -165,28 +300,6 @@ public class MainActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
-
-        nvDrawer = (NavigationView) findViewById(R.id.nav_view);
-        setupDrawerContent(nvDrawer);
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                setToolbarTitle(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-
     }
 
     /**
@@ -304,9 +417,9 @@ public class MainActivity extends AppCompatActivity {
                 setToolbarTitle(tabLayout.getSelectedTabPosition() + 7 * weekOffset);
                 updaeTablayoutDate(tabLayout);
             }
-                /**
-                 * swipe down
-                 */
+            /**
+             * swipe down
+             */
             else if (e2.getY() - e1.getY() > 100) {
 //                Toast.makeText(MainActivity.this, "Down Swipe", Toast.LENGTH_SHORT).show();
                 weekOffset += 1;
@@ -341,7 +454,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      *  set the target activity of each item in Drawer
-      * @param item item in Drawer
+     * @param item item in Drawer
      */
     public void selectDrawerItem(MenuItem item) {
         Intent intent;
